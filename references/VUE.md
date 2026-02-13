@@ -125,7 +125,7 @@ Add to your `pom.xml`:
         <plugin>
             <groupId>com.github.eirslett</groupId>
             <artifactId>frontend-maven-plugin</artifactId>
-            <version>1.15.0</version>
+            <version>1.15.1</version>
             <configuration>
                 <workingDirectory>frontend</workingDirectory>
                 <installDirectory>target</installDirectory>
@@ -138,8 +138,8 @@ Add to your `pom.xml`:
                         <goal>install-node-and-npm</goal>
                     </goals>
                     <configuration>
-                        <nodeVersion>v22.13.0</nodeVersion>
-                        <npmVersion>10.9.2</npmVersion>
+                        <nodeVersion>v22.14.0</nodeVersion>
+                        <npmVersion>10.10.0</npmVersion>
                     </configuration>
                 </execution>
                 

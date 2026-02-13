@@ -20,7 +20,11 @@ This agent skill helps you create Spring Boot projects following Julien Dubois' 
 - Follow best practices for project structure and configuration
 - Quick setup scripts for common use cases
 - Docker support for containerized deployments
-- Front-end development with Vue.js 3 and Vite when needed
+- Front-end development with multiple framework options:
+  - **Vue.js 3** (default) - Progressive framework with Composition API
+  - **React 18** - Popular library for building user interfaces
+  - **Angular 19** - Full-featured framework with TypeScript
+  - **Vanilla JavaScript** - No framework, pure ES6+ with Vite
 
 ## Validation
 
@@ -270,16 +274,61 @@ Key highlights:
 - AssertJ for fluent assertions
 
 ## Front-End Development
-For detailed instructions on creating front-end applications with Vue.js 3 and Vite, see the [Front-End Development Guide](references/FRONT-END.md).
+
+This skill supports multiple front-end framework options. Choose the one that best fits your project requirements:
+
+### Vue.js (Default) ⭐
+For detailed instructions, see the [Vue.js Development Guide](references/VUE.md).
 
 Key highlights:
 - Vue.js 3 with Composition API
 - Vite for development server with hot reload
-- Production builds minified and bundled into Spring Boot JAR
 - Pinia for state management
 - Vue Router for SPA routing
 - Bootstrap 5.3+ for responsive design
+- Production builds minified and bundled into Spring Boot JAR
+
+### React
+For detailed instructions, see the [React Development Guide](references/REACT.md).
+
+Key highlights:
+- React 18 with hooks and functional components
+- Vite for fast development with hot reload
+- Custom hooks for reusable logic
+- React Router for navigation
+- Bootstrap 5.3+ for responsive design
+- Production builds optimized and bundled into Spring Boot JAR
+
+### Angular
+For detailed instructions, see the [Angular Development Guide](references/ANGULAR.md).
+
+Key highlights:
+- Angular 19 with standalone components
+- Angular CLI for development and build tooling
+- TypeScript by default for type safety
+- RxJS for reactive programming
+- Angular Router for navigation
+- Bootstrap 5.3+ for responsive design
+- Production builds optimized and bundled into Spring Boot JAR
+
+### Vanilla JavaScript
+For detailed instructions, see the [Vanilla JS Development Guide](references/VANILLA-JS.md).
+
+Key highlights:
+- No framework - pure ES6+ JavaScript
+- Vite for modern development experience
+- Custom client-side routing
+- Minimal dependencies and bundle size
+- Bootstrap 5.3+ for responsive design
+- Production builds minified and bundled into Spring Boot JAR
+
+**All front-end options include:**
+- Hot reload during development
 - RESTful API integration patterns
+- Bootstrap 5.3+ for responsive UI
+- Automatic build and bundle into Spring Boot JAR
+- SPA routing with HTML5 history mode
+- CORS configuration for development
 
 ## Docker Deployment
 For comprehensive Docker deployment instructions, see the [Docker Guide](references/DOCKER.md).
@@ -331,7 +380,11 @@ Key highlights:
 - [Database Best Practices](references/DATABASE.md) (included in this skill - PostgreSQL and Hibernate optimization)
 - [Logging Best Practices](references/LOGGING.md) (included in this skill - Logback configuration and patterns)
 - [Testing Guide](references/TEST.md) (included in this skill - Unit and integration testing with TestContainers)
-- [Front-End Development Guide](references/FRONT-END.md) (included in this skill - Vue.js 3 with Vite)
+- Front-End Development Guides (included in this skill):
+  - [Vue.js Development Guide](references/VUE.md) (default - Vue.js 3 with Vite)
+  - [React Development Guide](references/REACT.md) (React 18 with Vite)
+  - [Angular Development Guide](references/ANGULAR.md) (Angular 19 with Angular CLI)
+  - [Vanilla JS Development Guide](references/VANILLA-JS.md) (Pure ES6+ with Vite)
 - [Docker Deployment Guide](references/DOCKER.md) (included in this skill)
 - [GraalVM Documentation](https://www.graalvm.org/)
 - [Spring Native Documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/native-image.html)
