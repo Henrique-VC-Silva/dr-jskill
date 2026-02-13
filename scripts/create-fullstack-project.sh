@@ -10,8 +10,8 @@ PROJECT_NAME="${1:-my-fullstack-app}"
 GROUP_ID="${2:-com.example}"
 ARTIFACT_ID="${3:-$PROJECT_NAME}"
 PACKAGE_NAME="${4:-$GROUP_ID.fullstack}"
-JAVA_VERSION="${5:-17}"
-SPRING_BOOT_VERSION="${6:-3.2.2}"
+JAVA_VERSION="${5:-25}"
+SPRING_BOOT_VERSION="${6:-4.0.0}"
 
 echo "Creating full-stack Spring Boot application..."
 echo "Project Name: $PROJECT_NAME"
@@ -34,7 +34,7 @@ curl -G https://start.spring.io/starter.zip \
   -d packageName="$PACKAGE_NAME" \
   -d packaging=jar \
   -d javaVersion="$JAVA_VERSION" \
-  -d dependencies=web,data-jpa,security,actuator,validation,devtools,h2,postgresql \
+  -d dependencies=web,data-jpa,actuator,validation,devtools,postgresql \
   -o "$PROJECT_NAME.zip"
 
 # Unzip the project
@@ -50,13 +50,7 @@ echo ""
 echo "The application includes:"
 echo "  - Spring Web (REST APIs)"
 echo "  - Spring Data JPA (Database access)"
-echo "  - Spring Security (Authentication & Authorization)"
 echo "  - Spring Boot Actuator (Monitoring)"
-echo "  - H2 Database (In-memory, for development)"
-echo "  - PostgreSQL Driver (For production)"
+echo "  - PostgreSQL Driver (Database)"
 echo "  - Validation (Bean validation)"
 echo "  - DevTools (Hot reload)"
-echo ""
-echo "Default credentials (Spring Security):"
-echo "  Username: user"
-echo "  Password: (check console output)"

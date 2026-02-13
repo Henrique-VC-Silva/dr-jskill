@@ -4,6 +4,38 @@ This directory contains sample bash scripts to quickly create Spring Boot projec
 
 ## Available Scripts
 
+### 0. create-project-latest.sh ⭐ RECOMMENDED
+Creates a Spring Boot project using the **latest available Spring Boot version** (automatically fetched from start.spring.io). This is the recommended script as it always uses the most current Spring Boot release.
+
+**Usage:**
+```bash
+./create-project-latest.sh [project-name] [group-id] [artifact-id] [package-name] [java-version] [project-type]
+```
+
+**Example:**
+```bash
+./create-project-latest.sh my-app com.mycompany my-app com.mycompany.myapp 25 web
+```
+
+**Default values:**
+- Project Name: my-spring-boot-app
+- Group ID: com.example
+- Artifact ID: (same as project name)
+- Package Name: com.example.app
+- Java Version: 25
+- Project Type: web (options: basic, web, fullstack)
+
+**Project Types:**
+- `basic` - Minimal project with Spring Web and Actuator
+- `web` - Web application with validation and DevTools
+- `fullstack` - Complete application with database, security, and all web features
+
+**Features:**
+- ✓ Automatically fetches the latest Spring Boot version
+- ✓ Supports Spring Boot 4.x and beyond
+- ✓ Flexible project types
+- ✓ Uses Java 25 by default
+
 ### 1. create-basic-project.sh
 Creates a minimal Spring Boot project with essential dependencies.
 
@@ -14,7 +46,7 @@ Creates a minimal Spring Boot project with essential dependencies.
 
 **Example:**
 ```bash
-./create-basic-project.sh my-app com.mycompany my-app com.mycompany.myapp 17 3.2.2
+./create-basic-project.sh my-app com.mycompany my-app com.mycompany.myapp 25 4.0.0
 ```
 
 **Default values:**
@@ -22,12 +54,13 @@ Creates a minimal Spring Boot project with essential dependencies.
 - Group ID: com.example
 - Artifact ID: (same as project name)
 - Package Name: com.example.app
-- Java Version: 17
-- Spring Boot Version: 3.2.2
+- Java Version: 25
+- Spring Boot Version: 4.0.0
 
 **Included dependencies:**
 - Spring Web
 - Spring Boot Actuator
+- Spring Boot DevTools
 
 ### 2. create-web-project.sh
 Creates a Spring Boot web application with REST API capabilities.
@@ -39,7 +72,7 @@ Creates a Spring Boot web application with REST API capabilities.
 
 **Example:**
 ```bash
-./create-web-project.sh my-web-app com.mycompany my-web-app com.mycompany.webapp 17 3.2.2
+./create-web-project.sh my-web-app com.mycompany my-web-app com.mycompany.webapp 25 4.0.0
 ```
 
 **Default values:**
@@ -47,8 +80,8 @@ Creates a Spring Boot web application with REST API capabilities.
 - Group ID: com.example
 - Artifact ID: (same as project name)
 - Package Name: com.example.webapp
-- Java Version: 17
-- Spring Boot Version: 3.2.2
+- Java Version: 25
+- Spring Boot Version: 4.0.0
 
 **Included dependencies:**
 - Spring Web
@@ -66,7 +99,7 @@ Creates a comprehensive Spring Boot application with database, security, and web
 
 **Example:**
 ```bash
-./create-fullstack-project.sh my-fullstack-app com.mycompany my-fullstack-app com.mycompany.fullstack 17 3.2.2
+./create-fullstack-project.sh my-fullstack-app com.mycompany my-fullstack-app com.mycompany.fullstack 25 4.0.0
 ```
 
 **Default values:**
@@ -74,17 +107,15 @@ Creates a comprehensive Spring Boot application with database, security, and web
 - Group ID: com.example
 - Artifact ID: (same as project name)
 - Package Name: com.example.fullstack
-- Java Version: 17
-- Spring Boot Version: 3.2.2
+- Java Version: 25
+- Spring Boot Version: 4.0.0
 
 **Included dependencies:**
 - Spring Web
 - Spring Data JPA
-- Spring Security
 - Spring Boot Actuator
 - Validation
 - Spring Boot DevTools
-- H2 Database
 - PostgreSQL Driver
 
 ## Requirements
@@ -92,6 +123,14 @@ Creates a comprehensive Spring Boot application with database, security, and web
 - `curl` - for downloading projects from start.spring.io
 - `unzip` - for extracting the downloaded project
 - `bash` - for running the scripts
+- `grep` and `sed` - standard Unix tools (included in macOS, Linux, Git Bash, WSL)
+
+## Platform Compatibility
+
+These scripts work on:
+- **macOS** - Uses built-in bash and Unix tools
+- **Linux** - Uses standard GNU tools
+- **Windows** - Requires Git Bash or WSL (Windows Subsystem for Linux)
 
 ## Quick Start
 
@@ -105,7 +144,52 @@ Creates a comprehensive Spring Boot application with database, security, and web
 
 ## Notes
 
-- All scripts use Maven as the build tool by default
+- All scripts use **Maven** as the build tool (Gradle is not supported)
 - All scripts create projects with Java packaging (JAR)
 - The scripts will create a new directory with your project name in the current directory
 - If a directory with the same name already exists, the unzip operation may fail
+- Spring Boot DevTools is included for development productivity
+- No Spring Security is included by default
+- PostgreSQL is the only database driver included (no H2)
+
+## Docker Deployment
+
+After creating your project, you can add Docker support by copying the Docker templates from the `references/` directory:
+
+```bash
+# Copy Docker files to your project
+cp references/Dockerfile my-project/
+cp references/Dockerfile-native my-project/
+cp references/docker-compose.yml my-project/
+cp references/docker-compose-native.yml my-project/
+
+# Run with Docker Compose
+cd my-project
+docker compose up -d
+```
+
+See [Docker Guide](../references/DOCKER.md) for detailed instructions.
+
+## Build and Run
+
+### Standard Maven Build
+```bash
+cd my-project
+./mvnw spring-boot:run
+```
+
+### GraalVM Native Build
+```bash
+cd my-project
+./mvnw -Pnative native:compile
+./target/my-project-exec
+```
+
+### Docker Build
+```bash
+# Standard JVM image
+docker build -t my-project .
+
+# GraalVM native image
+docker build -f Dockerfile-native -t my-project-native .
+```
