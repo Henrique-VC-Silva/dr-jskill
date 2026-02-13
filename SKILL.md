@@ -37,7 +37,6 @@ Use the `create-fullstack-project.sh` script to create a comprehensive Spring Bo
 - Include Spring Boot Actuator for production-ready features
 - Use Spring Data JPA for database access
 - Implement proper security with Spring Security
-- Use Lombok to reduce boilerplate code
 - Follow RESTful API design principles
 - Include proper logging configuration
 - Use profiles for environment-specific configurations
@@ -73,7 +72,6 @@ Common dependencies included in generated projects:
 - Spring Data JPA (for database access)
 - Spring Security (for authentication and authorization)
 - Spring Boot Actuator (for monitoring)
-- Lombok (to reduce boilerplate)
 - H2 Database (for development)
 - PostgreSQL Driver (for production)
 

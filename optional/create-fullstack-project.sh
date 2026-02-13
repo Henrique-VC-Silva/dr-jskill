@@ -34,7 +34,7 @@ curl -G https://start.spring.io/starter.zip \
   -d packageName="$PACKAGE_NAME" \
   -d packaging=jar \
   -d javaVersion="$JAVA_VERSION" \
-  -d dependencies=web,data-jpa,security,actuator,lombok,validation,devtools,h2,postgresql \
+  -d dependencies=web,data-jpa,security,actuator,validation,devtools,h2,postgresql \
   -o "$PROJECT_NAME.zip"
 
 # Unzip the project
@@ -54,7 +54,6 @@ echo "  - Spring Security (Authentication & Authorization)"
 echo "  - Spring Boot Actuator (Monitoring)"
 echo "  - H2 Database (In-memory, for development)"
 echo "  - PostgreSQL Driver (For production)"
-echo "  - Lombok (Reduce boilerplate)"
 echo "  - Validation (Bean validation)"
 echo "  - DevTools (Hot reload)"
 echo ""

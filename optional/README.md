@@ -28,7 +28,6 @@ Creates a minimal Spring Boot project with essential dependencies.
 **Included dependencies:**
 - Spring Web
 - Spring Boot Actuator
-- Lombok
 
 ### 2. create-web-project.sh
 Creates a Spring Boot web application with REST API capabilities.
@@ -54,7 +53,6 @@ Creates a Spring Boot web application with REST API capabilities.
 **Included dependencies:**
 - Spring Web
 - Spring Boot Actuator
-- Lombok
 - Validation
 - Spring Boot DevTools
 
@@ -84,7 +82,6 @@ Creates a comprehensive Spring Boot application with database, security, and web
 - Spring Data JPA
 - Spring Security
 - Spring Boot Actuator
-- Lombok
 - Validation
 - Spring Boot DevTools
 - H2 Database

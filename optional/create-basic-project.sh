@@ -34,7 +34,7 @@ curl -G https://start.spring.io/starter.zip \
   -d packageName="$PACKAGE_NAME" \
   -d packaging=jar \
   -d javaVersion="$JAVA_VERSION" \
-  -d dependencies=web,actuator,lombok \
+  -d dependencies=web,actuator \
   -o "$PROJECT_NAME.zip"
 
 # Unzip the project
