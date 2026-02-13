@@ -48,7 +48,7 @@ case "$PROJECT_TYPE" in
     DESCRIPTION="Spring+Boot+web+application"
     ;;
   fullstack)
-    DEPENDENCIES="web,data-jpa,actuator,validation,devtools,postgresql,docker-compose"
+    DEPENDENCIES="web,data-jpa,actuator,validation,devtools,postgresql,docker-compose,testcontainers"
     DESCRIPTION="Full-stack+Spring+Boot+application"
     ;;
   *)

@@ -1,7 +1,12 @@
 # Spring Boot Testing Best Practices
 
 ## Overview
-This guide covers testing best practices for Spring Boot applications, including unit tests with mocks and integration tests with TestContainers.
+This guide covers testing best practices for Spring Boot 4.x applications, including unit tests with mocks and integration tests with TestContainers.
+
+**Spring Boot 4 Testing Changes:**
+- TestContainers integration simplified with `@ServiceConnection` (no manual `@DynamicPropertySource` needed)
+- Mockito and testing dependencies remain stable
+- `@MockBean` continues to be the standard for Spring-integrated mocking
 
 ## Testing Dependencies
 
@@ -40,6 +45,20 @@ Add these dependencies to your `pom.xml`:
 ## Unit Tests with Mocks
 
 Unit tests should test individual components in isolation using mocks for dependencies.
+
+**Two approaches to mocking in Spring Boot:**
+
+1. **Pure Mockito** (for unit tests without Spring context):
+   - Use `@ExtendWith(MockitoExtension.class)`
+   - Use `@Mock` and `@InjectMocks` from Mockito
+   - Fast, no Spring container overhead
+   - Best for testing service logic, utilities, domain logic
+
+2. **Spring Boot Test with @MockBean** (for tests with Spring context):
+   - Use `@MockBean` from `org.springframework.boot.test.mock.mockito.MockBean`
+   - Integrated with Spring's dependency injection
+   - Use with `@WebMvcTest`, `@DataJpaTest`, or `@SpringBootTest`
+   - Best for testing Spring-managed components
 
 ### Testing Services with Mockito
 
@@ -126,7 +145,7 @@ class UserServiceTest {
 
 ### Testing Controllers with @WebMvcTest
 
-Test controllers without loading the full application context.
+Test controllers without loading the full application context. Uses `@MockBean` to mock service dependencies.
 
 **Example: Controller Unit Test**
 
@@ -246,8 +265,6 @@ package com.example.app;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -262,15 +279,10 @@ public abstract class AbstractIntegrationTest {
         .withDatabaseName("testdb")
         .withUsername("test")
         .withPassword("test");
-
-    @DynamicPropertySource
-    static void configureProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", postgres::getJdbcUrl);
-        registry.add("spring.datasource.username", postgres::getUsername);
-        registry.add("spring.datasource.password", postgres::getPassword);
-    }
 }
 ```
+
+**Note:** With Spring Boot 3.1+, `@ServiceConnection` automatically configures datasource properties. No need for manual `@DynamicPropertySource` configuration.
 
 ### REST API Integration Test
 
@@ -506,8 +518,8 @@ This naming convention allows:
 ### 2. Unit Tests
 - Mock all external dependencies
 - Test business logic in isolation
-- Use `@ExtendWith(MockitoExtension.class)` for Mockito
-- Use `@WebMvcTest` for controller tests (faster than full context)
+- **For pure unit tests**: Use `@ExtendWith(MockitoExtension.class)` with `@Mock` and `@InjectMocks`
+- **For Spring-integrated tests**: Use `@WebMvcTest`, `@DataJpaTest` with `@MockBean`
 - Verify mock interactions with `verify()`
 
 ### 3. Integration Tests

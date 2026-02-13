@@ -34,7 +34,7 @@ curl -G https://start.spring.io/starter.zip \
   -d packageName="$PACKAGE_NAME" \
   -d packaging=jar \
   -d javaVersion="$JAVA_VERSION" \
-  -d dependencies=web,data-jpa,actuator,validation,devtools,postgresql,docker-compose \
+  -d dependencies=web,data-jpa,actuator,validation,devtools,postgresql,docker-compose,testcontainers \
   -o "$PROJECT_NAME.zip"
 
 # Unzip the project
@@ -54,3 +54,5 @@ echo "  - Spring Boot Actuator (Monitoring)"
 echo "  - PostgreSQL Driver (Database)"
 echo "  - Validation (Bean validation)"
 echo "  - DevTools (Hot reload)"
+echo "  - Docker Compose (Automatic database startup)"
+echo "  - TestContainers (Integration testing with PostgreSQL)"

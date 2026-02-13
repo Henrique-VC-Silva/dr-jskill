@@ -28,7 +28,7 @@ Creates a Spring Boot project using the **latest available Spring Boot version**
 **Project Types:**
 - `basic` - Minimal project with Spring Web and Actuator
 - `web` - Web application with validation and DevTools
-- `fullstack` - Complete application with database, automatic Docker Compose support, and all web features
+- `fullstack` - Complete application with database, automatic Docker Compose support, TestContainers for integration testing, and all web features
 
 **Features:**
 - ✓ Automatically fetches the latest Spring Boot version
@@ -118,8 +118,9 @@ Creates a comprehensive Spring Boot application with database, security, and web
 - Spring Boot DevTools
 - PostgreSQL Driver
 - Spring Boot Docker Compose (automatically starts PostgreSQL during development)
+- TestContainers (for integration testing with PostgreSQL)
 
-**Note:** Full-stack projects include automatic Docker Compose support. When you run `./mvnw spring-boot:run`, PostgreSQL will start automatically if you have a `compose.yaml` file in your project root.
+**Note:** Full-stack projects include automatic Docker Compose support. When you run `./mvnw spring-boot:run`, PostgreSQL will start automatically if you have a `compose.yaml` file in your project root. TestContainers is included for writing integration tests with a real PostgreSQL database.
 
 ## Requirements
 
@@ -152,6 +153,8 @@ These scripts work on:
 - All scripts create projects with Java packaging (JAR)
 - The scripts will create a new directory with your project name in the current directory
 - If a directory with the same name already exists, the unzip operation may fail
+- **Testing support**: All projects include `spring-boot-starter-test` (JUnit 5, Mockito, AssertJ)
+- **TestContainers**: Full-stack projects include TestContainers for integration testing with PostgreSQL
 - Spring Boot DevTools is included for development productivity
 - No Spring Security is included by default
 - PostgreSQL is the only database driver included (no H2)
@@ -196,6 +199,20 @@ See [Docker Guide](../references/DOCKER.md) for detailed instructions.
 ```bash
 cd my-project
 ./mvnw spring-boot:run
+```
+
+### Running Tests
+```bash
+cd my-project
+
+# Run all tests (unit + integration)
+./mvnw verify
+
+# Run only unit tests
+./mvnw test
+
+# Skip tests
+./mvnw package -DskipTests
 ```
 
 ### GraalVM Native Build
