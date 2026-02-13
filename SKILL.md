@@ -271,6 +271,16 @@ Build native image locally:
 ./mvnw -Pnative native:compile
 ```
 
+## Deploying in production to Azure
+
+For deploying in production to Azure, see the [Azure Deployment Guide](references/AZURE.md).
+
+Key highlights:
+
+- Use Azure Container Apps for containerized deployments
+- Use Azure Database for PostgreSQL for managed database service if needed
+- Uses the Azure CLI for deployment and management
+
 ## Additional Resources
 - [Spring Boot Documentation](https://spring.io/projects/spring-boot)
 - [Spring Initializr](https://start.spring.io)
