@@ -11,25 +11,25 @@ This agent skill helps you create Spring Boot projects following Julien Dubois' 
 
 ## Usage
 
-### Using the Optional Scripts
-This skill includes sample bash scripts in the `optional/` directory that can be used to download pre-configured Spring Boot projects from start.spring.io.
+### Using the Scripts
+This skill includes sample bash scripts in the `scripts/` directory that can be used to download pre-configured Spring Boot projects from start.spring.io.
 
 ### Basic Spring Boot Project
 Use the `create-basic-project.sh` script to create a basic Spring Boot project with essential dependencies:
 ```bash
-./optional/create-basic-project.sh
+./scripts/create-basic-project.sh
 ```
 
 ### Web Application
 Use the `create-web-project.sh` script to create a Spring Boot web application with web dependencies:
 ```bash
-./optional/create-web-project.sh
+./scripts/create-web-project.sh
 ```
 
 ### Full-Stack Application
 Use the `create-fullstack-project.sh` script to create a comprehensive Spring Boot application with database, security, and web dependencies:
 ```bash
-./optional/create-fullstack-project.sh
+./scripts/create-fullstack-project.sh
 ```
 
 ## Best Practices
