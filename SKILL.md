@@ -11,6 +11,7 @@ This agent skill helps you create Spring Boot projects following Julien Dubois' 
 ## Prerequisites
 
 - Java 25 installed
+- Docker is installed and running
 
 ## Capabilities
 - Generate Spring Boot projects with predefined configurations
