@@ -1,4 +1,4 @@
-# Spring Boot Project Creation Skill
+# Spring Boot skill that follows Julien Dubois' best practices.
 
 ## Overview
 This agent skill helps you create Spring Boot projects following Julien Dubois' best practices. It provides tools and scripts to quickly bootstrap Spring Boot applications using start.spring.io.
@@ -56,6 +56,13 @@ my-spring-boot-app/
 │   │   │       ├── repository/
 │   │   │       └── domain/
 │   │   └── resources/
+│   │       ├── static/              # Front-end web assets (HTML, CSS, JS)
+│   │       │   ├── index.html
+│   │       │   ├── css/
+│   │       │   │   └── styles.css
+│   │       │   ├── js/
+│   │       │   │   └── app.js
+│   │       │   └── images/
 │   │       ├── application.properties
 │   │       ├── application-dev.properties
 │   │       └── application-prod.properties
@@ -95,7 +102,17 @@ spring.jpa.show-sql=false
 management.endpoints.web.exposure.include=health,info,metrics
 ```
 
+## Front-End Development
+For detailed instructions on creating front-end websites with vanilla JavaScript and Bootstrap, see the [Front-End Development Guide](references/FRONT-END.md).
+
+Key highlights:
+- Static resources placed in `src/main/resources/static/`
+- Vanilla JavaScript (no frameworks) with ES6+ features
+- Bootstrap 5.3.x for responsive design
+- RESTful API integration patterns
+
 ## Additional Resources
 - [Spring Boot Documentation](https://spring.io/projects/spring-boot)
 - [Spring Initializr](https://start.spring.io)
 - [Julien Dubois on GitHub](https://github.com/jdubois)
+- [Front-End Development Guide](references/FRONT-END.md) (included in this skill)
