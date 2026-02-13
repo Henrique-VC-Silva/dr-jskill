@@ -4,9 +4,10 @@
 This guide covers testing best practices for Spring Boot 4.x applications, including unit tests with mocks and integration tests with TestContainers.
 
 **Spring Boot 4 Testing Changes:**
-- TestContainers integration simplified with `@ServiceConnection` (no manual `@DynamicPropertySource` needed)
-- Mockito and testing dependencies remain stable
-- `@MockBean` continues to be the standard for Spring-integrated mocking
+- TestContainers 2.0+ is required (integration simplified with `@ServiceConnection`)
+- **@MockBean/@SpyBean are DEPRECATED** - use `@MockitoBean/@MockitoSpyBean` from Spring Framework instead
+- `@ServiceConnection` eliminates need for manual `@DynamicPropertySource` configuration
+- New modular test starter structure (e.g., `spring-boot-starter-data-jpa-test`)
 
 ## Testing Dependencies
 
@@ -21,7 +22,7 @@ Add these dependencies to your `pom.xml`:
         <scope>test</scope>
     </dependency>
     
-    <!-- TestContainers for integration tests -->
+    <!-- TestContainers 2.0+ for integration tests -->
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-testcontainers</artifactId>
@@ -46,7 +47,7 @@ Add these dependencies to your `pom.xml`:
 
 Unit tests should test individual components in isolation using mocks for dependencies.
 
-**Two approaches to mocking in Spring Boot:**
+**Two approaches to mocking in Spring Boot 4:**
 
 1. **Pure Mockito** (for unit tests without Spring context):
    - Use `@ExtendWith(MockitoExtension.class)`
@@ -54,8 +55,9 @@ Unit tests should test individual components in isolation using mocks for depend
    - Fast, no Spring container overhead
    - Best for testing service logic, utilities, domain logic
 
-2. **Spring Boot Test with @MockBean** (for tests with Spring context):
-   - Use `@MockBean` from `org.springframework.boot.test.mock.mockito.MockBean`
+2. **Spring Boot Test with @MockitoBean** (for tests with Spring context):
+   - Use `@MockitoBean` from `org.springframework.test.context.bean.override.mockito.MockitoBean`
+   - **DO NOT use deprecated** `@MockBean` from `org.springframework.boot.test.mock.mockito.MockBean`
    - Integrated with Spring's dependency injection
    - Use with `@WebMvcTest`, `@DataJpaTest`, or `@SpringBootTest`
    - Best for testing Spring-managed components
@@ -145,7 +147,7 @@ class UserServiceTest {
 
 ### Testing Controllers with @WebMvcTest
 
-Test controllers without loading the full application context. Uses `@MockBean` to mock service dependencies.
+Test controllers without loading the full application context. Uses `@MockitoBean` to mock service dependencies.
 
 **Example: Controller Unit Test**
 
@@ -158,7 +160,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -179,7 +181,7 @@ class UserControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @MockBean
+    @MockitoBean
     private UserService userService;
 
     @Test
@@ -282,7 +284,7 @@ public abstract class AbstractIntegrationTest {
 }
 ```
 
-**Note:** With Spring Boot 3.1+, `@ServiceConnection` automatically configures datasource properties. No need for manual `@DynamicPropertySource` configuration.
+**Note:** With Spring Boot 4.0, `@ServiceConnection` automatically configures datasource properties. No need for manual `@DynamicPropertySource` configuration. TestContainers 2.0+ is required.
 
 ### REST API Integration Test
 
@@ -519,7 +521,7 @@ This naming convention allows:
 - Mock all external dependencies
 - Test business logic in isolation
 - **For pure unit tests**: Use `@ExtendWith(MockitoExtension.class)` with `@Mock` and `@InjectMocks`
-- **For Spring-integrated tests**: Use `@WebMvcTest`, `@DataJpaTest` with `@MockBean`
+- **For Spring-integrated tests**: Use `@WebMvcTest`, `@DataJpaTest` with `@MockitoBean` (not deprecated `@MockBean`)
 - Verify mock interactions with `verify()`
 
 ### 3. Integration Tests
@@ -591,4 +593,113 @@ src/test/java/
 - [Spring Boot Testing Guide](https://spring.io/guides/gs/testing-web/)
 - [TestContainers Documentation](https://testcontainers.com/)
 - [Mockito Documentation](https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html)
+
+## Spring Boot 4 Migration Notes
+
+### @MockBean and @SpyBean Deprecation
+
+**Important:** Spring Boot 4 deprecates `@MockBean` and `@SpyBean` in favor of Spring Framework's `@MockitoBean` and `@MockitoSpyBean`.
+
+#### Key Differences
+
+**Old (Deprecated in Spring Boot 4):**
+```java
+import org.springframework.boot.test.mock.mockito.MockBean;  // ❌ Deprecated
+
+@SpringBootTest
+class MyTest {
+    @MockBean
+    private UserService userService;
+}
+```
+
+**New (Spring Boot 4):**
+```java
+import org.springframework.test.context.bean.override.mockito.MockitoBean;  // ✅ Correct
+
+@SpringBootTest
+class MyTest {
+    @MockitoBean
+    private UserService userService;
+}
+```
+
+#### Migration Path
+
+1. **Field-based mocks** - Direct replacement:
+   ```java
+   // Change this:
+   @MockBean
+   private UserService userService;
+   
+   // To this:
+   @MockitoBean
+   private UserService userService;
+   ```
+
+2. **Shared mocks in @Configuration classes** - Use class-level annotation:
+   ```java
+   // OLD - Not supported with @MockitoBean
+   @TestConfiguration
+   public class TestConfig {
+       @MockBean
+       private UserService userService;
+       @MockBean
+       private OrderService orderService;
+   }
+   
+   // NEW - Declare on test class
+   @SpringBootTest
+   @MockitoBean(types = {UserService.class, OrderService.class})
+   class ApplicationTests {
+       @Test
+       void check() {
+           // ...
+       }
+   }
+   ```
+
+3. **Custom annotation for shared mocks** - Recommended approach:
+   ```java
+   @Target(ElementType.TYPE)
+   @Retention(RetentionPolicy.RUNTIME)
+   @MockitoBean(types = {UserService.class, OrderService.class})
+   @MockitoBean(name = "emailService", types = EmailService.class)
+   public @interface SharedMocks {
+   }
+   
+   @SpringBootTest
+   @SharedMocks
+   class ApplicationTests {
+       // Clean test class
+   }
+   ```
+
+#### When to Migrate
+
+- **Now:** For new Spring Boot 4 projects, use `@MockitoBean` from the start
+- **Gradually:** For existing projects, you can temporarily use `@SuppressWarnings("removal")` but plan migration
+- **Soon:** Spring Boot will remove `@MockBean`/`@SpyBean` support in a future release
+
+#### Full Import Statements
+
+```java
+// Spring Boot 4 correct imports:
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
+
+// Deprecated (will be removed):
+import org.springframework.boot.test.mock.mockito.MockBean;  // ❌
+import org.springframework.boot.test.mock.mockito.SpyBean;   // ❌
+```
+
+### TestContainers 2.0 Requirements
+
+Spring Boot 4 requires **TestContainers 2.0+**, which brings:
+- Improved performance and resource management
+- Better cleanup of containers
+- Enhanced Docker platform support
+- Simplified configuration with `@ServiceConnection`
+
+No code changes needed if already using `@ServiceConnection` pattern shown in this guide.
 - [AssertJ Documentation](https://assertj.github.io/doc/)

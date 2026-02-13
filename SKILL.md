@@ -11,7 +11,7 @@ This agent skill helps you create Spring Boot projects following Julien Dubois' 
 ## Prerequisites
 
 - Java 25 installed
-- Node.js and NPM are installed (when doing front-end development)
+- Node.js 22.x and NPM 10.x are installed (when doing front-end development)
 - Docker is installed and running
 
 ## Capabilities
@@ -73,6 +73,7 @@ Use the `create-fullstack-project.sh` script to create a comprehensive Spring Bo
 ## Best Practices
 - Use the latest Spring Boot version for new projects (currently 4.x)
 - Use the `create-project-latest.sh` script to automatically get the latest version
+- **Spring Boot 4 changes**: See [Spring Boot 4 Migration Guide](references/SPRING-BOOT-4.md) for key differences from Spring Boot 3
 - Use Spring Boot Actuator for production-ready features
 - Use Spring Data JPA for database access
 - Use PostgreSQL for database (see [Database Best Practices](references/DATABASE.md) for optimization)
@@ -274,10 +275,11 @@ Build native image locally:
 - [Spring Boot Documentation](https://spring.io/projects/spring-boot)
 - [Spring Initializr](https://start.spring.io)
 - [Julien Dubois on GitHub](https://github.com/jdubois)
+- [Spring Boot 4 Migration Guide](references/SPRING-BOOT-4.md) (included in this skill - Key changes from Spring Boot 3)
 - [Database Best Practices](references/DATABASE.md) (included in this skill - PostgreSQL and Hibernate optimization)
 - [Logging Best Practices](references/LOGGING.md) (included in this skill - Logback configuration and patterns)
-- [Testing Guide](references/TEST.md) (included in this skill)
-- [Front-End Development Guide](references/FRONT-END.md) (included in this skill)
+- [Testing Guide](references/TEST.md) (included in this skill - Unit and integration testing with TestContainers)
+- [Front-End Development Guide](references/FRONT-END.md) (included in this skill - Vue.js 3 with Vite)
 - [Docker Deployment Guide](references/DOCKER.md) (included in this skill)
 - [GraalVM Documentation](https://www.graalvm.org/)
 - [Spring Native Documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/native-image.html)
