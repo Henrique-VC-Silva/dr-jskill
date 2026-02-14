@@ -4,24 +4,27 @@
 This guide covers Docker deployment for Spring Boot 4 applications, including both traditional JVM-based deployments and GraalVM native images.
 
 **Spring Boot 4 Requirements:**
-- Java 17+ (Java 21 LTS recommended - used in our Dockerfiles)
-- GraalVM 25+ for native images
-- Jakarta EE 11 / Servlet 6.1 baseline
-- PostgreSQL 12+ (we use 16-alpine for optimal size and performance)
+
+1. Java 17+ (Java 21 LTS recommended - used in our Dockerfiles)
+2. GraalVM 25+ for native images
+3. Jakarta EE 11 / Servlet 6.1 baseline
+4. PostgreSQL 12+ (we use 16-alpine for optimal size and performance)
 
 **Key Improvements in These Docker Files:**
-- ✅ Eclipse Temurin 21 LTS official images (better than Ubuntu + manual Java)
-- ✅ GraalVM 25 for native images (required for Spring Boot 4)
-- ✅ PostgreSQL 16 Alpine (smaller, more secure)
-- ✅ Optimized JVM flags for container environments
-- ✅ curl installed for healthchecks
-- ✅ Non-root user security
-- ✅ Multi-stage builds for smaller images
+
+1. Eclipse Temurin 21 LTS official images (better than Ubuntu + manual Java)
+2. GraalVM 25 for native images (required for Spring Boot 4)
+3. PostgreSQL 16 Alpine (smaller, more secure)
+4. Optimized JVM flags for container environments
+5. curl installed for healthchecks
+6. Non-root user security
+7. Multi-stage builds for smaller images
 
 ## Prerequisites
-- Docker installed and running
-- Docker Compose (included with Docker Desktop)
-- Spring Boot application with Maven build configuration
+
+1. Docker installed and running
+2. Docker Compose (included with Docker Desktop)
+3. Spring Boot application with Maven build configuration
 
 ## Development with Automatic Docker Compose Support
 
@@ -92,11 +95,12 @@ spring.docker.compose.file=docker/compose-dev.yaml
 ```
 
 **Benefits:**
-- ✅ No manual container management during development
-- ✅ Automatic datasource configuration
-- ✅ Containers start only when needed
-- ✅ Automatic cleanup on application stop (configurable)
-- ✅ Works with PostgreSQL, MySQL, MongoDB, Redis, and more
+
+1. No manual container management during development
+2. Automatic datasource configuration
+3. Containers start only when needed
+4. Automatic cleanup on application stop (configurable)
+5. Works with PostgreSQL, MySQL, MongoDB, Redis, and more
 
 **Note:** This is for development only. For production deployment, see the sections below.
 
@@ -108,13 +112,14 @@ Standard Docker deployment using Eclipse Temurin official Java images.
 **Location**: Copy to your project root
 
 **Features**:
-- Multi-stage build for smaller image size
-- Uses Eclipse Temurin 21 LTS (official Java images)
-- Maven build included
-- Non-root user for security
-- Health check configured with curl
-- Optimized JVM flags for containers
-- Production-ready
+
+1. Multi-stage build for smaller image size
+2. Uses Eclipse Temurin 21 LTS (official Java images)
+3. Maven build included
+4. Non-root user for security
+5. Health check configured with curl
+6. Optimized JVM flags for containers
+7. Production-ready
 
 **Build and Run**:
 ```bash
@@ -131,12 +136,13 @@ Native compilation using GraalVM 25 for faster startup and lower memory footprin
 **Location**: Copy to your project root
 
 **Features**:
-- GraalVM 25 native image compilation (required for Spring Boot 4)
-- Ultra-fast startup time (<100ms)
-- Lower memory consumption
-- Smaller runtime image (Oracle Linux slim base)
-- Health check with curl included
-- Ideal for serverless and microservices
+
+1. GraalVM 25 native image compilation (required for Spring Boot 4)
+2. Ultra-fast startup time (<100ms)
+3. Lower memory consumption
+4. Smaller runtime image (Oracle Linux slim base)
+5. Health check with curl included
+6. Ideal for serverless and microservices
 
 **Build and Run**:
 ```bash
@@ -155,13 +161,14 @@ Complete stack with PostgreSQL 16 database and Spring Boot application.
 **Location**: Copy to your project root
 
 **Features**:
-- PostgreSQL 16 Alpine (lightweight, production-ready)
-- Spring Boot application service
-- Automatic database connection configuration
-- Health checks for both services
-- Named volumes for data persistence
-- Network isolation
-- No version field (modern Docker Compose)
+
+1. PostgreSQL 16 Alpine (lightweight, production-ready)
+2. Spring Boot application service
+3. Automatic database connection configuration
+4. Health checks for both services
+5. Named volumes for data persistence
+6. Network isolation
+7. No version field (modern Docker Compose)
 
 **Usage**:
 ```bash

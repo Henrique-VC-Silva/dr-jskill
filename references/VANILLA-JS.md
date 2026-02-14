@@ -6,14 +6,16 @@ This guide covers creating front-end applications for Spring Boot using plain Ja
 ## Architecture
 
 **Development Mode:**
-- Vite dev server runs on port 5173 with hot reload
-- Proxies API calls to Spring Boot backend on port 8080
-- Fast HMR (Hot Module Replacement)
+
+1. Vite dev server runs on port 5173 with hot reload
+2. Proxies API calls to Spring Boot backend on port 8080
+3. Fast HMR (Hot Module Replacement)
 
 **Production Mode:**
-- JavaScript app built and minified by Vite
-- Static assets copied to `src/main/resources/static`
-- Served directly by Spring Boot
+
+1. JavaScript app built and minified by Vite
+2. Static assets copied to `src/main/resources/static`
+3. Served directly by Spring Boot
 
 ## Project Structure
 
@@ -857,52 +859,60 @@ This controller ensures that refreshing the browser on any route (e.g., `/items/
 ## Best Practices
 
 ### 1. Code Organization
-- **Modular Structure**: Separate concerns into different files (components, pages, services)
-- **ES6 Modules**: Use ES6 import/export for code organization
-- **Component Pattern**: Use functions that render reusable UI components
-- **Single Responsibility**: Each file should have a single clear purpose
+
+- Modular Structure: Separate concerns into different files (components, pages, services)
+- ES6 Modules: Use ES6 import/export for code organization
+- Component Pattern: Use functions that render reusable UI components
+- Single Responsibility: Each file should have a single clear purpose
 
 ### 2. State Management
-- **Local State**: Keep state close to where it's used
-- **Module-Level State**: Use module-level variables for shared state
-- **Event-Driven**: Use custom events for component communication
-- **Immutability**: Prefer immutable data patterns
+
+- Local State: Keep state close to where it's used
+- Module-Level State: Use module-level variables for shared state
+- Event-Driven: Use custom events for component communication
+- Immutability: Prefer immutable data patterns
 
 ### 3. API Integration
-- **Service Layer**: Separate API calls into service files
-- **Error Handling**: Implement consistent error handling patterns
-- **Loading States**: Show loading indicators during async operations
-- **Promises/Async-Await**: Use modern async patterns
+
+- Service Layer: Separate API calls into service files
+- Error Handling: Implement consistent error handling patterns
+- Loading States: Show loading indicators during async operations
+- Promises/Async-Await: Use modern async patterns
 
 ### 4. Routing
-- **History API**: Use `pushState` for client-side navigation
-- **Pattern Matching**: Support dynamic route parameters
-- **Link Handling**: Use data attributes for navigation links
-- **404 Handling**: Implement fallback for unknown routes
+
+- History API: Use `pushState` for client-side navigation
+- Pattern Matching: Support dynamic route parameters
+- Link Handling: Use data attributes for navigation links
+- 404 Handling: Implement fallback for unknown routes
 
 ### 5. Bootstrap Integration
-- **Import Once**: Import Bootstrap CSS/JS in main.js
-- **Utility Classes**: Leverage Bootstrap's utility classes
-- **Responsive Grid**: Use Bootstrap's grid system for layouts
-- **Component JS**: Use Bootstrap's JavaScript components (modals, dropdowns, etc.)
+
+- Import Once: Import Bootstrap CSS/JS in main.js
+- Utility Classes: Leverage Bootstrap's utility classes
+- Responsive Grid: Use Bootstrap's grid system for layouts
+- Component JS: Use Bootstrap's JavaScript components (modals, dropdowns, etc.)
 
 ### 6. Performance
-- **Code Splitting**: Vite automatically splits code
-- **Lazy Loading**: Load resources only when needed
-- **Terser Minification**: Configured in Vite for production builds
-- **Tree Shaking**: Vite removes unused code
+
+- Code Splitting: Vite automatically splits code
+- Lazy Loading: Load resources only when needed
+- Terser Minification: Configured in Vite for production builds
+- Tree Shaking: Vite removes unused code
 
 ### 7. Security
-- **XSS Prevention**: Always escape user content before rendering
-- **CORS Configuration**: Configure Spring Boot for Vite dev server
-- **CSRF Protection**: Handle Spring Security CSRF tokens properly
-- **Input Validation**: Validate user inputs on both client and server
+
+- XSS Prevention: Always escape user content before rendering
+- CORS Configuration: Configure Spring Boot for Vite dev server
+- CSRF Protection: Handle Spring Security CSRF tokens properly
+- Input Validation: Validate user inputs on both client and server
 
 ### 8. Development Workflow
-- **Hot Module Replacement**: Vite provides instant updates
-- **Browser DevTools**: Use console, debugger, and network tools
-- **Error Messages**: Provide clear error messages to users
-- **Code Comments**: Document complex logic
+
+- Hot Module Replacement: Vite provides instant updates
+- Browser DevTools: Use console, debugger, and network tools
+- Error Messages: Provide clear error messages to users
+- Code Comments: Document complex logic
 
 ## CORS Configuration for Development
 
@@ -969,10 +979,11 @@ DEV_MODE=true ./mvnw spring-boot:run
 4. All routes should work including direct navigation to `/items`, `/about`, etc.
 
 ### Browser DevTools
-- **Console**: Check for errors and debug output
-- **Network Tab**: Monitor API calls to Spring Boot backend
-- **Debugger**: Set breakpoints in JavaScript code
-- **Performance Tab**: Profile rendering and API calls
+
+- Console: Check for errors and debug output
+- Network Tab: Monitor API calls to Spring Boot backend
+- Debugger: Set breakpoints in JavaScript code
+- Performance Tab: Profile rendering and API calls
 
 ## Additional Resources
 

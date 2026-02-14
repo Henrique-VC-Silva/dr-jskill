@@ -12,11 +12,12 @@ This guide provides a simpler approach to deploying Spring Boot 4 applications t
 - **Azure Database for PostgreSQL Flexible Server**: Managed database
 
 **Key Benefits:**
-- ✅ No Terraform or complex IaC required
-- ✅ Simple bash scripts you can run directly
-- ✅ Fast deployment with minimal configuration
-- ✅ Easy to understand and modify
-- ✅ Add database only when needed
+
+1. No Terraform or complex IaC required
+2. Simple bash scripts you can run directly
+3. Fast deployment with minimal configuration
+4. Easy to understand and modify
+5. Add database only when needed
 
 ## Prerequisites
 

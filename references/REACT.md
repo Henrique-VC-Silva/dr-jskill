@@ -6,14 +6,16 @@ This guide covers creating front-end applications for Spring Boot using React 18
 ## Architecture
 
 **Development Mode:**
-- Vite dev server runs on port 5173 with hot reload
-- Proxies API calls to Spring Boot backend on port 8080
-- Fast HMR (Hot Module Replacement)
+
+1. Vite dev server runs on port 5173 with hot reload
+2. Proxies API calls to Spring Boot backend on port 8080
+3. Fast HMR (Hot Module Replacement)
 
 **Production Mode:**
-- React app built and minified by Vite
-- Static assets copied to `src/main/resources/static`
-- Served directly by Spring Boot
+
+1. React app built and minified by Vite
+2. Static assets copied to `src/main/resources/static`
+3. Served directly by Spring Boot
 
 ## Project Structure
 
@@ -783,52 +785,60 @@ This controller ensures that refreshing the browser on any React route (e.g., `/
 ## Best Practices
 
 ### 1. Component Organization
-- **Functional Components**: Use functional components with hooks
-- **Component Naming**: Use PascalCase for component names (e.g., `ItemCard.jsx`)
-- **Props Validation**: Use PropTypes or TypeScript for type checking
-- **Single Responsibility**: Each component should have a single purpose
+
+- Functional Components: Use functional components with hooks
+- Component Naming: Use PascalCase for component names (e.g., `ItemCard.jsx`)
+- Props Validation: Use PropTypes or TypeScript for type checking
+- Single Responsibility: Each component should have a single purpose
 
 ### 2. State Management
-- **Local State**: Use `useState` for component-local state
-- **Custom Hooks**: Extract reusable logic into custom hooks
-- **Context API**: Use Context for global state when needed
-- **React Query (Optional)**: Consider for advanced data fetching and caching
+
+- Local State: Use `useState` for component-local state
+- Custom Hooks: Extract reusable logic into custom hooks
+- Context API: Use Context for global state when needed
+- React Query (Optional): Consider for advanced data fetching and caching
 
 ### 3. API Integration
-- **Service Layer**: Separate API calls into service files
-- **Error Handling**: Implement consistent error handling patterns
-- **Loading States**: Track loading states explicitly
-- **TypeScript (Optional)**: Add TypeScript for better type safety
+
+- Service Layer: Separate API calls into service files
+- Error Handling: Implement consistent error handling patterns
+- Loading States: Track loading states explicitly
+- TypeScript (Optional): Add TypeScript for better type safety
 
 ### 4. Routing
-- **React Router**: Use React Router for navigation
-- **Lazy Loading**: Use `React.lazy()` for code splitting
-- **Named Routes**: Consider using named constants for routes
-- **Route Parameters**: Use `useParams` hook for accessing route params
+
+- React Router: Use React Router for navigation
+- Lazy Loading: Use `React.lazy()` for code splitting
+- Named Routes: Consider using named constants for routes
+- Route Parameters: Use `useParams` hook for accessing route params
 
 ### 5. Bootstrap Integration
-- **Import Once**: Import Bootstrap CSS/JS in `main.jsx`
-- **Utility Classes**: Leverage Bootstrap's utility classes
-- **Responsive Grid**: Use Bootstrap's grid system for layouts
-- **Icons**: Consider Bootstrap Icons or other icon libraries
+
+- Import Once: Import Bootstrap CSS/JS in `main.jsx`
+- Utility Classes: Leverage Bootstrap's utility classes
+- Responsive Grid: Use Bootstrap's grid system for layouts
+- Icons: Consider Bootstrap Icons or other icon libraries
 
 ### 6. Performance
-- **Code Splitting**: Use lazy loading for routes and large components
-- **Memoization**: Use `React.memo`, `useMemo`, `useCallback` when appropriate
-- **Terser Minification**: Configured in Vite for production builds
-- **Tree Shaking**: Vite automatically removes unused code
+
+- Code Splitting: Use lazy loading for routes and large components
+- Memoization: Use `React.memo`, `useMemo`, `useCallback` when appropriate
+- Terser Minification: Configured in Vite for production builds
+- Tree Shaking: Vite automatically removes unused code
 
 ### 7. Development Workflow
-- **Hot Module Replacement**: Vite provides instant updates
-- **Environment Variables**: Use `.env` files for configuration
-- **ESLint**: Maintain code quality with ESLint
-- **Component Testing**: Consider Vitest or React Testing Library
+
+- Hot Module Replacement: Vite provides instant updates
+- Environment Variables: Use `.env` files for configuration
+- ESLint: Maintain code quality with ESLint
+- Component Testing: Consider Vitest or React Testing Library
 
 ### 8. Security
-- **CORS Configuration**: Configure Spring Boot for Vite dev server during development
-- **CSRF Protection**: Handle Spring Security CSRF tokens properly
-- **Input Validation**: Validate user inputs on both client and server
-- **XSS Protection**: React escapes content by default in JSX
+
+- CORS Configuration: Configure Spring Boot for Vite dev server during development
+- CSRF Protection: Handle Spring Security CSRF tokens properly
+- Input Validation: Validate user inputs on both client and server
+- XSS Protection: React escapes content by default in JSX
 
 ## CORS Configuration for Development
 

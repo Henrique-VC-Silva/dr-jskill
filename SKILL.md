@@ -10,9 +10,9 @@ This agent skill helps you create Spring Boot projects following Julien Dubois' 
 
 ## Prerequisites
 
-- Java 21 installed
-- Node.js 22.x and NPM 10.x are installed (when doing front-end development)
-- Docker is installed and running
+1. Java 21 installed
+2. Node.js 22.x and NPM 10.x (for front-end development)
+3. Docker installed and running
 
 ## Capabilities
 - Generate Spring Boot projects with predefined configurations
@@ -28,17 +28,19 @@ This agent skill helps you create Spring Boot projects following Julien Dubois' 
 
 ## Validation
 
-Once the project is generated, this skill MUST:
+Once the project is generated, this skill MUST validate that:
 
-- Validate that the project builds successfully with `./mvnw clean install`
-- Validate that the application starts successfully with `./mvnw spring-boot:run`
-- Validate that the application responds to HTTP requests (e.g. `curl http://localhost:8080/actuator/health` returns `{"status":"UP"}`)
-- Validate that the unit tests run successfully with `./mvnw test`
-- Validate the the integration tests run successfully with `./mvnw verify` (if included)
-- Valide that the front-end assets are correctly bundled and served (e.g. `curl http://localhost:8080/index.html` returns the HTML page)
-- Validate that the Vue.js development server starts successfully with `npm run dev` (if included)
-- Validate that the Docker images build successfully
-- Validate that the GraalVM native image builds successfully with `./mvnw -Pnative native:compile`
+1. The project builds successfully with `./mvnw clean install`
+2. The application starts successfully with `./mvnw spring-boot:run`
+3. The application responds to HTTP requests (e.g. `curl http://localhost:8080/actuator/health` returns `{"status":"UP"}`)
+4. The unit tests run successfully with `./mvnw test`
+5. The integration tests run successfully with `./mvnw verify` (if included)
+6. The front-end assets are correctly bundled and served (e.g. `curl http://localhost:8080/index.html` returns the HTML page)
+7. The Vue.js development server starts successfully with `npm run dev` (if included)
+8. The Docker images build successfully
+9. The GraalVM native image builds successfully with `./mvnw -Pnative native:compile`
+
+Once the project is generated, go through the steps above to ensure that the generated project is fully functional and follows best practices. If any validation step fails, try to identify the issue and fix it before proceeding. This ensures that the generated project is of high quality and ready for development.
 
 ## Usage
 
@@ -75,19 +77,21 @@ Use the `create-fullstack-project.sh` script to create a comprehensive Spring Bo
 ```
 
 ## Best Practices
-- Use the latest Spring Boot version for new projects (currently 4.x)
-- Use the `create-project-latest.sh` script to automatically get the latest version
-- **Spring Boot 4 changes**: See [Spring Boot 4 Migration Guide](references/SPRING-BOOT-4.md) for critical considerations (Jackson 3 annotations, TestContainers configuration)
-- Use Spring Boot Actuator for production-ready features
-- Use Spring Data JPA for database access
-- Use PostgreSQL for database (see [Database Best Practices](references/DATABASE.md) for optimization)
-- Use `spring-boot-docker-compose` for automatic database startup during development (see [Docker Guide](references/DOCKER.md))
-- Follow RESTful API design principles
-- Use proper logging with Logback (see [Logging Best Practices](references/LOGGING.md))
-- Use Maven for dependency management
-- Add Spring Boot DevTools
-- Use Docker for containerized deployments
-- Configure GraalVM native image support
+
+When creating Spring Boot projects:
+
+1. Use the latest Spring Boot version (currently 4.x) - the `create-project-latest.sh` script automatically fetches it
+2. **Review Spring Boot 4 critical considerations**: See [Spring Boot 4 Migration Guide](references/SPRING-BOOT-4.md) for Jackson 3 annotations and TestContainers configuration
+3. Include Spring Boot Actuator for production-ready features
+4. Use Spring Data JPA for database access
+5. Use PostgreSQL for database - see [Database Best Practices](references/DATABASE.md) for optimization
+6. Use `spring-boot-docker-compose` for automatic database startup during development - see [Docker Guide](references/DOCKER.md)
+7. Follow RESTful API design principles
+8. Configure proper logging with Logback - see [Logging Best Practices](references/LOGGING.md)
+9. Use Maven for dependency management
+10. Include Spring Boot DevTools for development productivity
+11. Configure Docker for containerized deployments
+12. Enable GraalVM native image support
 
 ## Project Structure
 
@@ -132,16 +136,18 @@ my-spring-boot-app/
 ```
 
 ## Dependencies
+
 Common dependencies included in generated projects:
-- Spring Web (for REST APIs)
-- Spring Data JPA (for database access)
-- Spring Boot Actuator (for monitoring)
-- Spring Boot DevTools (for development productivity)
-- PostgreSQL Driver (for database)
-- Validation (for bean validation)
-- Spring Boot Docker Compose (for automatic PostgreSQL startup during development)
-- Spring Boot Test Starter (for testing with JUnit 5 and Mockito)
-- TestContainers (for integration tests with PostgreSQL)
+
+1. Spring Web - REST APIs
+2. Spring Data JPA - Database access
+3. Spring Boot Actuator - Monitoring and health checks
+4. Spring Boot DevTools - Development productivity
+5. PostgreSQL Driver - Database connectivity
+6. Validation - Bean validation
+7. Spring Boot Docker Compose - Automatic PostgreSQL startup during development
+8. Spring Boot Test Starter - Testing with JUnit 5 and Mockito
+9. TestContainers - Integration tests with PostgreSQL
 
 ## Configuration
 
@@ -174,24 +180,28 @@ For full-stack applications with databases, Spring Boot 4 can automatically mana
 **For complete setup and configuration**, see the [Docker Guide](references/DOCKER.md) section on "Development with Automatic Docker Compose Support".
 
 ## Testing
+
 For comprehensive testing best practices, see the [Testing Guide](references/TEST.md).
 
-Key highlights:
-- Unit tests with Mockito for isolated component testing
-- `@WebMvcTest` for controller unit tests
-- Integration tests with TestContainers for PostgreSQL
-- REST API integration tests with real database
-- Given-When-Then test structure
-- AssertJ for fluent assertions
+Key features:
+
+1. Unit tests with Mockito for isolated component testing
+2. `@WebMvcTest` for controller unit tests
+3. Integration tests with TestContainers for PostgreSQL
+4. REST API integration tests with real database
+5. Given-When-Then test structure
+6. AssertJ for fluent assertions
 
 ## Front-End Development
 
 This skill supports multiple front-end framework options. Choose the one that best fits your project requirements:
 
 ### Vue.js (Default) ⭐
+
 For detailed instructions, see the [Vue.js Development Guide](references/VUE.md).
 
-Key highlights:
+Key features:
+
 - Vue.js 3 with Composition API
 - Vite for development server with hot reload
 - Pinia for state management
@@ -200,9 +210,11 @@ Key highlights:
 - Production builds minified and bundled into Spring Boot JAR
 
 ### React
+
 For detailed instructions, see the [React Development Guide](references/REACT.md).
 
-Key highlights:
+Key features:
+
 - React 18 with hooks and functional components
 - Vite for fast development with hot reload
 - Custom hooks for reusable logic
@@ -211,9 +223,11 @@ Key highlights:
 - Production builds optimized and bundled into Spring Boot JAR
 
 ### Angular
+
 For detailed instructions, see the [Angular Development Guide](references/ANGULAR.md).
 
-Key highlights:
+Key features:
+
 - Angular 19 with standalone components
 - Angular CLI for development and build tooling
 - TypeScript by default for type safety
@@ -223,9 +237,11 @@ Key highlights:
 - Production builds optimized and bundled into Spring Boot JAR
 
 ### Vanilla JavaScript
+
 For detailed instructions, see the [Vanilla JS Development Guide](references/VANILLA-JS.md).
 
-Key highlights:
+Key features:
+
 - No framework - pure ES6+ JavaScript
 - Vite for modern development experience
 - Custom client-side routing
@@ -234,21 +250,24 @@ Key highlights:
 - Production builds minified and bundled into Spring Boot JAR
 
 **All front-end options include:**
-- Hot reload during development
-- RESTful API integration patterns
-- Bootstrap 5.3+ for responsive UI
-- Automatic build and bundle into Spring Boot JAR
-- SPA routing with HTML5 history mode
-- CORS configuration for development
+
+1. Hot reload during development
+2. RESTful API integration patterns
+3. Bootstrap 5.3+ for responsive UI
+4. Automatic build and bundle into Spring Boot JAR
+5. SPA routing with HTML5 history mode
+6. CORS configuration for development
 
 ## Docker Deployment
+
 For comprehensive Docker deployment instructions, see the [Docker Guide](references/DOCKER.md).
 
-Key highlights:
-- Automatic PostgreSQL startup during development with `spring-boot-docker-compose`
-- Standard JVM deployment with `Dockerfile`
-- GraalVM native images with `Dockerfile-native`
-- PostgreSQL integration with `docker-compose.yml`
+Key features:
+
+1. Automatic PostgreSQL startup during development with `spring-boot-docker-compose`
+2. Standard JVM deployment with `Dockerfile`
+3. GraalVM native images with `Dockerfile-native`
+4. PostgreSQL integration with `docker-compose.yml`
 
 ### Development Mode (Automatic)
 ```bash
@@ -273,15 +292,15 @@ Build native image locally:
 ./mvnw -Pnative native:compile
 ```
 
-## Deploying in production to Azure
+## Azure Deployment
 
-For deploying in production to Azure, see the [Azure Deployment Guide](references/AZURE.md).
+For production deployment to Azure, see the [Azure Deployment Guide](references/AZURE.md).
 
-Key highlights:
+Key features:
 
-- Use Azure Container Apps for containerized deployments
-- Use Azure Database for PostgreSQL for managed database service if needed
-- Uses the Azure CLI for deployment and management
+1. Azure Container Apps for containerized deployments
+2. Azure Database for PostgreSQL for managed database service
+3. Azure CLI for deployment and management
 
 ## Additional Resources
 - [Spring Boot Documentation](https://spring.io/projects/spring-boot)

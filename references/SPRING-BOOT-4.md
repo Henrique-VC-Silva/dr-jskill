@@ -11,22 +11,24 @@ This guide covers the key changes in Spring Boot 4.0 and what to consider when c
 ## System Requirements
 
 ### Minimum Requirements
-- **Java:** 17+ (Java 21+ LTS recommended for production)
-- **Kotlin:** 2.2+ (if using Kotlin)
-- **GraalVM:** 25+ (for native images)
-- **Jakarta EE:** 11 baseline (Servlet 6.1+)
-- **Maven:** 3.8+
-- **Gradle:** 8.14+ or 9.x
+
+1. Java: 17+ (Java 21+ LTS recommended for production)
+2. Kotlin: 2.2+ (if using Kotlin)
+3. GraalVM: 25+ (for native images)
+4. Jakarta EE: 11 baseline (Servlet 6.1+)
+5. Maven: 3.8+
+6. Gradle: 8.14+ or 9.x
 
 ### Key Version Upgrades
-- Spring Framework 7.0
-- Spring Data 2025.1
-- Spring Security 7.0
-- Hibernate 7.1
-- TestContainers 2.0
-- Jackson 3.0
-- Tomcat 11.0
-- Jetty 12.1
+
+1. Spring Framework 7.0
+2. Spring Data 2025.1
+3. Spring Security 7.0
+4. Hibernate 7.1
+5. TestContainers 2.0
+6. Jackson 3.0
+7. Tomcat 11.0
+8. Jetty 12.1
 
 ## Critical Considerations When Creating Spring Boot 4 Projects
 
@@ -136,14 +138,16 @@ class ApplicationTests {
 ```
 
 #### Test Starter Changes
-- `@SpringBootTest` no longer provides MockMVC automatically - add `@AutoConfigureMockMvc`
-- `@SpringBootTest` no longer provides `TestRestTemplate` - add `@AutoConfigureTestRestTemplate`
-- Consider using new `RestTestClient` instead of `TestRestTemplate`
+
+1. `@SpringBootTest` no longer provides MockMVC automatically - add `@AutoConfigureMockMvc`
+2. `@SpringBootTest` no longer provides `TestRestTemplate` - add `@AutoConfigureTestRestTemplate`
+3. Consider using new `RestTestClient` instead of `TestRestTemplate`
 
 #### TestContainers 2.0
-- **Required version:** TestContainers 2.0+
-- Enhanced performance and resource management
-- Works seamlessly with `@ServiceConnection` annotation
+
+1. Required version: TestContainers 2.0+
+2. Enhanced performance and resource management
+3. Works seamlessly with `@ServiceConnection` annotation
 
 ### 3. Removed Features
 
@@ -153,11 +157,12 @@ class ApplicationTests {
 - No migration path currently available
 
 #### Other Removals
-- Embedded executable jar launch scripts
-- Pulsar Reactive support
-- Spring Session Hazelcast (now maintained by Hazelcast team)
-- Spring Session MongoDB (now maintained by MongoDB team)
-- Spock integration (waiting for Groovy 5 support)
+
+1. Embedded executable jar launch scripts
+2. Pulsar Reactive support
+3. Spring Session Hazelcast (now maintained by Hazelcast team)
+4. Spring Session MongoDB (now maintained by MongoDB team)
+5. Spock integration (waiting for Groovy 5 support)
 
 ### 4. Jackson 2 to Jackson 3 Migration
 

@@ -6,14 +6,16 @@ This guide covers creating front-end applications for Spring Boot using Angular 
 ## Architecture
 
 **Development Mode:**
-- Angular dev server runs on port 4200 with hot reload
-- Proxies API calls to Spring Boot backend on port 8080
-- Fast incremental builds
+
+1. Angular dev server runs on port 4200 with hot reload
+2. Proxies API calls to Spring Boot backend on port 8080
+3. Fast incremental builds
 
 **Production Mode:**
-- Angular app built and minified
-- Static assets copied to `src/main/resources/static`
-- Served directly by Spring Boot
+
+1. Angular app built and minified
+2. Static assets copied to `src/main/resources/static`
+3. Served directly by Spring Boot
 
 ## Project Structure
 
@@ -772,52 +774,60 @@ This controller ensures that refreshing the browser on any Angular route (e.g., 
 ## Best Practices
 
 ### 1. Component Organization
-- **Standalone Components**: Use standalone components (Angular 14+)
-- **Component Naming**: Use kebab-case for file names (e.g., `item-card.component.ts`)
-- **TypeScript**: Leverage TypeScript's type safety
-- **Single Responsibility**: Each component should have a single purpose
+
+- Standalone Components: Use standalone components (Angular 14+)
+- Component Naming: Use kebab-case for file names (e.g., `item-card.component.ts`)
+- TypeScript: Leverage TypeScript's type safety
+- Single Responsibility: Each component should have a single purpose
 
 ### 2. State Management
-- **Services**: Use services for state management
-- **RxJS**: Leverage Observables for reactive programming
-- **NgRx (Optional)**: Consider NgRx for complex state management
-- **Signals (New)**: Consider Angular Signals for simpler state
+
+- Services: Use services for state management
+- RxJS: Leverage Observables for reactive programming
+- NgRx (Optional): Consider NgRx for complex state management
+- Signals (New): Consider Angular Signals for simpler state
 
 ### 3. API Integration
-- **HttpClient**: Use Angular's HttpClient for API calls
-- **Services**: Separate API calls into injectable services
-- **Error Handling**: Implement consistent error handling with RxJS operators
-- **Interceptors**: Use HTTP interceptors for auth, errors, etc.
+
+- HttpClient: Use Angular's HttpClient for API calls
+- Services: Separate API calls into injectable services
+- Error Handling: Implement consistent error handling with RxJS operators
+- Interceptors: Use HTTP interceptors for auth, errors, etc.
 
 ### 4. Routing
-- **RouterModule**: Use Angular Router for navigation
-- **Lazy Loading**: Use `loadChildren` for route-based code splitting
-- **Route Guards**: Implement guards for authentication and authorization
-- **Route Parameters**: Use `ActivatedRoute` for accessing route params
+
+- RouterModule: Use Angular Router for navigation
+- Lazy Loading: Use `loadChildren` for route-based code splitting
+- Route Guards: Implement guards for authentication and authorization
+- Route Parameters: Use `ActivatedRoute` for accessing route params
 
 ### 5. Bootstrap Integration
-- **Import in angular.json**: Add Bootstrap to styles and scripts arrays
-- **Utility Classes**: Leverage Bootstrap's utility classes
-- **Responsive Grid**: Use Bootstrap's grid system for layouts
-- **Icons**: Consider Bootstrap Icons or Angular Material Icons
+
+- Import in angular.json: Add Bootstrap to styles and scripts arrays
+- Utility Classes: Leverage Bootstrap's utility classes
+- Responsive Grid: Use Bootstrap's grid system for layouts
+- Icons: Consider Bootstrap Icons or Angular Material Icons
 
 ### 6. Performance
-- **OnPush Change Detection**: Use `ChangeDetectionStrategy.OnPush` for performance
-- **trackBy Functions**: Use trackBy in `*ngFor` to optimize rendering
-- **Lazy Loading**: Lazy load routes and modules
-- **Production Build**: Angular CLI optimizes for production automatically
+
+- OnPush Change Detection: Use `ChangeDetectionStrategy.OnPush` for performance
+- trackBy Functions: Use trackBy in `*ngFor` to optimize rendering
+- Lazy Loading: Lazy load routes and modules
+- Production Build: Angular CLI optimizes for production automatically
 
 ### 7. Development Workflow
-- **Hot Module Replacement**: Angular CLI provides instant updates
-- **Environment Files**: Use environment files for configuration
-- **TypeScript Strict Mode**: Enable strict mode for better type safety
-- **Testing**: Use Jasmine and Karma for unit testing
+
+- Hot Module Replacement: Angular CLI provides instant updates
+- Environment Files: Use environment files for configuration
+- TypeScript Strict Mode: Enable strict mode for better type safety
+- Testing: Use Jasmine and Karma for unit testing
 
 ### 8. Security
-- **CORS Configuration**: Configure Spring Boot for Angular dev server
-- **CSRF Protection**: Handle Spring Security CSRF tokens properly
-- **Input Validation**: Validate user inputs on both client and server
-- **Sanitization**: Angular sanitizes content automatically
+
+- CORS Configuration: Configure Spring Boot for Angular dev server
+- CSRF Protection: Handle Spring Security CSRF tokens properly
+- Input Validation: Validate user inputs on both client and server
+- Sanitization: Angular sanitizes content automatically
 
 ## CORS Configuration for Development
 

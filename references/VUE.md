@@ -6,14 +6,16 @@ This guide covers creating front-end applications for Spring Boot using Vue.js 3
 ## Architecture
 
 **Development Mode:**
-- Vite dev server runs on port 5173 with hot reload
-- Proxies API calls to Spring Boot backend on port 8080
-- Fast HMR (Hot Module Replacement)
+
+1. Vite dev server runs on port 5173 with hot reload
+2. Proxies API calls to Spring Boot backend on port 8080
+3. Fast HMR (Hot Module Replacement)
 
 **Production Mode:**
-- Vue.js app built and minified by Vite
-- Static assets copied to `src/main/resources/static`
-- Served directly by Spring Boot
+
+1. Vue.js app built and minified by Vite
+2. Static assets copied to `src/main/resources/static`
+3. Served directly by Spring Boot
 
 ## Project Structure
 
@@ -846,52 +848,60 @@ This controller ensures that refreshing the browser on any Vue.js route (e.g., `
 ## Best Practices
 
 ### 1. Component Organization
-- **Single File Components (SFC)**: Use `.vue` files with `<template>`, `<script>`, and `<style>` sections
-- **Composition API**: Prefer `<script setup>` for cleaner, more maintainable code
-- **Component Naming**: Use PascalCase for component names (e.g., `ItemCard.vue`)
-- **Props Validation**: Always define prop types and requirements
+
+- Single File Components (SFC): Use `.vue` files with `<template>`, `<script>`, and `<style>` sections
+- Composition API: Prefer `<script setup>` for cleaner, more maintainable code
+- Component Naming: Use PascalCase for component names (e.g., `ItemCard.vue`)
+- Props Validation: Always define prop types and requirements
 
 ### 2. State Management
-- **Pinia Stores**: Use Pinia for application state
-- **Store Organization**: One store per domain entity (e.g., `itemStore.js`, `userStore.js`)
-- **Composition API Style**: Use `ref()` and `computed()` in stores
-- **Actions for API Calls**: Keep API logic in store actions
+
+- Pinia Stores: Use Pinia for application state
+- Store Organization: One store per domain entity (e.g., `itemStore.js`, `userStore.js`)
+- Composition API Style: Use `ref()` and `computed()` in stores
+- Actions for API Calls: Keep API logic in store actions
 
 ### 3. API Integration
-- **Service Layer**: Separate API calls into service files (e.g., `itemService.js`)
-- **Error Handling**: Implement consistent error handling patterns
-- **Loading States**: Track loading states in stores
-- **TypeScript (Optional)**: Add TypeScript for better type safety
+
+- Service Layer: Separate API calls into service files (e.g., `itemService.js`)
+- Error Handling: Implement consistent error handling patterns
+- Loading States: Track loading states in stores
+- TypeScript (Optional): Add TypeScript for better type safety
 
 ### 4. Routing
-- **Lazy Loading**: Use dynamic imports for route components to reduce initial bundle size
-- **Route Guards**: Implement navigation guards for authentication
-- **Named Routes**: Use named routes instead of path strings
-- **Props Mode**: Pass route params as props to components
+
+- Lazy Loading: Use dynamic imports for route components to reduce initial bundle size
+- Route Guards: Implement navigation guards for authentication
+- Named Routes: Use named routes instead of path strings
+- Props Mode: Pass route params as props to components
 
 ### 5. Bootstrap Integration
-- **Import Once**: Import Bootstrap CSS/JS in `main.js`
-- **Utility Classes**: Leverage Bootstrap's utility classes
-- **Responsive Grid**: Use Bootstrap's grid system for layouts
-- **Icons**: Consider Bootstrap Icons with `npm install bootstrap-icons`
+
+- Import Once: Import Bootstrap CSS/JS in `main.js`
+- Utility Classes: Leverage Bootstrap's utility classes
+- Responsive Grid: Use Bootstrap's grid system for layouts
+- Icons: Consider Bootstrap Icons with `npm install bootstrap-icons`
 
 ### 6. Performance
-- **Code Splitting**: Use lazy-loaded routes for better initial load times
-- **Terser Minification**: Configured in Vite for production builds
-- **Tree Shaking**: Vite automatically removes unused code
-- **Asset Optimization**: Vite optimizes images and fonts automatically
+
+- Code Splitting: Use lazy-loaded routes for better initial load times
+- Terser Minification: Configured in Vite for production builds
+- Tree Shaking: Vite automatically removes unused code
+- Asset Optimization: Vite optimizes images and fonts automatically
 
 ### 7. Development Workflow
-- **Hot Module Replacement**: Vite provides instant updates during development
-- **Environment Variables**: Use `.env` files for configuration
-- **ESLint + Prettier**: Maintain code quality and consistent formatting
-- **Component Testing**: Use Vitest for unit testing Vue components
+
+- Hot Module Replacement: Vite provides instant updates during development
+- Environment Variables: Use `.env` files for configuration
+- ESLint + Prettier: Maintain code quality and consistent formatting
+- Component Testing: Use Vitest for unit testing Vue components
 
 ### 8. Security
-- **CORS Configuration**: Configure Spring Boot to allow Vite dev server during development
-- **CSRF Protection**: Ensure Spring Security CSRF tokens are properly handled
-- **Input Validation**: Validate user inputs on both client and server
-- **Sanitization**: Sanitize data before rendering (Vue does this automatically for text)
+
+- CORS Configuration: Configure Spring Boot to allow Vite dev server during development
+- CSRF Protection: Ensure Spring Security CSRF tokens are properly handled
+- Input Validation: Validate user inputs on both client and server
+- Sanitization: Sanitize data before rendering (Vue does this automatically for text)
 
 ## CORS Configuration for Development
 

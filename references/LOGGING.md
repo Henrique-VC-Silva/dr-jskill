@@ -6,11 +6,12 @@ This guide covers logging best practices for Spring Boot applications using Logb
 ## Why Logback?
 
 Logback is the default logging implementation in Spring Boot and is the only framework we use:
-- **Native support** in Spring Boot (no additional dependencies)
-- **Better performance** than alternatives
-- **Automatic configuration** with sensible defaults
-- **Simple XML configuration**
-- **Advanced features** like async logging and rolling file appenders
+
+1. Native support in Spring Boot (no additional dependencies)
+2. Better performance than alternatives
+3. Automatic configuration with sensible defaults
+4. Simple XML configuration
+5. Advanced features like async logging and rolling file appenders
 
 ## Basic Configuration
 
@@ -102,11 +103,12 @@ log.info("Order " + orderId + " processed in " + duration + "ms");
 ### 2. Never Log Sensitive Information
 
 **❌ Never log:**
-- Passwords or credentials
-- Credit card numbers
-- API keys or tokens
-- Social security numbers
-- Personal identifiable information (PII)
+
+1. Passwords or credentials
+2. Credit card numbers
+3. API keys or tokens
+4. Social security numbers
+5. Personal identifiable information (PII)
 
 **✅ Always sanitize:**
 ```java
