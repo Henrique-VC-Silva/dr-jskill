@@ -1,8 +1,10 @@
-# Spring Boot skill for AI Assistants by Julien Dubois
+# Dr JSkill
 
 **An Agent Skill for creating Spring Boot applications following Julien Dubois' best practices.**
 
 Generate Spring Boot 4.x projects with Java 21, PostgreSQL, Docker support, and your choice of front-end framework (Vue.js, React, Angular, or Vanilla JS).
+
+Dr JSkill is an agent skill: it is meant to work with tools like GitHub Copliot CLI or Claude Code.
 
 ## What This Skill Provides
 
@@ -10,6 +12,18 @@ Generate Spring Boot 4.x projects with Java 21, PostgreSQL, Docker support, and 
 - **Docker-ready** applications with standard and native image builds
 - **Multiple front-end options**: Vue.js (default), React, Angular, or Vanilla JS
 - **Production-ready** configurations with PostgreSQL, REST APIs, and monitoring
+
+## Comparison with JHipster
+
+[JHipster](https://jhipster.tech) is an awesome Spring Boot application generator, also created by Julien Dubois.
+
+Dr JSkill builds on the JHipster experience:
+
+- It generates applications that should be similar to what JHipster creates
+- It is closer to Julien Dubois' tastes, as JHipster is ultimately the work of hundreds of people
+- Dr JSkill is an AI agent: it is not deterministic, it is slower and can cost some money to execute. But it is easier to tune, more versatile, and can update projects easily.
+
+At the moment, Dr JSkill is an experiment. If it is successful, it might join the JHipster organization.
 
 ## Documentation
 
