@@ -28,6 +28,52 @@ This guide covers the key changes in Spring Boot 4.0 and what to consider when c
 - Tomcat 11.0
 - Jetty 12.1
 
+## Critical Considerations When Creating Spring Boot 4 Projects
+
+⚠️ **Two Most Common Mistakes** - Always verify these when generating code:
+
+### 1. Jackson 3 Annotations Stay in `com.fasterxml.jackson.annotation`
+
+**✅ CORRECT - Annotations do NOT change package:**
+```java
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
+```
+
+**❌ WRONG - Do NOT use `tools.jackson.annotation`:**
+```java
+import tools.jackson.annotation.JsonProperty;  // This package doesn't exist!
+```
+
+**Only Jackson API classes change to `tools.jackson`:**
+```java
+import tools.jackson.databind.ObjectMapper;  // ✅ Correct for API classes
+```
+
+See "Jackson 2 to Jackson 3 Migration" section below for complete details.
+
+### 2. TestcontainersConfiguration Must Be Package-Private
+
+**✅ CORRECT - Package-private (no `public` modifier):**
+```java
+@TestConfiguration(proxyBeanMethods = false)
+class TestcontainersConfiguration {  // No public!
+    // ...
+}
+```
+
+**❌ WRONG - Public modifier:**
+```java
+public class TestcontainersConfiguration {  // Wrong!
+    // ...
+}
+```
+
+This is a Spring Boot 4 requirement for test configurations. See "Testing Changes" section below for more details.
+
+---
+
 ## Major Changes from Spring Boot 3
 
 ### 1. Modular Architecture

@@ -23,6 +23,83 @@ This guide covers Docker deployment for Spring Boot 4 applications, including bo
 - Docker Compose (included with Docker Desktop)
 - Spring Boot application with Maven build configuration
 
+## Development with Automatic Docker Compose Support
+
+Spring Boot 4 includes the `spring-boot-docker-compose` dependency that automatically manages Docker containers during development. No more manual `docker compose up` commands!
+
+### How It Works
+
+When you run `./mvnw spring-boot:run`, Spring Boot will:
+1. Detect the `compose.yaml` or `docker-compose.yml` file in your project root
+2. Automatically start the PostgreSQL container defined in the compose file
+3. Configure the datasource connection automatically
+4. Stop the container when the application shuts down
+
+### Setup
+
+Create a `compose.yaml` file in your project root (or copy from `assets/compose.yaml`):
+
+```yaml
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+```
+
+### Usage
+
+```bash
+# Just run your application - PostgreSQL starts automatically!
+./mvnw spring-boot:run
+```
+
+**No manual `docker compose up` needed!** Spring Boot handles container lifecycle automatically during development.
+
+### Configuration
+
+Add the dependency to your `pom.xml` (included by default in full-stack projects):
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-docker-compose</artifactId>
+    <scope>runtime</scope>
+    <optional>true</optional>
+</dependency>
+```
+
+You can customize behavior in `application.properties`:
+
+```properties
+# Disable Docker Compose support
+spring.docker.compose.enabled=false
+
+# Keep containers running after application stops (useful for debugging)
+spring.docker.compose.lifecycle-management=start-only
+
+# Specify custom compose file location
+spring.docker.compose.file=docker/compose-dev.yaml
+```
+
+**Benefits:**
+- ✅ No manual container management during development
+- ✅ Automatic datasource configuration
+- ✅ Containers start only when needed
+- ✅ Automatic cleanup on application stop (configurable)
+- ✅ Works with PostgreSQL, MySQL, MongoDB, Redis, and more
+
+**Note:** This is for development only. For production deployment, see the sections below.
+
 ## Available Docker Files
 
 ### 1. Dockerfile (JVM-based)

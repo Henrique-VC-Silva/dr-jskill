@@ -77,59 +77,17 @@ Use the `create-fullstack-project.sh` script to create a comprehensive Spring Bo
 ## Best Practices
 - Use the latest Spring Boot version for new projects (currently 4.x)
 - Use the `create-project-latest.sh` script to automatically get the latest version
-- **Spring Boot 4 changes**: See [Spring Boot 4 Migration Guide](references/SPRING-BOOT-4.md) for key differences from Spring Boot 3
+- **Spring Boot 4 changes**: See [Spring Boot 4 Migration Guide](references/SPRING-BOOT-4.md) for critical considerations (Jackson 3 annotations, TestContainers configuration)
 - Use Spring Boot Actuator for production-ready features
 - Use Spring Data JPA for database access
 - Use PostgreSQL for database (see [Database Best Practices](references/DATABASE.md) for optimization)
-- Use `spring-boot-docker-compose` for automatic database startup during development
+- Use `spring-boot-docker-compose` for automatic database startup during development (see [Docker Guide](references/DOCKER.md))
 - Follow RESTful API design principles
 - Use proper logging with Logback (see [Logging Best Practices](references/LOGGING.md))
 - Use Maven for dependency management
 - Add Spring Boot DevTools
 - Use Docker for containerized deployments
 - Configure GraalVM native image support
-
-## Critical Spring Boot 4 Considerations
-
-When generating or modifying Spring Boot 4 applications, **ALWAYS** verify:
-
-### 1. Jackson 3 Annotations (Common Mistake!)
-**✅ CORRECT - Annotations stay in `com.fasterxml.jackson.annotation` package:**
-```java
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonFormat;
-```
-
-**❌ WRONG - Do NOT use `tools.jackson.annotation`:**
-```java
-import tools.jackson.annotation.JsonProperty;  // This package doesn't exist!
-```
-
-**Only Jackson API classes change to `tools.jackson`:**
-```java
-import tools.jackson.databind.ObjectMapper;  // ✅ Correct for API classes
-```
-
-See [Spring Boot 4 Migration Guide](references/SPRING-BOOT-4.md) for complete Jackson 3 details.
-
-### 2. TestcontainersConfiguration Must Be Package-Private
-**✅ CORRECT - Package-private (no `public` modifier):**
-```java
-@TestConfiguration(proxyBeanMethods = false)
-class TestcontainersConfiguration {  // No public!
-    // ...
-}
-```
-
-**❌ WRONG - Public modifier:**
-```java
-public class TestcontainersConfiguration {  // Wrong!
-    // ...
-}
-```
-
-See [Testing Best Practices](references/TEST.md) for complete TestContainers patterns.
 
 ## Project Structure
 
@@ -209,58 +167,11 @@ management.endpoints.web.exposure.include=health,info,metrics
 
 **For advanced database configuration and performance optimization**, see the [Database Best Practices Guide](references/DATABASE.md). It covers connection pooling, query optimization, transaction management, locking strategies, and PostgreSQL-specific optimizations based on Vlad Mihalcea's best practices.
 
-## Automatic Docker Compose Support
+## Development with Docker Compose
 
-For full-stack applications with databases, the `spring-boot-docker-compose` dependency is included to automatically start PostgreSQL during development.
+For full-stack applications with databases, Spring Boot 4 can automatically manage Docker containers during development. Simply run `./mvnw spring-boot:run` and PostgreSQL starts automatically - no manual `docker compose up` needed!
 
-### How It Works
-
-When you run `./mvnw spring-boot:run`, Spring Boot will:
-1. Detect the `compose.yaml` or `docker-compose.yml` file in your project root
-2. Automatically start the PostgreSQL container defined in the compose file
-3. Configure the datasource connection automatically
-4. Stop the container when the application shuts down
-
-### Setup
-
-Create a `compose.yaml` file in your project root (or copy from `assets/compose.yaml`):
-
-```yaml
-services:
-  postgres:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_DB: mydb
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-volumes:
-  postgres_data:
-```
-
-### Usage
-
-```bash
-# Just run your application - PostgreSQL starts automatically!
-./mvnw spring-boot:run
-```
-
-**No manual `docker compose up` needed!** Spring Boot handles container lifecycle automatically during development.
-
-### Configuration
-You can disable automatic startup if needed:
-
-```properties
-# Disable Docker Compose support
-spring.docker.compose.enabled=false
-
-# Keep containers running after application stops (useful for debugging)
-spring.docker.compose.lifecycle-management=start-only
-```
+**For complete setup and configuration**, see the [Docker Guide](references/DOCKER.md) section on "Development with Automatic Docker Compose Support".
 
 ## Testing
 For comprehensive testing best practices, see the [Testing Guide](references/TEST.md).
