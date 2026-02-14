@@ -136,7 +136,7 @@ See [Testing Best Practices](references/TEST.md) for complete TestContainers pat
 The service layer is only included if it adds value (e.g. complex business logic). For simple CRUD applications, the controller can directly call the repository.
 
 Generated projects follow the following recommended structure:
-```
+```plaintext
 my-spring-boot-app/
 ├── src/
 │   ├── main/
@@ -164,7 +164,8 @@ my-spring-boot-app/
 │               ├── controller/
 │               ├── service/         # Only included if needed
 │               ├── repository/
-│               └── domain/├── Dockerfile                   # Standard JVM Docker build
+│               └── domain/
+├── Dockerfile                   # Standard JVM Docker build
 ├── Dockerfile-native            # GraalVM native image build
 ├── docker-compose.yml           # Full stack with PostgreSQL
 ├── docker-compose-native.yml    # Native image with PostgreSQL
@@ -251,7 +252,6 @@ volumes:
 **No manual `docker compose up` needed!** Spring Boot handles container lifecycle automatically during development.
 
 ### Configuration
-
 You can disable automatic startup if needed:
 
 ```properties
