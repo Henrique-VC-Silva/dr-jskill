@@ -143,5 +143,7 @@ This skill follows the [Agent Skills specification](https://agentskills.io/speci
 
 ## License
 
+This project is licensed under the Apache License 2.0.
+
 See [LICENSE](LICENSE) file for details.
 
