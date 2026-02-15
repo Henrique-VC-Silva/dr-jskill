@@ -80,13 +80,13 @@ Configure skills for GitHub Copilot CLI by placing them in the skills directory:
 
 2. Clone or copy this skill to the skills directory:
    ```bash
-   git clone <repository-url> ~/.github-copilot/skills/jdubois-skill
-   # Or copy: cp -r /path/to/jdubois-skill ~/.github-copilot/skills/
+   git clone <repository-url> ~/.github-copilot/skills/dr-jskill
+   # Or copy: cp -r /path/to/dr-jskill ~/.github-copilot/skills/
    ```
 
 3. Use GitHub Copilot CLI as usual - the skill will be automatically loaded:
    ```bash
-   gh copilot suggest "create an application using the jdubois-skill"
+   gh copilot suggest "create an application using the dr-jskill"
    ```
 
 The skill will be available for all `gh copilot` commands.
@@ -101,7 +101,7 @@ The skill will be available for all `gh copilot` commands.
    {
      "github.copilot.chat.codeGeneration.instructions": [
        {
-         "file": "/absolute/path/to/jdubois-skill/SKILL.md"
+         "file": "/absolute/path/to/dr-jskill/SKILL.md"
        }
      ]
    }
@@ -118,7 +118,7 @@ Skills are automatically discovered from configured skill directories.
 
 1. Clone or copy this skill to a directory on your system:
    ```bash
-   git clone <repository-url> ~/skills/jdubois-skill
+   git clone <repository-url> ~/skills/dr-jskill
    ```
 
 2. Configure the skills directory in VS Code Settings:
