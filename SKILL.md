@@ -153,252 +153,44 @@ my-spring-boot-app/
 
 ## Dependencies
 
-Common dependencies included in generated projects:
-
-1. Spring Web - REST APIs
-2. Spring Data JPA - Database access
-3. Spring Boot Actuator - Monitoring and health checks
-4. Spring Boot DevTools - Development productivity
-5. PostgreSQL Driver - Database connectivity
-6. Validation - Bean validation
-7. Spring Boot Docker Compose - Automatic PostgreSQL startup during development
-8. Spring Boot Test Starter - Testing with JUnit 5 and Mockito
-9. TestContainers - Integration tests with PostgreSQL
+Generated projects include: Spring Web, Spring Data JPA, Spring Boot Actuator, DevTools, PostgreSQL, Validation, Docker Compose support, Test Starter with JUnit 5, and TestContainers.
 
 ## Configuration
 
-For comprehensive configuration best practices, see the [Configuration Guide](references/CONFIGURATION.md).
+Use `.properties` files (not YAML), externalize secrets via environment variables, and leverage `@ConfigurationProperties` for type safety. See the [Configuration Guide](references/CONFIGURATION.md) for profiles, secrets management, and common patterns.
 
-**Key Principles:**
-
-1. **Use Properties Files** (not YAML) for better IDE support and readability
-2. **Externalize Configuration** with environment variables for portability
-3. **Never Commit Secrets** to version control
-4. **Use Profiles** for environment-specific settings (dev, test, prod)
-5. **Type-Safe Configuration** with `@ConfigurationProperties` classes
-
-### Application Properties
-
-Basic configuration example:
-
-```properties
-# Server configuration
-server.port=8080
-
-# Database configuration
-spring.datasource.url=jdbc:postgresql://localhost:5432/mydb
-spring.datasource.username=user
-spring.datasource.password=${DATABASE_PASSWORD}
-
-# JPA configuration
-spring.jpa.hibernate.ddl-auto=validate
-spring.jpa.show-sql=false
-
-# Actuator configuration
-management.endpoints.web.exposure.include=health,info,metrics
-```
-
-**See the [Configuration Guide](references/CONFIGURATION.md) for:**
-- Profile-specific properties files
-- Environment variable management
-- Secrets management (local and production)
-- Type-safe `@ConfigurationProperties` classes
-- Common configuration patterns
-- Testing configuration
-
-**For database configuration and performance optimization**, see the [Database Best Practices Guide](references/DATABASE.md).
+**For database optimization**, see the [Database Best Practices Guide](references/DATABASE.md).
 
 ## Security (Optional)
 
-Spring Security is **optional** - only add it when you need authentication and authorization.
-
-For complete security implementation guide, see the [Security Guide](references/SECURITY.md).
-
-**When to Add Spring Security:**
-
-✅ Add when you need:
-- User authentication (login/logout)
-- API authentication (JWT, OAuth2)
-- Role-based access control
-- Protection against common vulnerabilities
-
-❌ Don't add if:
-- Building a simple public API
-- Creating a prototype
-- No authentication requirements
-
-**See the [Security Guide](references/SECURITY.md) for:**
-- Basic security configuration with Spring Boot 4
-- Database-backed user authentication
-- JWT authentication for REST APIs
-- OAuth2 and social login
-- Role-based authorization with `@PreAuthorize`
-- CORS configuration
-- Security best practices and testing
-
-## Development with Docker Compose
-
-For full-stack applications with databases, Spring Boot 4 can automatically manage Docker containers during development. Simply run `./mvnw spring-boot:run` and PostgreSQL starts automatically - no manual `docker compose up` needed!
-
-**For complete setup and configuration**, see the [Docker Guide](references/DOCKER.md) section on "Development with Automatic Docker Compose Support".
+Spring Security is **optional** - only add it when you need authentication or authorization. See the [Security Guide](references/SECURITY.md) for JWT, OAuth2, role-based access, and CORS configuration.
 
 ## Testing
 
-For comprehensive testing best practices, see the [Testing Guide](references/TEST.md).
-
-Key features:
-
-1. Unit tests with Mockito for isolated component testing
-2. `@WebMvcTest` for controller unit tests (import from `org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest`; ensure `spring-boot-starter-test` present)
-3. Integration tests with TestContainers for PostgreSQL
-4. REST API integration tests with real database
-5. Given-When-Then test structure
-6. AssertJ for fluent assertions
+See the [Testing Guide](references/TEST.md) for unit tests (Mockito, `@WebMvcTest`), integration tests (TestContainers + `@ServiceConnection`), and Given-When-Then patterns with AssertJ.
 
 ## Front-End Development
 
-This skill supports multiple front-end framework options. Choose the one that best fits your project requirements:
+Choose a front-end framework:
 
-### Vue.js (Default) ⭐
+- **Vue.js 3** (default) ⭐ → [Vue.js Guide](references/VUE.md)
+- **React 18** → [React Guide](references/REACT.md)
+- **Angular 19** → [Angular Guide](references/ANGULAR.md)
+- **Vanilla JavaScript** (no framework) → [Vanilla JS Guide](references/VANILLA-JS.md)
 
-For detailed instructions, see the [Vue.js Development Guide](references/VUE.md).
-
-Key features:
-
-- Vue.js 3 with Composition API
-- Vite for development server with hot reload
-- Pinia for state management
-- Vue Router for SPA routing
-- Bootstrap 5.3+ for responsive design
-- Production builds minified and bundled into Spring Boot JAR
-
-### React
-
-For detailed instructions, see the [React Development Guide](references/REACT.md).
-
-Key features:
-
-- React 18 with hooks and functional components
-- Vite for fast development with hot reload
-- Custom hooks for reusable logic
-- React Router for navigation
-- Bootstrap 5.3+ for responsive design
-- Production builds optimized and bundled into Spring Boot JAR
-
-### Angular
-
-For detailed instructions, see the [Angular Development Guide](references/ANGULAR.md).
-
-Key features:
-
-- Angular 19 with standalone components
-- Angular CLI for development and build tooling
-- TypeScript by default for type safety
-- RxJS for reactive programming
-- Angular Router for navigation
-- Bootstrap 5.3+ for responsive design
-- Production builds optimized and bundled into Spring Boot JAR
-
-### Vanilla JavaScript
-
-For detailed instructions, see the [Vanilla JS Development Guide](references/VANILLA-JS.md).
-
-Key features:
-
-- No framework - pure ES6+ JavaScript
-- Vite for modern development experience
-- Custom client-side routing
-- Minimal dependencies and bundle size
-- Bootstrap 5.3+ for responsive design
-- Production builds minified and bundled into Spring Boot JAR
-
-**All front-end options include:**
-
-1. Hot reload during development
-2. RESTful API integration patterns
-3. Bootstrap 5.3+ for responsive UI
-4. Automatic build and bundle into Spring Boot JAR
-5. SPA routing with HTML5 history mode
-6. CORS configuration for development
+All options include: Vite/CLI dev server with hot reload, Bootstrap 5.3+, SPA routing, and automatic build into the Spring Boot JAR.
 
 ## Docker Deployment
 
-For comprehensive Docker deployment instructions, see the [Docker Guide](references/DOCKER.md).
-
-**Key Features:**
-
-1. Automatic PostgreSQL startup during development with `spring-boot-docker-compose`
-2. Standard JVM deployment with `Dockerfile`
-3. GraalVM native images with `Dockerfile-native`
-4. PostgreSQL integration with `docker-compose.yml`
-
-### Development Mode (Automatic)
-```bash
-# PostgreSQL starts automatically with your app
-./mvnw spring-boot:run
-```
-
-### Production Deployment
-```bash
-# Standard JVM deployment
-docker compose up -d
-
-# Native image deployment (faster startup)
-docker compose -f docker-compose-native.yml up -d
-```
-
-**See the [Docker Guide](references/DOCKER.md) for:**
-- Automatic Docker Compose support in development
-- Multi-stage Dockerfile best practices
-- Docker Compose configuration for full-stack apps
-- Health checks and monitoring
-- Production deployment patterns
+Spring Boot automatically manages Docker containers during development via `spring-boot-docker-compose`. For production, use the provided `Dockerfile` (JVM) or `Dockerfile-native` (GraalVM). See the [Docker Guide](references/DOCKER.md) for full setup, health checks, and deployment patterns.
 
 ## GraalVM Native Images
 
-For comprehensive GraalVM native image instructions, see the [GraalVM Guide](references/GRAALVM.md).
-
-### Building with Docker (Recommended)
-
-```bash
-# Build native image with Docker
-docker build -f Dockerfile-native -t myapp-native:latest .
-
-# Run the native image
-docker run -p 8080:8080 myapp-native:latest
-
-# Or use Docker Compose
-docker compose -f docker-compose-native.yml up -d
-```
-
-### Building Locally (Optional)
-
-```bash
-# Requires GraalVM 25+ installed locally
-./mvnw -Pnative native:compile
-
-# Run the native executable
-./target/myapp-exec
-```
-
-**See the [GraalVM Guide](references/GRAALVM.md) for:**
-- Docker-based native builds (no local GraalVM needed)
-- Multi-stage Dockerfile for native images
-- Spring Boot native configuration
-- Runtime hints for reflection and resources
-- Performance characteristics and trade-offs
-- Testing and troubleshooting native images
-- CI/CD integration examples
+Build native images via Docker (no local GraalVM needed) or locally with `./mvnw -Pnative native:compile`. See the [GraalVM Guide](references/GRAALVM.md) for configuration, runtime hints, testing, and CI/CD integration.
 
 ## Azure Deployment
 
-For production deployment to Azure, see the [Azure Deployment Guide](references/AZURE.md).
-
-Key features:
-
-1. Azure Container Apps for containerized deployments
-2. Azure Database for PostgreSQL for managed database service
-3. Azure CLI for deployment and management
+Deploy to Azure Container Apps with Azure Database for PostgreSQL. See the [Azure Deployment Guide](references/AZURE.md).
 
 ## Validation
 
@@ -431,16 +223,6 @@ git commit -m "chore: bootstrap with dr-jskill"
 > The provided `assets/gitignore` template ignores `target/`, `frontend/node_modules/`, `.mvn/timing.properties`, IDE files, Testcontainers cache, SBOM outputs, and env files.
 
 ## Additional Resources
-
-### External Documentation
-- [Spring Boot Documentation](https://spring.io/projects/spring-boot)
-- [Spring Initializr](https://start.spring.io)
-- [Julien Dubois](https://www.julien-dubois.com)
-- [Julien Dubois on GitHub](https://github.com/jdubois)
-- [GraalVM Documentation](https://www.graalvm.org/)
-- [Spring Native Documentation](https://docs.spring.io/spring-boot/docs/current/reference/html/native-image.html)
-- [TestContainers Documentation](https://testcontainers.com/)
-- [Spring Security Documentation](https://docs.spring.io/spring-security/reference/)
 
 ### Included Reference Guides
 
