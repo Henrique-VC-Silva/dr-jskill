@@ -140,6 +140,19 @@ Claude Code will automatically discover all skills in the configured directory a
 
 This skill follows the [Agent Skills specification](https://agentskills.io/specification) and works with any compatible AI assistant. Refer to your assistant's documentation for configuration instructions.
 
+## Sample prompt
+
+Here is some example prompt you can use to try out this skill, using the plan mode of your assistant:
+
+```
+Use the Dr JSKill skill to create a new Todo List application.
+
+- Features: add/edit/remove todos
+- A fancy UI with nice effects
+- Data stored in a database
+- No security
+``` 
+
 ## Requirements
 
 - bash, curl, unzip
