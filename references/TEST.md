@@ -1,5 +1,19 @@
 # Spring Boot Testing Best Practices
 
+## Contents
+- [Overview](#overview)
+- [Testing Dependencies](#testing-dependencies)
+- [Testcontainers 2 + @ServiceConnection quickstart](#testcontainers-2--serviceconnection-quickstart)
+- [Unit Tests with Mocks](#unit-tests-with-mocks)
+- [Integration Tests with TestContainers](#integration-tests-with-testcontainers)
+- [Test Naming Conventions](#test-naming-conventions)
+- [Testing Best Practices](#testing-best-practices)
+- [Example Test Structure](#example-test-structure)
+- [Running Tests](#running-tests)
+- [Security Scanning & SBOM (CI-ready)](#security-scanning--sbom-ci-ready)
+- [Additional Resources](#additional-resources)
+- [Spring Boot 4 Migration Notes](#spring-boot-4-migration-notes)
+
 ## Overview
 This guide covers testing best practices for Spring Boot 4.x applications, including unit tests with mocks and integration tests with TestContainers.
 

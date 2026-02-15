@@ -1,5 +1,23 @@
 # Spring Security Best Practices Guide
 
+## Contents
+- [Overview](#overview)
+- [Prerequisites](#prerequisites)
+- [Problem Details (RFC 7807)](#problem-details-rfc-7807)
+- [CORS Configuration (API-only)](#cors-configuration-api-only)
+- [Maven Dependencies](#maven-dependencies)
+- [Basic Security Configuration](#basic-security-configuration)
+- [User Authentication](#user-authentication)
+- [JWT Authentication (REST APIs)](#jwt-authentication-rest-apis)
+- [Authorization](#authorization)
+- [CORS Configuration](#cors-configuration)
+- [OAuth2 and Social Login](#oauth2-and-social-login)
+- [Security Best Practices](#security-best-practices)
+- [Testing Security](#testing-security)
+- [Common Security Patterns](#common-security-patterns)
+- [Security Checklist](#security-checklist)
+- [References](#references)
+
 ## Overview
 This guide covers Spring Security configuration for Spring Boot 4 applications. Spring Security is **optional** - only include it when you need authentication and authorization. This guide provides best practices for common security scenarios.
 

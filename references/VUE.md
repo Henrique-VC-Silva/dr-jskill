@@ -1,5 +1,19 @@
 # Front-End Development with Vue.js for Spring Boot Applications
 
+## Contents
+- [Overview](#overview)
+- [Versions (managed via `versions.json`)](#versions-managed-via-versionsjson)
+- [Architecture](#architecture)
+- [Project Structure](#project-structure)
+- [Setup Instructions](#setup-instructions)
+- [Development Workflow](#development-workflow)
+- [Vue.js Application Structure](#vuejs-application-structure)
+- [Spring Boot SPA Controller](#spring-boot-spa-controller)
+- [Best Practices](#best-practices)
+- [CORS Configuration for Development](#cors-configuration-for-development)
+- [Testing Your Application](#testing-your-application)
+- [Additional Resources](#additional-resources)
+
 ## Overview
 This guide covers creating front-end applications for Spring Boot using **Vue.js 3** and **Vite 5**, with hot reload during development and optimized production builds integrated into the Spring Boot package.
 

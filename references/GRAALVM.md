@@ -1,5 +1,16 @@
 # GraalVM Native Image Guide for Spring Boot Applications
 
+## Contents
+- [Overview](#overview)
+- [Prerequisites](#prerequisites)
+- [Docker-Based Native Builds (Recommended)](#docker-based-native-builds-recommended)
+- [Spring Boot Configuration for Native Images](#spring-boot-configuration-for-native-images)
+- [Testing Native Images](#testing-native-images)
+- [Troubleshooting](#troubleshooting)
+- [Advanced Topics](#advanced-topics)
+- [CI/CD Integration](#cicd-integration)
+- [References](#references)
+
 ## Overview
 This guide covers building GraalVM native images for Spring Boot 4 applications using Docker multi-stage builds. Native images provide significantly faster startup times and lower memory footprint, making them ideal for microservices and serverless deployments.
 

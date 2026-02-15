@@ -1,5 +1,17 @@
 # Database Best Practices (PostgreSQL)
 
+## Contents
+- [Defaults](#defaults)
+- [Spring Boot Configuration](#spring-boot-configuration)
+- [Flyway Structure](#flyway-structure)
+- [Testcontainers Integration](#testcontainers-integration)
+- [Docker Compose (Dev)](#docker-compose-dev)
+- [Production Tips](#production-tips)
+- [Local Developer Experience](#local-developer-experience)
+- [Observability](#observability)
+- [Validation / Checks](#validation--checks)
+- [Troubleshooting](#troubleshooting)
+
 ## Defaults
 - **Engine:** PostgreSQL (preferred version: **16**; configure in `versions.json`).
 - **Migrations:** ✅ **Flyway** (Liquibase is not offered).
