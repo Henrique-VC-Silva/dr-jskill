@@ -1,5 +1,5 @@
 ---
-name: jdubois-skill
+name: dr-jskill
 description: Creates Spring Boot projects following Julien Dubois' best practices. Generates Web applications, full-stack apps with Vue.js, PostgreSQL, REST APIs, and Docker configurations. Use when creating Spring Boot projects, setting up Java microservices, or building enterprise applications with the Spring Framework.
 ---
 
