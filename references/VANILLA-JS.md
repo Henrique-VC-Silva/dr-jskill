@@ -1,5 +1,19 @@
 # Front-End Development with Vanilla JavaScript for Spring Boot Applications
 
+## Contents
+- [Overview](#overview)
+- [Versions (managed via `versions.json`)](#versions-managed-via-versionsjson)
+- [Architecture](#architecture)
+- [Project Structure](#project-structure)
+- [Setup Instructions](#setup-instructions)
+- [Development Workflow](#development-workflow)
+- [Vanilla JavaScript Application Structure](#vanilla-javascript-application-structure)
+- [Spring Boot SPA Controller](#spring-boot-spa-controller)
+- [Best Practices](#best-practices)
+- [CORS Configuration for Development](#cors-configuration-for-development)
+- [Testing Your Application](#testing-your-application)
+- [Additional Resources](#additional-resources)
+
 ## Overview
 This guide covers creating front-end applications for Spring Boot using plain JavaScript (no framework), modern ES6+ features, and Vite for development tooling. This approach provides maximum simplicity with hot reload during development and optimized production builds integrated into the Spring Boot package.
 

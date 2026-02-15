@@ -1,5 +1,19 @@
 # Logging Best Practices for Spring Boot Applications
 
+## Contents
+- [Overview](#overview)
+- [Why Logback?](#why-logback)
+- [Basic Configuration](#basic-configuration)
+- [Using SLF4J with Logback](#using-slf4j-with-logback)
+- [Logging Best Practices](#logging-best-practices)
+- [Logback XML Configuration](#logback-xml-configuration)
+- [Common Patterns](#common-patterns)
+- [What to Log](#what-to-log)
+- [Performance Tips](#performance-tips)
+- [Async Logging for High Performance](#async-logging-for-high-performance)
+- [Summary of Best Practices](#summary-of-best-practices)
+- [Additional Resources](#additional-resources)
+
 ## Overview
 This guide covers logging best practices for Spring Boot applications using Logback, the default and only recommended logging framework. Proper logging is essential for debugging, monitoring, and understanding application behavior in production.
 
