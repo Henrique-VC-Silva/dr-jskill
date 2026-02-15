@@ -415,6 +415,9 @@ Key features:
 | 9 | Native build | `./mvnw -Pnative native:compile` (GraalVM 25+) |
 | 10 | Docker native build | `docker build -f Dockerfile-native -t myapp-native:latest .` |
 | 11 | SBOM & vuln scan | `mvn -B verify cyclonedx:makeAggregateBom dependency-check:check` |
+| 12 | Git init & first commit | `cp assets/gitignore .gitignore && git init && git add . && git commit -m "chore: bootstrap with dr-jskill"` |
+
+> Use the provided `assets/gitignore` template. It ignores `target/`, `frontend/node_modules/`, `.mvn/timing.properties`, IDE files, Testcontainers cache, SBOM outputs, and env files.
 
 Once the project is generated, go through the steps above to ensure that the generated project is fully functional and follows best practices. If any validation step fails, try to identify the issue and fix it before proceeding. This ensures that the generated project is of high quality and ready for development.
 
