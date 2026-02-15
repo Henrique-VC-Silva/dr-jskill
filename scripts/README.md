@@ -152,6 +152,7 @@ These scripts work on:
 
 > Version management is centralized in `versions.json` and read via `scripts/lib/versions.sh` (bash) and `scripts/lib/versions.ps1` (PowerShell).
 > Windows PowerShell may require: `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force`.
+> On POSIX, run with **bash** (`./scripts/create-project` or `bash scripts/…`). Avoid `sh script.sh` which lacks bash features.
 
 ## Quick Start
 

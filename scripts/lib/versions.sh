@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+# Note: this file should be sourced by bash. If sourced via /bin/sh, some features may not work.
+if [ -z "${BASH_VERSION:-}" ]; then
+  >&2 echo "This script requires bash. Re-run with: bash -c 'source scripts/lib/versions.sh'"
+  return 1 2>/dev/null || exit 1
+fi
 set -euo pipefail
 
 ROOT_DIR="${ROOT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
@@ -62,21 +67,20 @@ resolve_boot_version() {
 }
 
 # Normalizes dependency list, ensuring unique, comma-separated values
+# Implementation avoids associative arrays for compatibility with older /bin/sh shells
 join_dependencies() {
   # Accept comma-separated string(s) and/or space-separated list
   local input="$*"
   input=${input//,/ } # normalize commas to spaces
-  declare -A seen
-  local out=()
+  local out=""
   for item in $input; do
-    [[ -z "$item" ]] && continue
-    if [[ -z "${seen[$item]:-}" ]]; then
-      seen[$item]=1
-      out+=("$item")
-    fi
+    [ -z "$item" ] && continue
+    case ",$out," in
+      *,$item,*) ;; # already present
+      *) out="${out:+$out,}$item" ;;
+    esac
   done
-  local IFS=','
-  echo "${out[*]}"
+  echo "$out"
 }
 
 export -f json_get get_java_version get_boot_preferred_major get_boot_fallback \

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Script to create a Spring Boot project using the LATEST available Spring Boot version
+if [ -z "${BASH_VERSION:-}" ]; then exec bash "$0" "$@"; fi
 # Automatically fetches latest from start.spring.io; falls back per versions.json when preferred major unavailable
 set -euo pipefail
 

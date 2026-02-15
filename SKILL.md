@@ -58,7 +58,8 @@ Flags supported:
 - `--project-type basic|web|fullstack` / `-ProjectType`
 - `--flyway` / `-Flyway`: adds Flyway dependency (Liquibase not offered)
 
-> Tip: The `create-project-latest` scripts auto-resolve preferred Boot 4.x and fall back to the configured `springBootFallback` if 4.x is not yet available.
+> Tip: The `create-project-latest` scripts auto-resolve preferred Boot 4.x and fall back to the configured `springBootFallback` if 4.x is not yet available. Override with `--boot-version`/`-BootVersion` if needed.
+> Note: Run with **bash** (`./scripts/create-project` or `bash scripts/...`). Avoid `sh script.sh`, which cannot handle some bash-only features.
 
 ### Latest Version Project ⭐
 Use the `create-project-latest.sh` script to create a project with the **latest Spring Boot version** (automatically fetched):
