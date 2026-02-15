@@ -45,6 +45,8 @@ This is an [Agent Skill](https://agentskills.io) that can be used with AI coding
 - PowerShell (Windows): `pwsh ./scripts/create-project-latest.ps1 -ProjectName myapp -GroupId com.myco -ProjectType fullstack -Flyway`
 
 > All scripts auto-resolve preferred Spring Boot 4.x; they fall back to `springBootFallback` from `versions.json` if 4.x is unavailable. Override with `--boot-version`/`-BootVersion`.
+> Default branch: **main**. When initializing a new repo, use `git init -b main`.
+
 ### Fork or clone this repository
 
 In order to use this skill, and modify it to your needs, you can fork this repository on GitHub, or simply clone it to your local machine.
