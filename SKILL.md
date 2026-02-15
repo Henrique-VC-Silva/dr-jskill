@@ -249,7 +249,7 @@ For comprehensive testing best practices, see the [Testing Guide](references/TES
 Key features:
 
 1. Unit tests with Mockito for isolated component testing
-2. `@WebMvcTest` for controller unit tests
+2. `@WebMvcTest` for controller unit tests (import from `org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest`; ensure `spring-boot-starter-test` present)
 3. Integration tests with TestContainers for PostgreSQL
 4. REST API integration tests with real database
 5. Given-When-Then test structure

@@ -167,6 +167,9 @@ class UserServiceTest {
 
 Test controllers without loading the full application context. Uses `@MockitoBean` to mock service dependencies.
 
+> ✅ **Spring Boot 4 import:** `org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest`
+> ✅ **Dependency:** `spring-boot-starter-test` (still provides `@WebMvcTest`). If you trimmed dependencies, ensure this starter is present. Avoid IDE auto-imports to `org.springframework.test.web.servlet.*` (wrong).
+
 **Example: Controller Unit Test**
 
 ```java
@@ -177,7 +180,7 @@ import com.example.app.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest; // ✅ correct package for Boot 4
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
