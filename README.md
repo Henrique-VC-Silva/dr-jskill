@@ -144,7 +144,7 @@ This skill follows the [Agent Skills specification](https://agentskills.io/speci
 
 ## Sample prompt
 
-Here is some example prompt you can use to try out this skill, using the plan mode of your assistant:
+Here is an example prompt you can use to try out this skill with an AI assistant:
 
 ```
 Use the Dr JSKill skill to create a new Todo List application.
