@@ -1,6 +1,17 @@
 # Dr JSkill
 
-**An Agent Skill for creating Spring Boot applications following Julien Dubois' best practices.**
+<table>
+  <tr>
+    <td>
+      <h3>Dr JSkill</h3>
+      <p><strong>An Agent Skill for creating Spring Boot applications following Julien Dubois' best practices.</strong></p>
+      <p>Generate Spring Boot 4.x projects with Java 21, PostgreSQL, Docker support, and your choice of front-end framework (Vue.js, React, Angular, or Vanilla JS).</p>
+    </td>
+    <td align="right" valign="middle" width="340">
+      <img src="./dr-jskill-small.png" alt="Dr JSkill logo" width="320" />
+    </td>
+  </tr>
+</table>
 
 Generate Spring Boot 4.x projects with Java 21, PostgreSQL, Docker support, and your choice of front-end framework (Vue.js, React, Angular, or Vanilla JS).
 
