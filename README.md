@@ -47,6 +47,15 @@ This is an [Agent Skill](https://agentskills.io) that can be used with AI coding
 > All scripts auto-resolve preferred Spring Boot 4.x; they fall back to `springBootFallback` from `versions.json` if 4.x is unavailable. Override with `--boot-version`/`-BootVersion`.
 > Default branch: **main**. When initializing a new repo, use `git init -b main`.
 
+### After generation & validation (Git)
+Initialize git **after** all validation steps succeed (see `SKILL.md` table):
+```bash
+cp assets/gitignore .gitignore
+git init -b main
+git add .
+git commit -m "chore: bootstrap with dr-jskill"
+```
+
 ### Fork or clone this repository
 
 In order to use this skill, and modify it to your needs, you can fork this repository on GitHub, or simply clone it to your local machine.
