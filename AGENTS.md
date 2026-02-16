@@ -39,7 +39,7 @@ To update all versions of tools, libraries, and frameworks in this skill, update
    - Update references in: `references/SPRING-BOOT-4.md`
    - Check latest at: https://maven.apache.org/
 
-6. **GraalVM**: Currently 26+ (for native images)
+6. **GraalVM**: Currently 25+ (for native images)
    - Update references in: `references/SPRING-BOOT-4.md`
    - Check latest at: https://www.graalvm.org/
 

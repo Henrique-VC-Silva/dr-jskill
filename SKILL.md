@@ -209,7 +209,7 @@ Deploy to Azure Container Apps with Azure Database for PostgreSQL. See the [Azur
 | 6 | Front-end bundle served | `curl http://localhost:8080/index.html` (if frontend added) |
 | 7 | Front-end dev server | `cd frontend && npm run dev` |
 | 8 | Docker build (JVM) | `docker build -t myapp:latest .` |
-| 9 | Native build | `./mvnw native:compile` (GraalVM 26+) |
+| 9 | Native build | `./mvnw native:compile` (GraalVM 25+) |
 | 10 | Docker native build | `docker build -f Dockerfile-native -t myapp-native:latest .` |
 | 11 | SBOM & vuln scan | `mvn -B verify cyclonedx:makeAggregateBom dependency-check:check` |
 

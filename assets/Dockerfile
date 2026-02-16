@@ -26,17 +26,14 @@ COPY frontend ./frontend
 # Build the application
 RUN ./mvnw clean package -DskipTests
 
-# Runtime stage
-FROM eclipse-temurin:25-jre-jammy
+# Runtime stage (Alpine-based for smaller image ~100 MB vs ~220 MB)
+FROM eclipse-temurin:25-jre-alpine
 
 # Install curl for healthchecks
-RUN apt-get update && \
-    apt-get install -y curl && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache curl
 
 # Create non-root user
-RUN useradd -m -u 1001 springboot
+RUN adduser -D -u 1001 springboot
 
 # Set working directory
 WORKDIR /app

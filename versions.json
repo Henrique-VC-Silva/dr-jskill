@@ -5,7 +5,7 @@
   "postgresVersion": "16",
   "temurinVersion": "25",
   "mavenMinVersion": "3.8.0",
-  "graalvmVersion": "26",
+  "graalvmVersion": "25",
   "nodeVersion": "22.14.0",
   "npmVersion": "10.10.0",
   "viteVersion": "5",

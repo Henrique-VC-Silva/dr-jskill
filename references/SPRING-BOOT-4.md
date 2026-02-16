@@ -25,7 +25,7 @@ This guide covers the key changes in Spring Boot 4.0 and what to consider when c
 
 1. Java: 17+ (Java 25 recommended for production)
 2. Kotlin: 2.2+ (if using Kotlin)
-3. GraalVM: 26+ (for native images)
+3. GraalVM: 25+ (for native images)
 4. Jakarta EE: 11 baseline (Servlet 6.1+)
 5. Maven: 3.8+
 6. Gradle: 8.14+ or 9.x

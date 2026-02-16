@@ -20,14 +20,14 @@ This guide covers Docker deployment for Spring Boot 4 applications, including bo
 **Spring Boot 4 Requirements:**
 
 1. Java 17+ (Java 25 recommended - used in our Dockerfiles)
-2. GraalVM 26+ for native images
+2. GraalVM 25+ for native images
 3. Jakarta EE 11 / Servlet 6.1 baseline
 4. PostgreSQL 12+ (we use 16-alpine for optimal size and performance)
 
 **Key Improvements in These Docker Files:**
 
-1. Eclipse Temurin 25 official images (better than Ubuntu + manual Java)
-2. GraalVM 26 for native images (required for Spring Boot 4)
+1. Eclipse Temurin 25 official images (Alpine-based for smaller footprint)
+2. GraalVM 25 for native images (required for Spring Boot 4)
 3. PostgreSQL 16 Alpine (smaller, more secure)
 4. Optimized JVM flags for container environments
 5. curl installed for healthchecks
@@ -158,18 +158,16 @@ docker run -p 8080:8080 my-spring-app
 ```
 
 ### 2. Dockerfile-native (GraalVM Native Image)
-Native compilation using GraalVM 26 for faster startup and lower memory footprint.
+Native compilation using GraalVM 25 for faster startup and lower memory footprint.
 
 **Location**: Copy to your project root
 
 **Features**:
 
-1. GraalVM 26 native image compilation (required for Spring Boot 4)
+1. GraalVM 25 native image compilation (required for Spring Boot 4)
 2. Ultra-fast startup time (<100ms)
 3. Lower memory consumption
-4. Smaller runtime image (Oracle Linux slim base)
-5. Health check with curl included
-6. Ideal for serverless and microservices
+4. Smaller runtime image (Debian 12 slim base)\n5. Health check with curl included\n6. Ideal for serverless and microservices
 
 **Build and Run**:
 ```bash
@@ -217,13 +215,13 @@ docker compose down -v
 - Database: localhost:5432
 
 ### 4. docker-compose-native.yml (Native with Database)
-Complete stack using GraalVM 26 native image with PostgreSQL 16.
+Complete stack using GraalVM 25 native image with PostgreSQL 16.
 
 **Location**: Copy to your project root
 
 **Features**:
 - All benefits of docker-compose.yml
-- Uses GraalVM 26 native Spring Boot image
+- Uses GraalVM 25 native Spring Boot image
 - PostgreSQL 16 Alpine for smaller footprint
 - Faster startup times (<100ms vs several seconds)
 - Lower resource usage (50-75% less memory)
@@ -309,7 +307,7 @@ To enable GraalVM native compilation, add to your `pom.xml`:
 ```
 
 ### Native Build Requirements
-- **GraalVM 26+** required for Spring Boot 4
+- **GraalVM 25+** required for Spring Boot 4
 - Ensure all reflection, resources, and JNI access are declared
 - Spring Boot 4.x has excellent native support out of the box
 - Most Spring libraries are pre-configured for native compilation
@@ -319,7 +317,7 @@ To enable GraalVM native compilation, add to your `pom.xml`:
 
 ### 1. Image Optimization
 - Use multi-stage builds to minimize final image size (both Dockerfiles use this)
-- Use Alpine or slim variants: `postgres:16-alpine`, `eclipse-temurin:25-jre-jammy`
+- Use Alpine or slim variants: `postgres:16-alpine`, `eclipse-temurin:25-jre-alpine`
 - Clean up package manager cache after installations
 - Copy only necessary files
 - Use `.dockerignore` to exclude unnecessary files
@@ -453,7 +451,7 @@ docker system prune -a
 - [ ] Configure environment variables for production
 - [ ] **Pin versions**: Use specific tags (postgres:16-alpine, not latest)
 - [ ] **Java version**: Verify Java 25+ for Spring Boot 4
-- [ ] **GraalVM version**: Use GraalVM 26+ for native images
+- [ ] **GraalVM version**: Use GraalVM 25+ for native images
 - [ ] Set up health checks (already configured in provided files)
 - [ ] Configure resource limits (memory, CPU)
 - [ ] Set up logging and log aggregation

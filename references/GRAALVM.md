@@ -25,7 +25,7 @@ This guide covers building GraalVM native images for Spring Boot 4 applications 
 
 1. Docker installed and running
 2. Spring Boot 4 application with Maven
-3. GraalVM 26+ (automatically handled in Dockerfile)
+3. GraalVM 25+ (automatically handled in Dockerfile)
 4. Sufficient build resources (native compilation is resource-intensive)
 
 ## Docker-Based Native Builds (Recommended)
@@ -44,10 +44,10 @@ Use the `Dockerfile-native` for building native images with Docker:
 ```dockerfile
 # Multi-stage Dockerfile for GraalVM Native Image
 # Builds and runs a native Spring Boot application
-# Requires GraalVM 26+ for Spring Boot 4
+# Requires GraalVM 25+ for Spring Boot 4 (GraalVM 25 = JDK 25)
 
-# Build stage with GraalVM 26 (includes native-image toolchain, JDK 25)
-FROM ghcr.io/graalvm/graalvm-community:26-ol9 AS build
+# Build stage with GraalVM 25 (includes native-image toolchain, JDK 25)
+FROM ghcr.io/graalvm/graalvm-community:25 AS build
 
 # Set working directory
 WORKDIR /app
@@ -80,48 +80,38 @@ RUN if [ -f target/$(./mvnw help:evaluate -Dexpression=project.artifactId -q -Df
       else echo "ERROR: Native executable not found in target/"; ls -laR target/ | head -40; exit 1; fi; \
     fi
 
-# Runtime stage with minimal base image
-FROM oraclelinux:9-slim
-
-# Install curl for healthchecks
-RUN microdnf install -y curl && \
-    microdnf clean all
-
-# Create non-root user
-RUN useradd -m -u 1001 springboot
+# Runtime stage with distroless (glibc-based, ~20 MB)
+# Uses base-debian12 because the native binary is linked against glibc
+FROM gcr.io/distroless/base-debian12
 
 # Set working directory
 WORKDIR /app
 
 # Copy the native executable from build stage
-COPY --from=build /app/native-app native-app
-
-# Change ownership
-RUN chown -R springboot:springboot /app && \
-    chmod +x native-app
+# distroless ships a built-in nonroot user (UID 65532)
+COPY --from=build --chown=nonroot:nonroot /app/native-app native-app
 
 # Switch to non-root user
-USER springboot
+USER nonroot
 
 # Expose port
 EXPOSE 8080
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=30s --retries=3 \
-    CMD curl -f http://localhost:8080/actuator/health || exit 1
+# No HEALTHCHECK here — distroless has no shell or curl.
+# Define healthchecks in Docker Compose or your orchestrator.
 
 # Run the native application
-CMD ["./native-app"]
+ENTRYPOINT ["./native-app"]
 ```
 
 **Key Points:**
 
-1. **Build Stage**: Uses GraalVM 26 Community Edition with Oracle Linux 9 (includes native-image toolchain, JDK 25)
+1. **Build Stage**: Uses GraalVM 25 Community Edition with Oracle Linux 9 (includes native-image toolchain, JDK 25)
 2. **Native Compile**: Uses `native:compile` to directly invoke the GraalVM native image compilation
 3. **Portable Copy**: First tries `target/<artifactId>` (the default native output), then falls back to `find` to locate any executable binary
-4. **Multi-Stage**: Final image is minimal (Oracle Linux 9 Slim + native executable)
-5. **Non-Root User**: Runs as unprivileged user for security
-6. **Healthcheck**: Standard Spring Boot Actuator health endpoint
+4. **Debian Slim Runtime**: Final image uses `debian:12-slim` (~80 MB, glibc-based) — includes all shared libraries the native binary needs
+5. **Non-Root User**: Runs as unprivileged user (UID 1001) for security
+6. **Healthcheck**: Standard Spring Boot Actuator health endpoint via curl
 
 ### Building the Native Image
 

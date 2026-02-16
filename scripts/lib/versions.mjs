@@ -26,7 +26,7 @@ export function getBootFallback() { return getVersionValue('springBootFallback',
 export function getPostgresVersion() { return getVersionValue('postgresVersion', '16'); }
 export function getTemurinVersion() { return getVersionValue('temurinVersion', '25'); }
 export function getMavenMinVersion() { return getVersionValue('mavenMinVersion', '3.8.0'); }
-export function getGraalvmVersion() { return getVersionValue('graalvmVersion', '26'); }
+export function getGraalvmVersion() { return getVersionValue('graalvmVersion', '25'); }
 export function getNodeVersion() { return getVersionValue('nodeVersion', '22.14.0'); }
 export function getNpmVersion() { return getVersionValue('npmVersion', '10.10.0'); }
 export function getViteVersion() { return getVersionValue('viteVersion', '5'); }
