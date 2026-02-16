@@ -13,9 +13,15 @@ RUN apt-get update && \
 # Set working directory
 WORKDIR /app
 
-# Copy project files
+# Copy pom.xml (dependency caching layer)
 COPY pom.xml .
+
+# Copy source code
 COPY src ./src
+
+# Copy frontend directory if present (for fullstack projects with frontend-maven-plugin)
+# If no frontend/ exists, comment out or remove this line
+COPY frontend ./frontend
 
 # Build the application
 RUN mvn clean package -DskipTests
