@@ -69,7 +69,7 @@ COPY src ./src
 COPY frontend ./frontend
 
 # Build native image (compile → process-aot → native compile)
-RUN ./mvnw native:compile -DskipTests
+RUN ./mvnw native:compile -Pnative -DskipTests
 
 # Move native executable to a known path (artifact name varies per project)
 RUN if [ -f target/$(./mvnw help:evaluate -Dexpression=project.artifactId -q -DforceStdout 2>/dev/null) ]; then \
@@ -107,7 +107,7 @@ ENTRYPOINT ["./native-app"]
 **Key Points:**
 
 1. **Build Stage**: Uses GraalVM 25 Community Edition with Oracle Linux 9 (includes native-image toolchain, JDK 25)
-2. **Native Compile**: Uses `native:compile` to directly invoke the GraalVM native image compilation
+2. **Native Compile**: Uses `native:compile -Pnative` to directly invoke the GraalVM native image compilation
 3. **Portable Copy**: First tries `target/<artifactId>` (the default native output), then falls back to `find` to locate any executable binary
 4. **Debian Slim Runtime**: Final image uses `debian:12-slim` (~80 MB, glibc-based) — includes all shared libraries the native binary needs
 5. **Non-Root User**: Runs as unprivileged user (UID 1001) for security
@@ -275,7 +275,7 @@ public class MyRuntimeHints implements RuntimeHintsRegistrar {
 
 ```bash
 # Build native image locally (requires GraalVM installed)
-./mvnw native:compile -DskipTests
+./mvnw native:compile -Pnative -DskipTests
 
 # Run the native executable (name matches your artifactId)
 ./target/myapp

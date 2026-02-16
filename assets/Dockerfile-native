@@ -25,7 +25,7 @@ COPY src ./src
 COPY frontend ./frontend
 
 # Build native image (compile → process-aot → native compile)
-RUN ./mvnw native:compile -DskipTests
+RUN ./mvnw native:compile -Pnative -DskipTests
 
 # Move native executable to a known path (artifact name varies per project)
 RUN if [ -f target/$(./mvnw help:evaluate -Dexpression=project.artifactId -q -DforceStdout 2>/dev/null) ]; then \
