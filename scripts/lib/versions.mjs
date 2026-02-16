@@ -324,9 +324,6 @@ export function parseArgs(argv) {
     } else if (args[i] === '--project-type') {
       flags.projectType = args[i + 1];
       i += 2;
-    } else if (args[i] === '--flyway') {
-      flags.flyway = true;
-      i += 1;
     } else if (args[i] === '-h' || args[i] === '--help') {
       flags.help = true;
       i += 1;

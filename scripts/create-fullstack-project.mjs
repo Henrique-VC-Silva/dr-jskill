@@ -10,7 +10,6 @@ function usage() {
   console.log(`Usage: node create-fullstack-project.mjs [PROJECT_NAME] [GROUP_ID] [ARTIFACT_ID] [PACKAGE_NAME] [JAVA_VERSION]
 Options:
   --boot-version <version>   Override Spring Boot version
-  --flyway                   Include Flyway migration support (Liquibase not offered)
   -h|--help                  Show this help`);
 }
 
@@ -29,9 +28,6 @@ const javaVersion = positional[4] || getJavaVersion();
 const bootVersion = flags.bootVersion || await resolveBootVersion();
 
 let dependencies = 'web,data-jpa,actuator,validation,devtools,postgresql,docker-compose,testcontainers,native';
-if (flags.flyway) {
-  dependencies = joinDependencies(dependencies, 'flyway');
-}
 
 console.error(`Creating full-stack Spring Boot application with Boot=${bootVersion}, Java=${javaVersion}`);
 
@@ -57,7 +53,6 @@ console.log('  - Spring Web (REST APIs)');
 console.log('  - Spring Data JPA (Database access)');
 console.log('  - Spring Boot Actuator (Monitoring)');
 console.log('  - PostgreSQL Driver (Database)');
-console.log('  - Flyway (if --flyway specified)');
 console.log('  - Validation (Bean validation)');
 console.log('  - DevTools (Hot reload)');
 console.log('  - Docker Compose (Automatic database startup)');

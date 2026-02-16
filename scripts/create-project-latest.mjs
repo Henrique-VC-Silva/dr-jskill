@@ -18,11 +18,10 @@ function usage() {
 Environment / Flags:
   --boot-version <version>   Override Spring Boot version (otherwise resolves preferred major with fallback)
   --project-type <type>      basic | web | fullstack (default: web)
-  --flyway                   Include Flyway migration support (no Liquibase)
   -h|--help                  Show this help
 
 Examples:
-  node scripts/create-project-latest.mjs myapp com.acme myapp com.acme.myapp 21 fullstack --flyway
+  node scripts/create-project-latest.mjs myapp com.acme myapp com.acme.myapp 21 fullstack
   node scripts/create-project-latest.mjs --boot-version 4.0.0-M1 myapp`);
 }
 
@@ -65,10 +64,6 @@ switch (projectType) {
     console.error(`Unknown project type: ${projectType}`);
     console.error('Valid options: basic, web, fullstack');
     process.exit(1);
-}
-
-if (flags.flyway) {
-  dependencies = joinDependencies(dependencies, 'flyway');
 }
 
 await downloadAndExtractProject({

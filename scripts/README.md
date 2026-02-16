@@ -7,7 +7,7 @@ This directory contains cross-platform JavaScript scripts (Node.js) to quickly c
 ### 🚀 Unified launcher (`scripts/create-project`)
 Cross-platform entrypoint. Delegates to `create-project-latest.mjs` via Node.js.
 ```bash
-node scripts/create-project my-app com.myco my-app com.myco.myapp 21 fullstack --flyway
+node scripts/create-project my-app com.myco my-app com.myco.myapp 21 fullstack
 ```
 
 ### 0. create-project-latest.mjs ⭐ RECOMMENDED
@@ -15,12 +15,12 @@ Creates a Spring Boot project using the **latest available Spring Boot version**
 
 **Usage:**
 ```bash
-node scripts/create-project-latest.mjs [project-name] [group-id] [artifact-id] [package-name] [java-version] [project-type] [--boot-version x.y.z] [--flyway]
+node scripts/create-project-latest.mjs [project-name] [group-id] [artifact-id] [package-name] [java-version] [project-type] [--boot-version x.y.z]
 ```
 
 **Example:**
 ```bash
-node scripts/create-project-latest.mjs my-app com.mycompany my-app com.mycompany.myapp 21 web --flyway
+node scripts/create-project-latest.mjs my-app com.mycompany my-app com.mycompany.myapp 21 web
 ```
 
 **Default values:**

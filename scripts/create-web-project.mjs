@@ -10,7 +10,6 @@ function usage() {
   console.log(`Usage: node create-web-project.mjs [PROJECT_NAME] [GROUP_ID] [ARTIFACT_ID] [PACKAGE_NAME] [JAVA_VERSION]
 Options:
   --boot-version <version>   Override Spring Boot version
-  --flyway                   Include Flyway migration support
   -h|--help                  Show this help`);
 }
 
@@ -29,9 +28,6 @@ const javaVersion = positional[4] || getJavaVersion();
 const bootVersion = flags.bootVersion || await resolveBootVersion();
 
 let dependencies = 'web,actuator,validation,devtools,native';
-if (flags.flyway) {
-  dependencies = joinDependencies(dependencies, 'flyway');
-}
 
 console.error(`Creating Spring Boot web application with Boot=${bootVersion}, Java=${javaVersion}`);
 

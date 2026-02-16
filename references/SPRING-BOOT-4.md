@@ -45,7 +45,7 @@ This guide covers the key changes in Spring Boot 4.0 and what to consider when c
 
 ⚠️ **Most Common Mistakes** - Always verify these when generating code:
 
-0. **Maven-only / No Lombok / Flyway**: Do not generate Gradle builds; enforce no Lombok usage via Maven Enforcer + ArchUnit (snippet below). Offer Flyway only (no Liquibase).
+0. **Maven-only / No Lombok / Spring Boot SQL Initialization**: Do not generate Gradle builds; enforce no Lombok usage via Maven Enforcer + ArchUnit (snippet below). Use Spring Boot SQL Initialization only (no Flyway, no Liquibase).
 
 ### 1. Jackson 3 Annotations Stay in `com.fasterxml.jackson.annotation`
 
@@ -153,9 +153,7 @@ Spring Boot 4 introduces a **new modular design** with technology-specific modul
 - Starters: `spring-boot-starter-<technology>` (e.g., `spring-boot-starter-graphql`)
 - Test starters: `spring-boot-starter-<technology>-test`
 
-**Important:** Most technologies now have dedicated starters where they didn't before. For example:
-- Flyway: Use `spring-boot-starter-flyway` instead of direct `flyway-core`
-- Liquibase: Use `spring-boot-starter-liquibase` instead of direct `liquibase-core`
+**Important:** Most technologies now have dedicated starters where they didn't before.
 
 **For quick upgrades:** Use `spring-boot-starter-classic` to get all modules at once (but migrate away eventually).
 
@@ -623,7 +621,7 @@ For war deployment to Tomcat:
 - [ ] TestContainers 2.0+ in use (`testcontainers-postgresql` artifact, `org.testcontainers.postgresql` package)
 - [ ] No Undertow references
 - [ ] Jackson 3 package names (or using compatibility mode)
-- [ ] Technology-specific starters added (e.g., Flyway, Liquibase)
+- [ ] Technology-specific starters added where needed
 - [ ] MongoDB properties renamed if applicable
 - [ ] Spring Batch database starter if needed
 - [ ] Elasticsearch client updated to Rest5Client

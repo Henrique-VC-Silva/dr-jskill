@@ -37,18 +37,17 @@ This skill includes cross-platform JavaScript (Node.js) scripts in the `scripts/
 
 **Unified launcher (cross-platform):**
 ```bash
-node scripts/create-project my-app com.myco my-app com.myco.myapp 21 fullstack --flyway
+node scripts/create-project my-app com.myco my-app com.myco.myapp 21 fullstack
 ```
 
 **Direct invocation:**
 ```bash
-node scripts/create-project-latest.mjs my-app com.myco my-app com.myco.myapp 21 fullstack --flyway
+node scripts/create-project-latest.mjs my-app com.myco my-app com.myco.myapp 21 fullstack
 ```
 
 Flags supported:
 - `--boot-version <x.y.z>` / `-BootVersion`: override Spring Boot version
 - `--project-type basic|web|fullstack` / `-ProjectType`
-- `--flyway` / `-Flyway`: adds Flyway dependency (Liquibase not offered)
 
 > Tip: The `create-project-latest` script auto-resolves preferred Boot 4.x and falls back to the configured `springBootFallback` if 4.x is not yet available. Override with `--boot-version` if needed.
 
