@@ -48,6 +48,8 @@ src/main/resources/db/migration/
   V2__add_user_table.sql
 ```
 
+> ⚠️ **GraalVM Native Images:** Flyway SQL files are **not** automatically included in native images. You must register them explicitly. See the [GraalVM Guide — Flyway Native Image Configuration](GRAALVM.md#flyway-native-image-configuration) for the required `FlywayNativeConfiguration` class and `resource-config.json`.
+
 Flyway SQL examples:
 ```sql
 -- V1__init.sql

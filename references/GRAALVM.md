@@ -7,6 +7,7 @@
 - [Spring Boot Configuration for Native Images](#spring-boot-configuration-for-native-images)
 - [Testing Native Images](#testing-native-images)
 - [Troubleshooting](#troubleshooting)
+- [Flyway Native Image Configuration](#flyway-native-image-configuration)
 - [Advanced Topics](#advanced-topics)
 - [CI/CD Integration](#cicd-integration)
 - [References](#references)
@@ -333,7 +334,15 @@ Error: Class MyClass cannot be found for reflection
 
 **Solution:** Add `@RegisterReflectionForBinding` or create a `RuntimeHintsRegistrar`.
 
-**Issue 3: Resource Not Found**
+**Issue 3: Flyway Migrations Not Found in Native Image**
+
+```
+org.flywaydb.core.api.FlywayException: No migration scripts found
+```
+
+GraalVM native images only include resources that are explicitly registered. By default, Flyway SQL migration files in `src/main/resources/db/migration/` are **not** included in the native image. See the [Flyway Native Image Configuration](#flyway-native-image-configuration) section below for the fix.
+
+**Issue 4: Resource Not Found**
 
 ```
 Error: Resource 'config/data.json' not found
@@ -365,6 +374,59 @@ Before deploying native images, verify:
 - [ ] Docker image size is reasonable (< 200 MB)
 - [ ] Memory usage is stable under load
 - [ ] No reflection or resource loading errors in logs
+- [ ] Flyway migrations execute successfully (if using Flyway)
+
+## Flyway Native Image Configuration
+
+GraalVM native images use ahead-of-time (AOT) compilation and only include resources that are explicitly registered. Flyway SQL migration files in `src/main/resources/db/migration/` must be registered or they will be missing at runtime.
+
+Use **both** approaches below for maximum compatibility:
+
+### 1. RuntimeHints Configuration (Spring Boot approach)
+
+Create a configuration class that registers Flyway migration resources with Spring's AOT engine:
+
+```java
+package com.example.app.config;
+
+import org.springframework.aot.hint.RuntimeHints;
+import org.springframework.aot.hint.RuntimeHintsRegistrar;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportRuntimeHints;
+
+@Configuration
+@ImportRuntimeHints(FlywayNativeConfiguration.FlywayResourcesRuntimeHints.class)
+public class FlywayNativeConfiguration {
+
+    static class FlywayResourcesRuntimeHints implements RuntimeHintsRegistrar {
+        @Override
+        public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
+            hints.resources().registerPattern("db/migration/*.sql");
+            hints.resources().registerPattern("db/migration/**");
+        }
+    }
+}
+```
+
+### 2. Native Image Resource Configuration (GraalVM approach)
+
+Create `src/main/resources/META-INF/native-image/<groupId>/<artifactId>/resource-config.json`:
+
+```json
+{
+  "resources": {
+    "includes": [
+      {
+        "pattern": "db/migration/.*\\.sql"
+      }
+    ]
+  }
+}
+```
+
+Replace `<groupId>/<artifactId>` with your project's coordinates (e.g., `com.example/my-app`).
+
+> ⚠️ **Both files should be created when the project uses Flyway with native image support.** The RuntimeHints approach integrates with Spring Boot's AOT processing, while the `resource-config.json` approach is a GraalVM-level fallback that works even outside the Spring context.
 
 ## Advanced Topics
 
