@@ -1,5 +1,21 @@
 # Azure CLI Deployment Guide for Spring Boot Applications
 
+## Contents
+- [Overview](#overview)
+- [Prerequisites](#prerequisites)
+- [Quick Start (Without Database)](#quick-start-without-database)
+- [Deployment Script (Without Database)](#deployment-script-without-database)
+- [With PostgreSQL Database](#with-postgresql-database)
+- [Complete Deployment Script (With Database)](#complete-deployment-script-with-database)
+- [Update Existing Deployment](#update-existing-deployment)
+- [Monitoring and Logs](#monitoring-and-logs)
+- [Database Management](#database-management)
+- [Cleanup](#cleanup)
+- [Cost Optimization](#cost-optimization)
+- [Troubleshooting](#troubleshooting)
+- [Best Practices](#best-practices)
+- [Additional Resources](#additional-resources)
+
 ## Overview
 This guide provides a simpler approach to deploying Spring Boot 4 applications to Azure using Azure CLI commands. Deploy Container Apps with optional PostgreSQL database support.
 

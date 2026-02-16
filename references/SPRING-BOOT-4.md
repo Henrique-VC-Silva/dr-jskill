@@ -1,5 +1,14 @@
 # Spring Boot 4 Migration Guide
 
+## Contents
+- [Overview](#overview)
+- [System Requirements](#system-requirements)
+- [Critical Considerations When Creating Spring Boot 4 Projects](#critical-considerations-when-creating-spring-boot-4-projects)
+- [Major Changes from Spring Boot 3](#major-changes-from-spring-boot-3)
+- [Migration Strategy](#migration-strategy)
+- [Best Practices for Spring Boot 4 Projects](#best-practices-for-spring-boot-4-projects)
+- [Resources](#resources)
+
 ## Overview  
 
 This guide covers the key changes in Spring Boot 4.0 and what to consider when creating new Spring Boot 4 projects.

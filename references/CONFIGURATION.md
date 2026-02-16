@@ -1,5 +1,18 @@
 # Configuration Best Practices for Spring Boot Applications
 
+## Contents
+- [Overview](#overview)
+- [Configuration File Format](#configuration-file-format)
+- [Configuration Profiles](#configuration-profiles)
+- [Externalized Configuration](#externalized-configuration)
+- [Configuration Properties Classes](#configuration-properties-classes)
+- [Secrets Management](#secrets-management)
+- [Common Configuration Patterns](#common-configuration-patterns)
+- [Testing Configuration](#testing-configuration)
+- [Configuration Documentation](#configuration-documentation)
+- [Best Practices Checklist](#best-practices-checklist)
+- [References](#references)
+
 ## Overview
 This guide covers configuration best practices for Spring Boot 4 applications, including profiles, externalized configuration, secrets management, and environment-specific settings.
 

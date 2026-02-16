@@ -11,6 +11,7 @@
 - [Observability](#observability)
 - [Validation / Checks](#validation--checks)
 - [Troubleshooting](#troubleshooting)
+- [References](#references)
 
 ## Defaults
 - **Engine:** PostgreSQL (preferred version: **16**; configure in `versions.json`).
@@ -102,7 +103,7 @@ volumes:
 
 ## Local Developer Experience
 - Enable `spring-boot-docker-compose` (Boot 3.1+) to auto-start `compose.yaml` on `./mvnw spring-boot:run`.
-- Provide `.env.example` with placeholders: `DATABASE_PASSWORD`, etc.
+- Provide `.env.sample` with placeholders: `DATABASE_PASSWORD`, etc. (see [Project Setup](PROJECT-SETUP.md)).
 
 ## Observability
 - Expose Postgres metrics via `pg_stat_statements`; integrate with Micrometer if needed.
@@ -115,3 +116,12 @@ volumes:
 ## Troubleshooting
 - Common error: `FATAL: password authentication failed` — verify `spring.datasource.*` and `compose.yaml` env vars match.
 - Timeouts in CI: increase Testcontainers startup timeout or use `withReuse(true)` + `~/.testcontainers.properties`.
+
+## References
+
+- [Spring Boot Data Access](https://docs.spring.io/spring-boot/reference/data/sql.html)
+- [Flyway Documentation](https://documentation.red-gate.com/fd/)
+- [Testcontainers PostgreSQL Module](https://java.testcontainers.org/modules/databases/postgres/)
+- [Docker Deployment Guide](DOCKER.md) — `compose.yaml` setup
+- [Configuration Best Practices](CONFIGURATION.md) — externalized config & secrets
+- [Project Setup](PROJECT-SETUP.md) — `.env.sample` for database credentials

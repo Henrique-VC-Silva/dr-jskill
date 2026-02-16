@@ -236,6 +236,9 @@ Once the project is generated, go through the steps above to ensure that the gen
 - [Angular Development Guide](references/ANGULAR.md) - Angular 19 with Angular CLI
 - [Vanilla JS Development Guide](references/VANILLA-JS.md) - Pure ES6+ with Vite
 
+**Project Setup:**
+- [Project Setup & Dotfiles](references/PROJECT-SETUP.md) - `.gitignore`, `.env.sample`, `.editorconfig`, `.gitattributes`, `.dockerignore`
+
 **Deployment:**
 - [Docker Deployment Guide](references/DOCKER.md) - Docker, Docker Compose, development automation
 - [GraalVM Native Images Guide](references/GRAALVM.md) - Docker-based native builds, optimization
