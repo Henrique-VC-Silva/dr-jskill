@@ -250,25 +250,32 @@ function writeTextFileIfMissing(destPath, content) {
 
 /**
  * Apply additional dotfiles after project extraction.
+ * @param {string} projectDir
+ * @param {{ database?: boolean }} [options]
  */
-export function applyDotfiles(projectDir) {
+export function applyDotfiles(projectDir, options = {}) {
+  const hasDatabase = options.database === true;
   mergeGitignore(projectDir);
   copyAssetIfMissing('env.sample', join(projectDir, '.env.sample'));
   copyAssetIfMissing('editorconfig', join(projectDir, '.editorconfig'));
   copyAssetIfMissing('gitattributes', join(projectDir, '.gitattributes'));
   copyAssetIfMissing('dockerignore', join(projectDir, '.dockerignore'));
-  // Docker deployment files
+  // Docker deployment files (Dockerfiles always, compose files only with database)
   copyAssetIfMissing('Dockerfile', join(projectDir, 'Dockerfile'));
   copyAssetIfMissing('Dockerfile-native', join(projectDir, 'Dockerfile-native'));
-  copyAssetIfMissing('compose.yaml', join(projectDir, 'compose.yaml'));
-  copyAssetIfMissing('docker-compose.yml', join(projectDir, 'docker-compose.yml'));
-  copyAssetIfMissing('docker-compose-native.yml', join(projectDir, 'docker-compose-native.yml'));
+  if (hasDatabase) {
+    copyAssetIfMissing('compose.yaml', join(projectDir, 'compose.yaml'));
+    copyAssetIfMissing('docker-compose.yml', join(projectDir, 'docker-compose.yml'));
+    copyAssetIfMissing('docker-compose-native.yml', join(projectDir, 'docker-compose-native.yml'));
+  }
   // Optional .vscode recommendations
   copyAssetIfMissing(join('vscode', 'extensions.json'), join(projectDir, '.vscode', 'extensions.json'));
   copyAssetIfMissing(join('vscode', 'settings.json'), join(projectDir, '.vscode', 'settings.json'));
-  // DevContainer setup (Java 21, Node 22, PostgreSQL)
+  // DevContainer setup
   copyAssetIfMissing(join('devcontainer', 'devcontainer.json'), join(projectDir, '.devcontainer', 'devcontainer.json'));
-  copyAssetIfMissing(join('devcontainer', 'docker-compose.yml'), join(projectDir, '.devcontainer', 'docker-compose.yml'));
+  if (hasDatabase) {
+    copyAssetIfMissing(join('devcontainer', 'docker-compose.yml'), join(projectDir, '.devcontainer', 'docker-compose.yml'));
+  }
   // CI workflow
   copyAssetIfMissing(join('ci', 'github-actions.yml'), join(projectDir, '.github', 'workflows', 'ci.yml'));
   // Optional Node version pinning if front-end present

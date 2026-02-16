@@ -87,7 +87,8 @@ await downloadAndExtractProject({
 });
 
 // Apply dotfiles and editor-recommended settings
-applyDotfiles(projectName);
+const hasDatabase = projectType === 'fullstack';
+applyDotfiles(projectName, { database: hasDatabase });
 
 console.log('');
 console.log(`✓ Spring Boot project created successfully in ./${projectName}`);

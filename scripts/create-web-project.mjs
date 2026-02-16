@@ -49,7 +49,7 @@ await downloadAndExtractProject({
   javaVersion,
   dependencies,
 });
-applyDotfiles(projectName);
+applyDotfiles(projectName, { database: false });
 
 console.log(`✓ Spring Boot web application created successfully in ./${projectName}`);
 console.log(`  cd ${projectName}`);
