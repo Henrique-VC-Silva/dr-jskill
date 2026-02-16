@@ -1,6 +1,6 @@
 ---
 name: dr-jskill
-description: Creates Spring Boot projects following Julien Dubois' best practices. Generates Web applications, full-stack apps with Vue.js, PostgreSQL, REST APIs, and Docker configurations. Use when creating Spring Boot projects, setting up Java microservices, or building enterprise applications with the Spring Framework.
+description: Creates Java + Spring Boot projects: Web applications, full-stack apps with Vue.js or Angular or React or vanilla JS, PostgreSQL, REST APIs, and Docker. Use when creating Spring Boot projects, setting up Java microservices, or building enterprise applications with the Spring Framework.
 ---
 
 # Spring Boot skill that follows Julien Dubois' best practices.
@@ -202,16 +202,6 @@ Deploy to Azure Container Apps with Azure Database for PostgreSQL. See the [Azur
 > Run validation steps first. If anything fails, fix before proceeding.
 
 Once the project is generated, go through the steps above to ensure that the generated project is fully functional and follows best practices. If any validation step fails, try to identify the issue and fix it before proceeding. This ensures that the generated project is of high quality and ready for development.
-
-## Post-validation (Git init)
-Once all validation steps pass, initialize git **once**:
-```bash
-cp assets/gitignore .gitignore
-git init -b main
-git add .
-git commit -m "chore: bootstrap with dr-jskill"
-```
-> The provided `assets/gitignore` template ignores `target/`, `frontend/node_modules/`, `.mvn/timing.properties`, IDE files, Testcontainers cache, SBOM outputs, and env files.
 
 ## Additional Resources
 
