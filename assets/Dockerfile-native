@@ -2,12 +2,8 @@
 # Builds and runs a native Spring Boot application
 # Requires GraalVM 25+ for Spring Boot 4
 
-# Build stage with GraalVM 25
+# Build stage with GraalVM 25 (includes native-image toolchain)
 FROM ghcr.io/graalvm/graalvm-community:25-ol9 AS build
-
-# Install required build tools
-RUN microdnf install -y gcc glibc-devel zlib-devel && \
-    microdnf clean all
 
 # Set working directory
 WORKDIR /app
