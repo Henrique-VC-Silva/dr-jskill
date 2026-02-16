@@ -26,6 +26,10 @@ COPY frontend ./frontend
 # Build native image (full lifecycle: compile → process-aot → native compile)
 RUN ./mvnw -Pnative package -DskipTests
 
+# Move native executable to a known path (artifact name varies per project)
+RUN find target -maxdepth 1 -type f -executable ! -name '*.jar' ! -name 'mvnw' -print -quit \
+    | xargs -I{} cp {} native-app
+
 # Runtime stage with minimal base image
 FROM oraclelinux:9-slim
 
@@ -40,7 +44,7 @@ RUN useradd -m -u 1001 springboot
 WORKDIR /app
 
 # Copy the native executable from build stage
-COPY --from=build /app/target/*-exec native-app
+COPY --from=build /app/native-app native-app
 
 # Change ownership
 RUN chown -R springboot:springboot /app && \

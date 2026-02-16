@@ -149,6 +149,7 @@ my-spring-boot-app/
 │               └── domain/
 ├── Dockerfile                   # Standard JVM Docker build
 ├── Dockerfile-native            # GraalVM native image build
+├── compose.yaml                 # Dev database (spring-boot-docker-compose)
 ├── docker-compose.yml           # Full stack with PostgreSQL
 ├── docker-compose-native.yml    # Native image with PostgreSQL
 ├── pom.xml

@@ -257,12 +257,20 @@ export function applyDotfiles(projectDir) {
   copyAssetIfMissing('editorconfig', join(projectDir, '.editorconfig'));
   copyAssetIfMissing('gitattributes', join(projectDir, '.gitattributes'));
   copyAssetIfMissing('dockerignore', join(projectDir, '.dockerignore'));
+  // Docker deployment files
+  copyAssetIfMissing('Dockerfile', join(projectDir, 'Dockerfile'));
+  copyAssetIfMissing('Dockerfile-native', join(projectDir, 'Dockerfile-native'));
+  copyAssetIfMissing('compose.yaml', join(projectDir, 'compose.yaml'));
+  copyAssetIfMissing('docker-compose.yml', join(projectDir, 'docker-compose.yml'));
+  copyAssetIfMissing('docker-compose-native.yml', join(projectDir, 'docker-compose-native.yml'));
   // Optional .vscode recommendations
   copyAssetIfMissing(join('vscode', 'extensions.json'), join(projectDir, '.vscode', 'extensions.json'));
   copyAssetIfMissing(join('vscode', 'settings.json'), join(projectDir, '.vscode', 'settings.json'));
   // DevContainer setup (Java 21, Node 22, PostgreSQL)
   copyAssetIfMissing(join('devcontainer', 'devcontainer.json'), join(projectDir, '.devcontainer', 'devcontainer.json'));
   copyAssetIfMissing(join('devcontainer', 'docker-compose.yml'), join(projectDir, '.devcontainer', 'docker-compose.yml'));
+  // CI workflow
+  copyAssetIfMissing(join('ci', 'github-actions.yml'), join(projectDir, '.github', 'workflows', 'ci.yml'));
   // Optional Node version pinning if front-end present
   try {
     const nodeVersion = getNodeVersion();

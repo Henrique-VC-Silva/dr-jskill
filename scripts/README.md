@@ -234,7 +234,7 @@ cd my-project
 ```bash
 cd my-project
 ./mvnw -Pnative package
-./target/my-project-exec
+./target/my-project
 ```
 
 ### Docker Build

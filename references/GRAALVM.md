@@ -70,6 +70,10 @@ COPY frontend ./frontend
 # Build native image (full lifecycle: compile → process-aot → native compile)
 RUN ./mvnw -Pnative package -DskipTests
 
+# Move native executable to a known path (artifact name varies per project)
+RUN find target -maxdepth 1 -type f -executable ! -name '*.jar' ! -name 'mvnw' -print -quit \
+    | xargs -I{} cp {} native-app
+
 # Runtime stage with minimal base image
 FROM oraclelinux:9-slim
 
@@ -84,7 +88,7 @@ RUN useradd -m -u 1001 springboot
 WORKDIR /app
 
 # Copy the native executable from build stage
-COPY --from=build /app/target/*-exec native-app
+COPY --from=build /app/native-app native-app
 
 # Change ownership
 RUN chown -R springboot:springboot /app && \
@@ -108,9 +112,10 @@ CMD ["./native-app"]
 
 1. **Build Stage**: Uses GraalVM 25 Community Edition with Oracle Linux 9 (includes native-image toolchain)
 2. **Full Lifecycle**: Uses `package` (not `native:compile`) to ensure `process-aot` runs correctly
-3. **Multi-Stage**: Final image is minimal (Oracle Linux 9 Slim + native executable)
-4. **Non-Root User**: Runs as unprivileged user for security
-5. **Healthcheck**: Standard Spring Boot Actuator health endpoint
+3. **Portable Copy**: Uses `find` to locate the native binary by its executable flag, so the Dockerfile works regardless of artifact name
+4. **Multi-Stage**: Final image is minimal (Oracle Linux 9 Slim + native executable)
+5. **Non-Root User**: Runs as unprivileged user for security
+6. **Healthcheck**: Standard Spring Boot Actuator health endpoint
 
 ### Building the Native Image
 
@@ -260,8 +265,8 @@ public class MyRuntimeHints implements RuntimeHintsRegistrar {
 # Build native image locally (requires GraalVM installed)
 ./mvnw -Pnative package -DskipTests
 
-# Run the native executable
-./target/myapp-exec
+# Run the native executable (name matches your artifactId)
+./target/myapp
 
 # Test with Docker
 docker build -f Dockerfile-native -t myapp-native:test .
