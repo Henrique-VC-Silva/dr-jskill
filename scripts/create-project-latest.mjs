@@ -5,6 +5,7 @@
 import {
   getJavaVersion, getBootPreferredMajor, getBootFallback,
   resolveBootVersion, joinDependencies, downloadAndExtractProject, parseArgs,
+  applyDotfiles,
 } from './lib/versions.mjs';
 
 const PREFERRED_BOOT_MAJOR = getBootPreferredMajor();
@@ -84,6 +85,9 @@ await downloadAndExtractProject({
   javaVersion,
   dependencies,
 });
+
+// Apply dotfiles and editor-recommended settings
+applyDotfiles(projectName);
 
 console.log('');
 console.log(`✓ Spring Boot project created successfully in ./${projectName}`);

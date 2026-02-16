@@ -91,14 +91,15 @@ When creating Spring Boot projects:
 4. Use Spring Data JPA for database access
 5. Use PostgreSQL for database - see [Database Best Practices](references/DATABASE.md) for optimization
 6. Use properties files for configuration - see [Configuration Best Practices](references/CONFIGURATION.md)
-7. Use `spring-boot-docker-compose` for automatic database startup during development - see [Docker Guide](references/DOCKER.md)
-8. Follow RESTful API design principles
-9. Configure proper logging with Logback - see [Logging Best Practices](references/LOGGING.md)
-10. Use Maven for dependency management
-11. Include Spring Boot DevTools for development productivity
-12. Add Spring Security only when needed - see [Security Guide](references/SECURITY.md) for best practices
-13. Configure Docker for containerized deployments - see [Docker Guide](references/DOCKER.md)
-14. Enable GraalVM native image support for faster startup - see [GraalVM Guide](references/GRAALVM.md)
+7. Set up foundational dotfiles: `.gitignore`, `.env.sample`, `.editorconfig`, `.gitattributes`, `.dockerignore`, optional `.vscode/` - see [Project Setup & Dotfiles](references/PROJECT-SETUP.md)
+8. Use `spring-boot-docker-compose` for automatic database startup during development - see [Docker Guide](references/DOCKER.md)
+9. Follow RESTful API design principles
+10. Configure proper logging with Logback - see [Logging Best Practices](references/LOGGING.md)
+11. Use Maven for dependency management
+12. Include Spring Boot DevTools for development productivity
+13. Add Spring Security only when needed - see [Security Guide](references/SECURITY.md) for best practices
+14. Configure Docker for containerized deployments - see [Docker Guide](references/DOCKER.md)
+15. Enable GraalVM native image support for faster startup - see [GraalVM Guide](references/GRAALVM.md)
 
 ## Project Structure
 
@@ -107,6 +108,14 @@ The service layer is only included if it adds value (e.g. complex business logic
 Generated projects follow the following recommended structure:
 ```plaintext
 my-spring-boot-app/
+├── .gitignore                 # Java + front-end + secrets (see references/PROJECT-SETUP.md)
+├── .env.sample                # Template for local env vars; .env is gitignored
+├── .editorconfig              # Consistent formatting across IDEs
+├── .gitattributes             # Normalize line endings, better diffs
+├── .dockerignore              # Slim Docker build contexts
+├── .vscode/                   # Optional editor recommendations
+│   ├── extensions.json
+│   └── settings.json
 ├── src/
 │   ├── main/
 │   │   ├── java/

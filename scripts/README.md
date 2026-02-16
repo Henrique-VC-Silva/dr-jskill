@@ -125,6 +125,17 @@ node scripts/create-fullstack-project.mjs my-fullstack-app com.mycompany my-full
 
 **Note:** Full-stack projects include automatic Docker Compose support. When you run `./mvnw spring-boot:run`, PostgreSQL will start automatically if you have a `compose.yaml` file in your project root. TestContainers is included for writing integration tests with a real PostgreSQL database.
 
+## Dotfiles auto-applied
+
+After downloading from start.spring.io, the scripts **patch in** dotfiles:
+- `.gitignore` (merged with `assets/gitignore` — covers Java + front-end + secrets)
+- `.env.sample` (real `.env` is gitignored)
+- `.editorconfig`, `.gitattributes`, `.dockerignore`
+- optional `.vscode/` recommendations
+- optional `.nvmrc` / `.node-version` (uses Node version from `versions.json`)
+
+Existing files are preserved; `.gitignore` is appended once using a marker.
+
 ## Requirements
 
 - **Node.js** 22.x and **npm** 10.x (scripts use built-in `fetch` API, available since Node 18)

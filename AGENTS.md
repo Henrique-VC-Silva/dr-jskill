@@ -8,6 +8,7 @@
 - Build tool is **Maven only** (no Gradle).
 - **Flyway** is the supported migration tool (do not offer Liquibase).
 - Do not add OpenAPI/springdoc, feature toggles, Buildpacks, or Jib.
+- **Ship dotfiles**: ensure `.gitignore`, `.env.sample`, `.editorconfig`, `.gitattributes`, `.dockerignore`, optional `.vscode/` are added to generated projects (see `references/PROJECT-SETUP.md`).
 
 ## Versions Manifest
 Centralize versions in `versions.json`. Scripts load from `scripts/lib/versions.mjs` (JavaScript). Update this file first when bumping versions.

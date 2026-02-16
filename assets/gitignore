@@ -46,6 +46,7 @@ dependency-check-report.*
 .env
 .env.*
 .env.local
+!.env.sample
 
 # Native builds
 **/*.exe

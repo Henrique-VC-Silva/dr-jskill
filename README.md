@@ -38,6 +38,7 @@ At the moment, Dr JSkill is an experiment. If it is successful, it might join th
 For complete documentation, usage instructions, and best practices, see **[SKILL.md](SKILL.md)**.
 
 Additional references:
+- [Project Setup & Dotfiles](references/PROJECT-SETUP.md)
 - [Front-end Development Guides](references/) (Vue.js, React, Angular, Vanilla JS)
 - [Database Best Practices](references/DATABASE.md)
 - [Docker Deployment](references/DOCKER.md)

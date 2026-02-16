@@ -3,7 +3,7 @@
 
 import {
   getJavaVersion, resolveBootVersion, joinDependencies,
-  downloadAndExtractProject, parseArgs,
+  downloadAndExtractProject, parseArgs, applyDotfiles,
 } from './lib/versions.mjs';
 
 function usage() {
@@ -49,6 +49,7 @@ await downloadAndExtractProject({
   javaVersion,
   dependencies,
 });
+applyDotfiles(projectName);
 
 console.log(`✓ Spring Boot web application created successfully in ./${projectName}`);
 console.log(`  cd ${projectName}`);

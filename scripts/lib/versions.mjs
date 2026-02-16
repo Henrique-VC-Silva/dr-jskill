@@ -1,14 +1,16 @@
 #!/usr/bin/env node
 // Shared version utilities for dr-jskill scripts
 
-import { readFileSync, writeFileSync, existsSync, unlinkSync } from 'node:fs';
-import { resolve, dirname } from 'node:path';
+import { readFileSync, writeFileSync, existsSync, unlinkSync, mkdirSync, copyFileSync, appendFileSync } from 'node:fs';
+import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = process.env.ROOT_DIR || resolve(__dirname, '..', '..');
 const VERSIONS_FILE = process.env.VERSIONS_FILE || resolve(ROOT_DIR, 'versions.json');
+const ASSETS_DIR = resolve(ROOT_DIR, 'assets');
+const DOTFILES_MARKER = '# === dr-jskill additions ===';
 
 /** Read a value from versions.json */
 function getVersionValue(key, defaultValue = '') {
@@ -112,6 +114,64 @@ export async function downloadAndExtractProject(params) {
   await downloadFile(url, zipFile);
   extractZip(zipFile);
   unlinkSync(zipFile);
+}
+
+/**
+ * Append or merge .gitignore content. Preserves existing content; appends our template once.
+ */
+export function mergeGitignore(projectDir) {
+  const target = join(projectDir, '.gitignore');
+  const templatePath = resolve(ASSETS_DIR, 'gitignore');
+  if (!existsSync(templatePath)) return;
+  const templateContent = readFileSync(templatePath, 'utf8');
+  if (!existsSync(target)) {
+    writeFileSync(target, templateContent, 'utf8');
+    return;
+  }
+  const current = readFileSync(target, 'utf8');
+  if (current.includes(DOTFILES_MARKER)) return; // Already appended
+  const merged = `${current.trimEnd()}\n\n${DOTFILES_MARKER}\n${templateContent.trim()}\n`;
+  writeFileSync(target, merged, 'utf8');
+}
+
+function copyAssetIfMissing(assetName, destPath) {
+  const assetPath = resolve(ASSETS_DIR, assetName);
+  if (!existsSync(assetPath)) return;
+  if (existsSync(destPath)) return;
+  const destDir = dirname(destPath);
+  if (!existsSync(destDir)) mkdirSync(destDir, { recursive: true });
+  copyFileSync(assetPath, destPath);
+}
+
+function writeTextFileIfMissing(destPath, content) {
+  if (existsSync(destPath)) return;
+  const destDir = dirname(destPath);
+  if (!existsSync(destDir)) mkdirSync(destDir, { recursive: true });
+  writeFileSync(destPath, content, 'utf8');
+}
+
+/**
+ * Apply additional dotfiles after project extraction.
+ */
+export function applyDotfiles(projectDir) {
+  mergeGitignore(projectDir);
+  copyAssetIfMissing('env.sample', join(projectDir, '.env.sample'));
+  copyAssetIfMissing('editorconfig', join(projectDir, '.editorconfig'));
+  copyAssetIfMissing('gitattributes', join(projectDir, '.gitattributes'));
+  copyAssetIfMissing('dockerignore', join(projectDir, '.dockerignore'));
+  // Optional .vscode recommendations
+  copyAssetIfMissing(join('vscode', 'extensions.json'), join(projectDir, '.vscode', 'extensions.json'));
+  copyAssetIfMissing(join('vscode', 'settings.json'), join(projectDir, '.vscode', 'settings.json'));
+  // Optional Node version pinning if front-end present
+  try {
+    const nodeVersion = getNodeVersion();
+    if (nodeVersion) {
+      writeTextFileIfMissing(join(projectDir, '.nvmrc'), `${nodeVersion}\n`);
+      writeTextFileIfMissing(join(projectDir, '.node-version'), `${nodeVersion}\n`);
+    }
+  } catch (e) {
+    // Non-fatal
+  }
 }
 
 /**

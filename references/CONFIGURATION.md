@@ -239,6 +239,8 @@ API_KEY=your-api-key
 API_SECRET=your-api-secret
 ```
 
+> See also **[Project Setup & Dotfiles](./PROJECT-SETUP.md)** for `.env.sample` patterns, `.gitignore` rules, and `.dockerignore` recommendations.
+
 ## Configuration Properties Classes
 
 ### Type-Safe Configuration
