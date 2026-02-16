@@ -111,8 +111,8 @@ dependency-check-report.*
 SPRING_PROFILES_ACTIVE=dev
 
 # Database (PostgreSQL)
-DATABASE_URL=jdbc:postgresql://localhost:5432/myapp
-DATABASE_USERNAME=myapp
+DATABASE_URL=jdbc:postgresql://localhost:5432/mydb
+DATABASE_USERNAME=user
 DATABASE_PASSWORD=change-me
 
 # Testcontainers overrides (optional)

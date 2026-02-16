@@ -246,8 +246,8 @@ Configure your application using environment variables in docker-compose.yml:
 ```yaml
 environment:
   SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/mydb
-  SPRING_DATASOURCE_USERNAME: dbuser
-  SPRING_DATASOURCE_PASSWORD: dbpassword
+  SPRING_DATASOURCE_USERNAME: user
+  SPRING_DATASOURCE_PASSWORD: password
   SPRING_JPA_HIBERNATE_DDL_AUTO: update
   SERVER_PORT: 8080
 ```
@@ -402,10 +402,10 @@ docker compose logs -f
 ### Database Connection Issues
 ```bash
 # Check if PostgreSQL is ready
-docker exec postgres-db pg_isready -U dbuser
+docker exec postgres-db pg_isready -U user
 
 # Connect to database
-docker exec -it postgres-db psql -U dbuser -d mydb
+docker exec -it postgres-db psql -U user -d mydb
 ```
 
 ### Performance Monitoring
@@ -447,7 +447,7 @@ docker system prune -a
 ```
 
 ## Deployment Checklist
-- [ ] Update database credentials (change from default dbuser/dbpassword)
+- [ ] Update database credentials (change from default user/password)
 - [ ] Configure environment variables for production
 - [ ] **Pin versions**: Use specific tags (postgres:16-alpine, not latest)
 - [ ] **Java version**: Verify Java 25+ for Spring Boot 4

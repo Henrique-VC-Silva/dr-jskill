@@ -25,8 +25,8 @@
 ```properties
 # Datasource
 spring.datasource.url=jdbc:postgresql://localhost:5432/mydb
-spring.datasource.username=app
-spring.datasource.password=${DATABASE_PASSWORD:app}
+spring.datasource.username=user
+spring.datasource.password=${DATABASE_PASSWORD:password}
 spring.datasource.driver-class-name=org.postgresql.Driver
 
 # JPA
@@ -81,12 +81,12 @@ services:
     image: postgres:16-alpine
     environment:
       POSTGRES_DB: mydb
-      POSTGRES_USER: app
-      POSTGRES_PASSWORD: app
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "app"]
+      test: ["CMD", "pg_isready", "-U", "user"]
       interval: 10s
       timeout: 5s
       retries: 5
