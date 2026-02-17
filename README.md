@@ -14,6 +14,10 @@
   </tr>
 </table>
 
+## Video Introduction
+
+[![Dr JSkill Video](https://img.youtube.com/vi/Z8tWJ0NTy08/maxresdefault.jpg)](https://youtu.be/Z8tWJ0NTy08)
+
 ## What This Skill Provides
 
 - **Automated project generation** from https://start.spring.io with the latest available Spring Boot version
