@@ -16,7 +16,9 @@
 
 ## Video Introduction
 
-[![Dr JSkill Video](https://img.youtube.com/vi/Z8tWJ0NTy08/maxresdefault.jpg)](https://youtu.be/Z8tWJ0NTy08)
+<a href="https://youtu.be/Z8tWJ0NTy08">
+  <img src="https://img.youtube.com/vi/Z8tWJ0NTy08/hqdefault.jpg" alt="Dr JSkill Video" width="480" />
+</a>
 
 ## What This Skill Provides
 
