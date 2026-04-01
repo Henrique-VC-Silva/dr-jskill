@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 // Shared version utilities for dr-jskill scripts
 
-import { readFileSync, writeFileSync, existsSync, unlinkSync, mkdirSync, copyFileSync, appendFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, unlinkSync, mkdirSync, copyFileSync, appendFileSync, createWriteStream } from 'node:fs';
+import { pipeline } from 'node:stream/promises';
+import { Readable } from 'node:stream';
 import { resolve, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
@@ -12,11 +14,21 @@ const VERSIONS_FILE = process.env.VERSIONS_FILE || resolve(ROOT_DIR, 'versions.j
 const ASSETS_DIR = resolve(ROOT_DIR, 'assets');
 const DOTFILES_MARKER = '# === dr-jskill additions ===';
 
-/** Read a value from versions.json */
+/** Default timeout for HTTP requests (10 seconds) */
+const FETCH_TIMEOUT_MS = 10_000;
+
+/** Cached versions.json data — parsed once per process */
+let _versionsCache = undefined;
+
+/** Read a value from versions.json (cached after first read) */
 function getVersionValue(key, defaultValue = '') {
-  if (!existsSync(VERSIONS_FILE)) return defaultValue;
-  const data = JSON.parse(readFileSync(VERSIONS_FILE, 'utf8'));
-  const value = data[key];
+  if (_versionsCache === undefined) {
+    _versionsCache = existsSync(VERSIONS_FILE)
+      ? JSON.parse(readFileSync(VERSIONS_FILE, 'utf8'))
+      : null;
+  }
+  if (_versionsCache === null) return defaultValue;
+  const value = _versionsCache[key];
   return value != null && String(value).trim() !== '' ? String(value) : defaultValue;
 }
 
@@ -54,7 +66,7 @@ async function existsOnMavenCentral(version) {
   const groupPath = 'org/springframework/boot/spring-boot';
   const url = `https://repo1.maven.org/maven2/${groupPath}/${version}/spring-boot-${version}.pom`;
   try {
-    const res = await fetch(url, { method: 'HEAD' });
+    const res = await fetch(url, { method: 'HEAD', signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) });
     return res.ok;
   } catch {
     return false;
@@ -73,12 +85,19 @@ export async function resolveBootVersion(preferredMajor, fallback) {
   try {
     const response = await fetch('https://start.spring.io', {
       headers: { Accept: 'application/json' },
+      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
     });
     if (!response.ok) {
       console.error(`Warning: start.spring.io returned HTTP ${response.status}. Using fallback ${fallback}.`);
       return fallback;
     }
-    const metadata = await response.json();
+    let metadata;
+    try {
+      metadata = await response.json();
+    } catch {
+      console.error(`Warning: start.spring.io returned invalid JSON. Using fallback ${fallback}.`);
+      return fallback;
+    }
 
     // Try multiple metadata paths (API may evolve)
     const fetched = metadata?.bootVersion?.default
@@ -133,16 +152,18 @@ export function joinDependencies(...args) {
 }
 
 /**
- * Download a file from a URL and save it to disk.
- * Uses Node.js built-in fetch API.
+ * Download a file from a URL and stream it to disk.
+ * Uses Node.js built-in fetch API with streaming to avoid loading the entire
+ * response into memory.
  */
 export async function downloadFile(url, dest) {
-  const response = await fetch(url);
+  console.log(`  ⬇  Downloading from ${new URL(url).hostname}…`);
+  const response = await fetch(url, { signal: AbortSignal.timeout(60_000) });
   if (!response.ok) {
     throw new Error(`Failed to download: HTTP ${response.status} ${response.statusText}`);
   }
-  const buffer = Buffer.from(await response.arrayBuffer());
-  writeFileSync(dest, buffer);
+  const fileStream = createWriteStream(dest);
+  await pipeline(Readable.fromWeb(response.body), fileStream);
 }
 
 /**
@@ -175,6 +196,7 @@ export async function downloadAndExtractProject(params) {
   const zipFile = `${params.baseDir}.zip`;
 
   await downloadFile(url, zipFile);
+  console.log('  📦 Extracting project…');
   extractZip(zipFile);
   unlinkSync(zipFile);
 
@@ -183,6 +205,7 @@ export async function downloadAndExtractProject(params) {
     const mainClassName = toCamelCase(params.name) + 'Application';
     patchPomStartClass(params.baseDir, `${params.packageName}.${mainClassName}`);
   }
+  console.log('  ✅ Project extracted successfully.');
 }
 
 /**
@@ -270,6 +293,7 @@ function stripFrontendCopyLines(filePath) {
 export function applyDotfiles(projectDir, options = {}) {
   const hasDatabase = options.database === true;
   const hasFrontend = options.frontend === true;
+  console.log('  📄 Applying dotfiles and Docker assets…');
   mergeGitignore(projectDir);
   copyAssetIfMissing('env.sample', join(projectDir, '.env.sample'));
   copyAssetIfMissing('editorconfig', join(projectDir, '.editorconfig'));

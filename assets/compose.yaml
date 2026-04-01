@@ -19,6 +19,7 @@ services:
     deploy:
       resources:
         limits:
+          cpus: "1.0"
           memory: 512m
     volumes:
       - postgres_data:/var/lib/postgresql/data

@@ -122,6 +122,100 @@ volumes:
 - **Schema Validation:** Keep `spring.jpa.hibernate.ddl-auto=validate` in prod.
 - **UTF-8:** Ensure DB encoding is UTF8 (default for official Postgres images).
 
+## Performance Optimization
+
+### Avoiding N+1 Queries
+The most common JPA performance issue. Use `JOIN FETCH` or `@EntityGraph` to load associations in a single query:
+
+```java
+// BAD: triggers N+1 — one query per order's items
+List<Order> orders = orderRepository.findAll();
+orders.forEach(o -> o.getItems().size()); // N extra queries
+
+// GOOD: single query with JOIN FETCH
+@Query("SELECT o FROM Order o JOIN FETCH o.items WHERE o.status = :status")
+List<Order> findByStatusWithItems(@Param("status") String status);
+
+// GOOD: declarative with @EntityGraph
+@EntityGraph(attributePaths = {"items"})
+List<Order> findByStatus(String status);
+```
+
+Enable Hibernate statistics in development to detect N+1 issues:
+```properties
+# Development only — disable in production
+spring.jpa.properties.hibernate.generate_statistics=true
+logging.level.org.hibernate.stat=DEBUG
+```
+
+### Pagination
+Always paginate large result sets. Never use unbounded `findAll()` in production:
+
+```java
+// Repository
+Page<AppUser> findByActiveTrue(Pageable pageable);
+
+// Controller
+@GetMapping("/users")
+Page<AppUser> listUsers(@RequestParam(defaultValue = "0") int page,
+                        @RequestParam(defaultValue = "20") int size) {
+    return userRepository.findByActiveTrue(PageRequest.of(page, size, Sort.by("login")));
+}
+```
+
+### Batch Operations
+For bulk inserts/updates, configure Hibernate batching:
+
+```properties
+spring.jpa.properties.hibernate.jdbc.batch_size=25
+spring.jpa.properties.hibernate.order_inserts=true
+spring.jpa.properties.hibernate.order_updates=true
+```
+
+Use `saveAll()` instead of individual `save()` calls inside loops:
+```java
+// BAD: N individual INSERT statements
+items.forEach(item -> repository.save(item));
+
+// GOOD: batched — Hibernate groups INSERTs
+repository.saveAll(items);
+```
+
+### Connection Pool Sizing
+HikariCP pool size should match your workload. A good starting formula:
+
+```properties
+# connections = (2 × CPU cores) + effective_spindle_count
+# For a typical 4-core server with SSD:
+spring.datasource.hikari.maximum-pool-size=10
+spring.datasource.hikari.minimum-idle=5
+spring.datasource.hikari.idle-timeout=300000
+spring.datasource.hikari.max-lifetime=1800000
+spring.datasource.hikari.connection-timeout=30000
+```
+
+### Caching
+For read-heavy data that changes infrequently, enable Hibernate second-level cache:
+
+```properties
+spring.jpa.properties.hibernate.cache.use_second_level_cache=true
+spring.jpa.properties.hibernate.cache.region.factory_class=org.hibernate.cache.jcache.JCacheRegionFactory
+```
+
+```java
+@Entity
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+public class Country { ... }
+```
+
+For application-level caching, use Spring's `@Cacheable`:
+```java
+@Cacheable("users")
+public AppUser findByLogin(String login) {
+    return userRepository.findByLogin(login);
+}
+```
+
 ## Local Developer Experience
 - Enable `spring-boot-docker-compose` (Boot 3.1+) to auto-start `compose.yaml` on `./mvnw spring-boot:run`.
 - Provide `.env.sample` with placeholders: `DATABASE_PASSWORD`, etc. (see [Project Setup](PROJECT-SETUP.md)).
