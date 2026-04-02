@@ -110,7 +110,7 @@ Add Spring Security starter to your `pom.xml`:
 <!-- For OAuth2 support -->
 <dependency>
     <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+    <artifactId>spring-boot-starter-security-oauth2-resource-server</artifactId>
 </dependency>
 ```
 

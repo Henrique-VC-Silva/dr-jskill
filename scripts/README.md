@@ -168,7 +168,7 @@ These JavaScript scripts work natively on:
 - All scripts create projects with Java packaging (JAR)
 - The scripts will create a new directory with your project name in the current directory
 - If a directory with the same name already exists, the unzip operation may fail
-- **Testing support**: All projects include `spring-boot-starter-test` (JUnit 5, Mockito, AssertJ)
+- **Testing support**: All projects include `spring-boot-starter-test` (JUnit 5, Mockito, AssertJ). For `@WebMvcTest` support in Spring Boot 4, `spring-boot-starter-webmvc-test` is also required.
 - **TestContainers**: Full-stack projects include TestContainers for integration testing with PostgreSQL
 - Spring Boot DevTools is included for development productivity
 - No Spring Security is included by default

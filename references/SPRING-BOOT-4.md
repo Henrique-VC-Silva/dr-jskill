@@ -556,6 +556,11 @@ management.metrics.mongo.* → management.metrics.mongodb.*
 - `spring-boot-starter-aop` renamed to `spring-boot-starter-aspectj`
 - Only add if you actually use AspectJ (`@Aspect` annotations)
 
+#### OAuth2 / Security Starters
+- `spring-boot-starter-oauth2-resource-server` renamed to `spring-boot-starter-security-oauth2-resource-server`
+- `spring-boot-starter-oauth2-client` renamed to `spring-boot-starter-security-oauth2-client`
+- `spring-boot-starter-oauth2-authorization-server` renamed to `spring-boot-starter-security-oauth2-authorization-server`
+
 #### Classic Loader
 Classic uber-jar loader removed:
 ```xml
@@ -622,6 +627,7 @@ For war deployment to Tomcat:
 - [ ] No Undertow references
 - [ ] Jackson 3 package names (or using compatibility mode)
 - [ ] Technology-specific starters added where needed
+- [ ] OAuth2 starters renamed: `spring-boot-starter-oauth2-*` → `spring-boot-starter-security-oauth2-*`
 - [ ] MongoDB properties renamed if applicable
 - [ ] Spring Batch database starter if needed
 - [ ] Elasticsearch client updated to Rest5Client
