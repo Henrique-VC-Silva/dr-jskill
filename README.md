@@ -48,7 +48,7 @@ To create a new project:
 Use Dr JSkill to create a new Todo List application.
 
 - Features: add/edit/remove todos
-- A fancy UI with nice effects
+- A fancy UI using Vite + Vue, with nice effects
 - Data stored in a database
 - No security
 ``` 
