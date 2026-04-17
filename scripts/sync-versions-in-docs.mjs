@@ -52,6 +52,11 @@ const docs = {
     ['PostgreSQL', versions.postgresVersion],
     ['Java (Temurin)', versions.temurinVersion],
   ],
+  'references/GRAALVM.md': [
+    ['GraalVM', versions.graalvmVersion],
+    ['Java (Temurin)', versions.temurinVersion],
+    ['PostgreSQL', versions.postgresVersion],
+  ],
 };
 
 function renderTable(rows) {

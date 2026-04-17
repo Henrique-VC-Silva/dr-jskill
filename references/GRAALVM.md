@@ -1,13 +1,26 @@
 # GraalVM Native Image Guide for Spring Boot Applications
 
+## Versions
+
+<!-- versions:start -->
+| Tool | Version |
+|------|---------|
+| GraalVM | 25 |
+| Java (Temurin) | 25 |
+| PostgreSQL | 18 |
+<!-- versions:end -->
+
+Run `node scripts/sync-versions-in-docs.mjs` at the repo root to keep this
+table aligned with `versions.json`.
+
 ## Contents
 - [Overview](#overview)
+- [Agent instructions — ask the user first](#agent-instructions--ask-the-user-first)
 - [Prerequisites](#prerequisites)
 - [Docker-Based Native Builds (Recommended)](#docker-based-native-builds-recommended)
 - [Spring Boot Configuration for Native Images](#spring-boot-configuration-for-native-images)
 - [Testing Native Images](#testing-native-images)
 - [Troubleshooting](#troubleshooting)
-- [Advanced Topics](#advanced-topics)
 - [CI/CD Integration](#cicd-integration)
 - [References](#references)
 
@@ -21,11 +34,54 @@ This guide covers building GraalVM native images for Spring Boot 4 applications 
 3. **Optimized Performance**: Ahead-of-time compilation optimizes code at build time
 4. **Improved Security**: Smaller attack surface with only required dependencies
 
+## Agent instructions — ask the user first
+
+> **If you are an AI agent applying this guide, do not blindly copy the
+> Dockerfile or pom.xml snippets.** Interview the user first, inspect the
+> target project, and tailor the output.
+
+Ask the user:
+
+| Question | Why it matters | Default |
+|---|---|---|
+| Is this a **fresh project** or are you **retrofitting** native support onto an existing one? | Retrofit requires surgical `pom.xml` edits (profile, `start-class`), not a full rewrite. | ask |
+| Do you want to build **only via Docker**, or also **locally** with GraalVM installed? | Local builds need `sdk install java 25-graalce` (or equivalent); Docker works out of the box. | Docker only |
+| Does the project have a `frontend/` directory (Vite/Vue/React/Angular)? | If not, the `COPY frontend ./frontend` line must be removed from the Dockerfile. | detect it |
+| Should the frontend be built inside the native image, or served separately? | The default Dockerfile assumes frontend is built by `frontend-maven-plugin` during `mvn package`. | built-in |
+| Do you want a **native integration test** (`@SpringBootTest` with the native profile)? | Native tests add ~10–15 min to CI runs; skip unless required. | No |
+| How much RAM can Docker use on this machine? | Native compilation needs **≥ 8 GB**. Warn if the user reports less. | check |
+
+Also run these pre-flight checks and report results before editing anything:
+
+```bash
+# Is Docker running?
+docker info --format '{{.ServerVersion}} / {{.MemTotal}}' 2>/dev/null \
+  || echo "Docker not reachable — start Docker Desktop / dockerd first."
+
+# Does pom.xml already declare a native profile?
+grep -q "<id>native</id>" pom.xml && echo "native profile already present" \
+  || echo "native profile needs to be added"
+
+# Is start-class set? (required for Spring Boot's process-aot goal)
+grep -q "<start-class>" pom.xml && echo "start-class present" \
+  || echo "start-class missing — must be added"
+
+# Frontend directory?
+test -d frontend && echo "frontend/ detected" || echo "no frontend/ — adjust Dockerfile"
+
+# artifactId (used as the native executable name under target/)
+./mvnw -q help:evaluate -Dexpression=project.artifactId -DforceStdout
+```
+
+Derive the **`start-class`** from `project.artifactId`: convert
+`my-cool-app` → `MyCoolAppApplication` under the base package. Confirm with
+the user before writing it to `pom.xml`.
+
 ## Prerequisites
 
-1. Docker installed and running
+1. Docker installed and running (≥ 8 GB RAM allocated)
 2. Spring Boot 4 application with Maven
-3. GraalVM 25+ (automatically handled in Dockerfile)
+3. GraalVM 25+ *(only for local builds — the Dockerfile handles this in CI and Docker builds)*
 4. Sufficient build resources (native compilation is resource-intensive)
 
 ## Docker-Based Native Builds (Recommended)
@@ -106,12 +162,12 @@ ENTRYPOINT ["./native-app"]
 
 **Key Points:**
 
-1. **Build Stage**: Uses GraalVM 25 Community Edition with Oracle Linux 9 (includes native-image toolchain, JDK 25)
-2. **Native Compile**: Uses `native:compile -Pnative` to directly invoke the GraalVM native image compilation
-3. **Portable Copy**: First tries `target/<artifactId>` (the default native output), then falls back to `find` to locate any executable binary
-4. **Debian Slim Runtime**: Final image uses `debian:12-slim` (~80 MB, glibc-based) — includes all shared libraries the native binary needs
-5. **Non-Root User**: Runs as unprivileged user (UID 1001) for security
-6. **Healthcheck**: Standard Spring Boot Actuator health endpoint via curl
+1. **Build Stage**: Uses GraalVM 25 Community Edition (Oracle Linux 9) — includes the `native-image` toolchain and JDK 25.
+2. **Native Compile**: `./mvnw native:compile -Pnative -DskipTests` invokes GraalVM's `native-image` via the `native-maven-plugin`.
+3. **Portable Copy**: First tries `target/<artifactId>` (the default native output), then falls back to `find` so the Dockerfile works regardless of Maven's output name.
+4. **Distroless Runtime**: Final image is `gcr.io/distroless/base-debian12` (~20 MB, glibc-based) — ships the shared libraries the native binary needs, nothing else. No shell, no package manager.
+5. **Non-Root User**: Runs as the built-in `nonroot` user (UID **65532**) provided by distroless.
+6. **No Dockerfile HEALTHCHECK**: Distroless has no shell, `curl`, or `wget`. Define health checks in Docker Compose / Kubernetes / your orchestrator against `GET /actuator/health` (Spring Boot Actuator is enabled by the skill).
 
 ### Building the Native Image
 
@@ -365,22 +421,6 @@ Before deploying native images, verify:
 - [ ] Docker image size is reasonable (< 200 MB)
 - [ ] Memory usage is stable under load
 - [ ] No reflection or resource loading errors in logs
-
-## Advanced Topics
-
-### Buildpacks Alternative
-
-Spring Boot also supports Cloud Native Buildpacks for native images:
-
-```bash
-# Build with buildpacks (alternative to Dockerfile)
-./mvnw spring-boot:build-image -Pnative
-
-# Run the image
-docker run -p 8080:8080 myapp:latest
-```
-
-**Note:** This guide focuses on Dockerfiles for consistency and control, but buildpacks are a valid alternative.
 
 ## CI/CD Integration
 
