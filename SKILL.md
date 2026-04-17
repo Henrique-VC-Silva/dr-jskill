@@ -15,7 +15,7 @@ Centralized versions live in `versions.json`. All scripts read from it via `scri
 ## Prerequisites
 
 1. Java 25 installed
-2. Node.js 22.x and NPM 10.x (for front-end development)
+2. Node.js 24.x and NPM 11.x (for front-end development)
 3. Docker installed and running
 
 ## Capabilities
@@ -26,8 +26,8 @@ Centralized versions live in `versions.json`. All scripts read from it via `scri
 - Docker support for containerized deployments
 - Front-end development with multiple framework options:
   - **Vue.js 3** (default) - Progressive framework with Composition API
-  - **React 18** - Popular library for building user interfaces
-  - **Angular 19** - Full-featured framework with TypeScript
+  - **React 19** - Popular library for building user interfaces
+  - **Angular 21** - Full-featured framework with TypeScript
   - **Vanilla JavaScript** - No framework, pure ES6+ with Vite
 
 ## Usage
@@ -116,7 +116,7 @@ my-spring-boot-app/
 ├── .vscode/                   # Optional editor recommendations
 │   ├── extensions.json
 │   └── settings.json
-├── .devcontainer/             # Optional Dev Container (Java 25 + Node 22 + PostgreSQL)
+├── .devcontainer/             # Optional Dev Container (Java 25 + Node 24 + PostgreSQL)
 │   ├── devcontainer.json
 │   └── docker-compose.yml
 ├── src/
@@ -178,8 +178,8 @@ See the [Testing Guide](references/TEST.md) for unit tests (Mockito, `@WebMvcTes
 Choose a front-end framework:
 
 - **Vue.js 3** (default) ⭐ → [Vue.js Guide](references/VUE.md)
-- **React 18** → [React Guide](references/REACT.md)
-- **Angular 19** → [Angular Guide](references/ANGULAR.md)
+- **React 19** → [React Guide](references/REACT.md)
+- **Angular 21** → [Angular Guide](references/ANGULAR.md)
 - **Vanilla JavaScript** (no framework) → [Vanilla JS Guide](references/VANILLA-JS.md)
 
 All options include: Vite/CLI dev server with hot reload, Bootstrap 5.3+, SPA routing, and automatic build into the Spring Boot JAR.
@@ -229,8 +229,8 @@ Once the project is generated, go through the steps above to ensure that the gen
 
 **Front-End Development:**
 - [Vue.js Development Guide](references/VUE.md) - Vue.js 3 with Vite (default)
-- [React Development Guide](references/REACT.md) - React 18 with Vite
-- [Angular Development Guide](references/ANGULAR.md) - Angular 19 with Angular CLI
+- [React Development Guide](references/REACT.md) - React 19 with Vite
+- [Angular Development Guide](references/ANGULAR.md) - Angular 21 with Angular CLI
 - [Vanilla JS Development Guide](references/VANILLA-JS.md) - Pure ES6+ with Vite
 
 **Project Setup:**

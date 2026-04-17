@@ -15,15 +15,15 @@
 - [Additional Resources](#additional-resources)
 
 ## Overview
-This guide covers creating front-end applications for Spring Boot using **Vue.js 3** and **Vite 5**, with hot reload during development and optimized production builds integrated into the Spring Boot package.
+This guide covers creating front-end applications for Spring Boot using **Vue.js 3** and **Vite 8**, with hot reload during development and optimized production builds integrated into the Spring Boot package.
 
 ## Versions (managed via `versions.json`)
 | Tool | Version |
 |------|---------|
-| Node.js | 22.14.0 |
-| npm | 10.9.4 |
+| Node.js | 24.15.0 |
+| npm | 11.12.1 |
 | Vue.js | 3.x |
-| Vite | 5.x |
+| Vite | 8.x |
 | Pinia | 2.x |
 | Vue Router | 4.x |
 
@@ -169,8 +169,8 @@ Add to your `pom.xml`:
                         <goal>install-node-and-npm</goal>
                     </goals>
                     <configuration>
-                        <nodeVersion>v22.14.0</nodeVersion>
-                        <npmVersion>10.9.4</npmVersion>
+                        <nodeVersion>v24.15.0</nodeVersion>
+                        <npmVersion>11.12.1</npmVersion>
                     </configuration>
                 </execution>
                 

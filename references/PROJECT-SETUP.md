@@ -22,9 +22,9 @@
 - **.editorconfig** → enforce indentation, charset, LF endings, trim trailing whitespace
 - **.gitattributes** → normalize line endings, mark binary files, improve diffs
 - **.dockerignore** → keep Docker build context lean; exclude `target/`, `node_modules/`, `.git/`, etc.
-- **.devcontainer/** (optional) → reproducible Dev Container with Java 25, Node 22, PostgreSQL
+- **.devcontainer/** (optional) → reproducible Dev Container with Java 25, Node 24, PostgreSQL
 - **.vscode/** (optional) → recommended extensions/settings (Java, Spring, YAML, Docker)
-- **.nvmrc / .node-version** (optional) → pin Node 22.x for front-end builds
+- **.nvmrc / .node-version** (optional) → pin Node 24.x for front-end builds
 
 ---
 
@@ -224,7 +224,7 @@ coverage
 
 ## DevContainer Setup
 
-A [Dev Container](https://containers.dev/) gives every contributor the same pre-configured environment — Java 25, Node 22, Maven, Docker-in-Docker, and a PostgreSQL sidecar — without installing anything locally beyond VS Code / GitHub Codespaces.
+A [Dev Container](https://containers.dev/) gives every contributor the same pre-configured environment — Java 25, Node 24, Maven, Docker-in-Docker, and a PostgreSQL sidecar — without installing anything locally beyond VS Code / GitHub Codespaces.
 
 The skill ships two files in `assets/devcontainer/`; the generator copies them to `.devcontainer/` in the project root.
 
@@ -288,7 +288,7 @@ The skill ships two files in `assets/devcontainer/`; the generator copies them t
 |---------|-----|
 | `dockerComposeFile` | Lets the container depend on a PostgreSQL service instead of requiring `spring-boot-docker-compose` to start one |
 | `features/java` | Installs Eclipse Temurin 25 + Maven wrapper support |
-| `features/node` | Installs Node 22 so `npm run dev` works for the front-end |
+| `features/node` | Installs Node 24 so `npm run dev` works for the front-end |
 | `features/docker-in-docker` | Lets Testcontainers and `docker build` work inside the container |
 | `postCreateCommand` | Pre-fetches Maven dependencies so the first build is fast |
 | `forwardPorts` | Exposes the Spring Boot app (8080), Vite dev server (5173), and PostgreSQL (5432) |
@@ -307,7 +307,7 @@ services:
         condition: service_healthy
 
   postgres:
-    image: postgres:16-alpine
+    image: postgres:18-alpine
     restart: unless-stopped
     environment:
       POSTGRES_DB: mydb
@@ -366,7 +366,7 @@ spring.datasource.password=${SPRING_DATASOURCE_PASSWORD:password}
   }
   ```
 - **`.vscode/settings.json`**: enable format-on-save, set Java code style, Prettier, ESLint, files.eol = "\n".
-- **`.nvmrc` / `.node-version`**: set `22.14.0` (kept in `versions.json`).
+- **`.nvmrc` / `.node-version`**: set `24.15.0` (kept in `versions.json`).
 - **`.mvn/wrapper`**: already provided by start.spring.io; keep `mvnw` executable.
 - **`.prettierignore` / `.eslintignore`** (if front-end added): ignore generated assets and `target/`.
 - **`.testcontainers.properties`** (optional): tune reuse, Docker host, etc. Keep it **ignored** if it contains sensitive overrides.

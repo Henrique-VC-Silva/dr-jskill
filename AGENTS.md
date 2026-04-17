@@ -3,7 +3,7 @@
 - You MUST follow the Agents Skills specifications at: https://agentskills.io/home
 - When doing a script, you MUST do a JavaScript (Node.js) script that works on Mac OS X, Windows and Linux.
   - Scripts use ES modules (`.mjs` extension) and only Node.js built-in APIs (no npm dependencies).
-  - Node.js 22.x and npm 10.x are prerequisites.
+  - Node.js 24.x and npm 11.x are prerequisites.
 - NEVER propose to use Lombok in the generated projects (add Maven Enforcer/ArchUnit checks in generated templates).
 - Build tool is **Maven only** (no Gradle).
 - **Hibernate ddl-auto** is the supported database initialization mechanism (`spring.jpa.hibernate.ddl-auto`). Do not offer Liquibase or Flyway.
@@ -26,7 +26,7 @@ To update all versions of tools, libraries, and frameworks in this skill, update
    - The `create-project-latest.mjs` script automatically fetches the latest version from start.spring.io
    - For manual updates, check: https://spring.io/projects/spring-boot
 
-3. **PostgreSQL version**: Currently 16
+3. **PostgreSQL version**: Currently 18
    - Update in: `assets/compose.yaml`, `assets/docker-compose.yml`, `assets/docker-compose-native.yml`
    - Update references in: `references/TEST.md`, `references/DOCKER.md`, `references/DATABASE.md`
    - Check latest at: https://www.postgresql.org/
@@ -44,11 +44,11 @@ To update all versions of tools, libraries, and frameworks in this skill, update
    - Check latest at: https://www.graalvm.org/
 
 ### Front-End (All Frameworks)
-7. **Node.js version**: Currently v22.14.0
+7. **Node.js version**: Currently v24.15.0
    - Update in: `references/VUE.md`, `references/REACT.md`, `references/ANGULAR.md`, `references/VANILLA-JS.md`
    - Check latest LTS at: https://nodejs.org/
 
-8. **npm version**: Currently 10.9.4
+8. **npm version**: Currently 11.12.1
    - Update in: `references/VUE.md`, `references/REACT.md`, `references/ANGULAR.md`, `references/VANILLA-JS.md`
    - Check latest at: https://www.npmjs.com/package/npm
 
@@ -57,7 +57,7 @@ To update all versions of tools, libraries, and frameworks in this skill, update
    - Check latest at: https://github.com/eirslett/frontend-maven-plugin/releases
 
 ### Framework-Specific Versions
-10. **Vite**: Currently 5.x
+10. **Vite**: Currently 8.x
    - Update in: `references/VUE.md`, `references/REACT.md`, `references/VANILLA-JS.md`
    - Check latest at: https://vitejs.dev/
 
@@ -69,11 +69,11 @@ To update all versions of tools, libraries, and frameworks in this skill, update
     - Update in: `references/VUE.md`, `SKILL.md`, `README.md`
     - Check latest at: https://vuejs.org/
 
-13. **React**: Currently 18.x
+13. **React**: Currently 21.x
     - Update in: `references/REACT.md`, `SKILL.md`, `README.md`
     - Check latest at: https://react.dev/
 
-14. **Angular**: Currently 19.x
+14. **Angular**: Currently 21.x
     - Update in: `references/ANGULAR.md`, `SKILL.md`, `README.md`
     - Check latest at: https://angular.io/
 

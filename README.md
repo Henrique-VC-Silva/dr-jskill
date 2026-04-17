@@ -174,7 +174,7 @@ This skill follows the [Agent Skills specification](https://agentskills.io/speci
 
 ## Requirements
 
-- Node.js 22.x and npm 10.x
+- Node.js 24.x and npm 11.x
 - Java 25
 - Docker (for containerized deployments)
 

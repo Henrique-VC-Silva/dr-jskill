@@ -28,7 +28,7 @@ This guide covers Docker deployment for Spring Boot 4 applications, including bo
 
 1. Eclipse Temurin 25 official images (Alpine-based for smaller footprint)
 2. GraalVM 25 for native images (required for Spring Boot 4)
-3. PostgreSQL 16 Alpine (smaller, more secure)
+3. PostgreSQL 18 Alpine (smaller, more secure)
 4. Optimized JVM flags for container environments
 5. curl installed for healthchecks
 6. Non-root user security
@@ -61,7 +61,7 @@ Create a `compose.yaml` file in your project root (or copy from `assets/compose.
 ```yaml
 services:
   postgres:
-    image: postgres:16-alpine
+    image: postgres:18-alpine
     environment:
       POSTGRES_DB: mydb
       POSTGRES_USER: user
@@ -181,13 +181,13 @@ docker run -p 8080:8080 my-spring-app-native
 **Note**: Native compilation takes longer but results in a much faster runtime application.
 
 ### 3. docker-compose.yml (JVM with Database)
-Complete stack with PostgreSQL 16 database and Spring Boot application.
+Complete stack with PostgreSQL 18 database and Spring Boot application.
 
 **Location**: Copy to your project root
 
 **Features**:
 
-1. PostgreSQL 16 Alpine (lightweight, production-ready)
+1. PostgreSQL 18 Alpine (lightweight, production-ready)
 2. Spring Boot application service
 3. Automatic database connection configuration
 4. Health checks for both services
@@ -215,14 +215,14 @@ docker compose down -v
 - Database: localhost:5432
 
 ### 4. docker-compose-native.yml (Native with Database)
-Complete stack using GraalVM 25 native image with PostgreSQL 16.
+Complete stack using GraalVM 25 native image with PostgreSQL 18.
 
 **Location**: Copy to your project root
 
 **Features**:
 - All benefits of docker-compose.yml
 - Uses GraalVM 25 native Spring Boot image
-- PostgreSQL 16 Alpine for smaller footprint
+- PostgreSQL 18 Alpine for smaller footprint
 - Faster startup times (<100ms vs several seconds)
 - Lower resource usage (50-75% less memory)
 
@@ -317,14 +317,14 @@ To enable GraalVM native compilation, add to your `pom.xml`:
 
 ### 1. Image Optimization
 - Use multi-stage builds to minimize final image size (both Dockerfiles use this)
-- Use Alpine or slim variants: `postgres:16-alpine`, `eclipse-temurin:25-jre-alpine`
+- Use Alpine or slim variants: `postgres:18-alpine`, `eclipse-temurin:25-jre-alpine`
 - Clean up package manager cache after installations
 - Copy only necessary files
 - Use `.dockerignore` to exclude unnecessary files
 
 ### 2. Security
 - Run as non-root user (both Dockerfiles implement this)
-- **Pin specific versions** in production (postgres:16-alpine, not latest)
+- **Pin specific versions** in production (postgres:18-alpine, not latest)
 - Use official images: Eclipse Temurin for Java, postgres:alpine for database
 - Scan images for vulnerabilities: `docker scout cves my-app`
 - Keep base images updated
@@ -449,7 +449,7 @@ docker system prune -a
 ## Deployment Checklist
 - [ ] Update database credentials (change from default user/password)
 - [ ] Configure environment variables for production
-- [ ] **Pin versions**: Use specific tags (postgres:16-alpine, not latest)
+- [ ] **Pin versions**: Use specific tags (postgres:18-alpine, not latest)
 - [ ] **Java version**: Verify Java 25+ for Spring Boot 4
 - [ ] **GraalVM version**: Use GraalVM 25+ for native images
 - [ ] Set up health checks (already configured in provided files)

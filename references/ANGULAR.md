@@ -15,15 +15,15 @@
 - [Additional Resources](#additional-resources)
 
 ## Overview
-This guide covers creating front-end applications for Spring Boot using Angular 19 and Angular CLI, with hot reload during development and optimized production builds integrated into the Spring Boot package.
+This guide covers creating front-end applications for Spring Boot using Angular 21 and Angular CLI, with hot reload during development and optimized production builds integrated into the Spring Boot package.
 
 ## Versions (managed via `versions.json`)
 | Tool | Version |
 |------|---------|
-| Node.js | 22.14.0 |
-| npm | 10.9.4 |
-| Angular | 19.x |
-| Angular Router | 19.x |
+| Node.js | 24.15.0 |
+| npm | 11.12.1 |
+| Angular | 21.x |
+| Angular Router | 21.x |
 
 > Use `npx @angular/cli@latest` to scaffold; keep alignment with `engines` constraints. No OpenAPI client generation provided.
 
@@ -173,8 +173,8 @@ Add to your `pom.xml`:
                         <goal>install-node-and-npm</goal>
                     </goals>
                     <configuration>
-                        <nodeVersion>v22.14.0</nodeVersion>
-                        <npmVersion>10.9.4</npmVersion>
+                        <nodeVersion>v24.15.0</nodeVersion>
+                        <npmVersion>11.12.1</npmVersion>
                     </configuration>
                 </execution>
                 
@@ -486,7 +486,7 @@ import { Component } from '@angular/core';
         <div class="col-lg-8 mx-auto">
           <h1 class="display-4">Welcome to Spring Boot</h1>
           <p class="lead">
-            A modern web application built with Spring Boot and Angular 19.
+            A modern web application built with Spring Boot and Angular 21.
           </p>
 
           <div class="card mt-4">

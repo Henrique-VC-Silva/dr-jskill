@@ -72,7 +72,7 @@ class TestcontainersConfiguration {
   @Bean
   @ServiceConnection
   PostgreSQLContainer postgresContainer() {
-    return new PostgreSQLContainer("postgres:16-alpine");
+    return new PostgreSQLContainer("postgres:18-alpine");
   }
 }
 ```
@@ -317,7 +317,7 @@ class TestcontainersConfiguration {  // ✅ Note: package-private (no public mod
     @Bean
     @ServiceConnection
     PostgreSQLContainer postgresContainer() {
-        return new PostgreSQLContainer("postgres:16-alpine");
+        return new PostgreSQLContainer("postgres:18-alpine");
     }
 }
 ```
@@ -616,7 +616,7 @@ This naming convention allows:
 - Test complete user flows and edge cases
 
 ### 4. TestContainers Configuration
-- Use lightweight PostgreSQL Alpine image (`postgres:16-alpine`)
+- Use lightweight PostgreSQL Alpine image (`postgres:18-alpine`)
 - Share container across tests with `@Container static` field
 - Use `@ServiceConnection` for automatic Spring Boot configuration
 - Container starts once per test class, improving performance

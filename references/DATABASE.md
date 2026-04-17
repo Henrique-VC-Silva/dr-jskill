@@ -17,7 +17,7 @@
 - **Engine:** PostgreSQL (preferred version: **16**; configure in `versions.json`).
 - **Schema management:** ✅ **Hibernate ddl-auto** — schema derived from `@Entity` classes. Do not offer Flyway or Liquibase.
 - **Driver:** `org.postgresql:postgresql` (bundled via start.spring.io dependency).
-- **Testcontainers:** Use `postgres:16-alpine` images.
+- **Testcontainers:** Use `postgres:18-alpine` images.
 
 ## Spring Boot Configuration
 
@@ -87,7 +87,7 @@ class TestcontainersConfiguration {
   @Bean
   @ServiceConnection
   PostgreSQLContainer postgresContainer() {
-    return new PostgreSQLContainer("postgres:16-alpine")
+    return new PostgreSQLContainer("postgres:18-alpine")
       .withReuse(true);
   }
 }
@@ -99,7 +99,7 @@ Use `@Import(TestcontainersConfiguration.class)` in integration tests. Keep clas
 ```yaml
 services:
   postgres:
-    image: postgres:16-alpine
+    image: postgres:18-alpine
     environment:
       POSTGRES_DB: mydb
       POSTGRES_USER: user
