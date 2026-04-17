@@ -378,9 +378,10 @@ export function initRouter() {
   
   // Handle link clicks
   document.addEventListener('click', (e) => {
-    if (e.target.matches('[data-link]')) {
+    const link = e.target.closest('[data-link]')
+    if (link) {
       e.preventDefault()
-      navigate(e.target.getAttribute('href'))
+      navigate(link.getAttribute('href'))
     }
   })
   
