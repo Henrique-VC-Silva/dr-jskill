@@ -15,7 +15,7 @@ table aligned with `versions.json`.
 
 ## Contents
 - [Overview](#overview)
-- [Agent instructions — ask the user first](#agent-instructions--ask-the-user-first)
+- [Agent instructions — detect first, ask only if ambiguous](#agent-instructions--detect-first-ask-only-if-ambiguous)
 - [Prerequisites](#prerequisites)
 - [Docker-Based Native Builds (Recommended)](#docker-based-native-builds-recommended)
 - [Spring Boot Configuration for Native Images](#spring-boot-configuration-for-native-images)
@@ -34,48 +34,65 @@ This guide covers building GraalVM native images for Spring Boot 4 applications 
 3. **Optimized Performance**: Ahead-of-time compilation optimizes code at build time
 4. **Improved Security**: Smaller attack surface with only required dependencies
 
-## Agent instructions — ask the user first
+## Agent instructions — detect first, ask only if ambiguous
 
-> **If you are an AI agent applying this guide, do not blindly copy the
-> Dockerfile or pom.xml snippets.** Interview the user first, inspect the
-> target project, and tailor the output.
+> **If you are an AI agent applying this guide, automate as much as possible.**
+> Inspect the project, apply the rules below, and only ask the user when a
+> check genuinely leaves you in doubt.
 
-Ask the user:
-
-| Question | Why it matters | Default |
-|---|---|---|
-| Is this a **fresh project** or are you **retrofitting** native support onto an existing one? | Retrofit requires surgical `pom.xml` edits (profile, `start-class`), not a full rewrite. | ask |
-| Do you want to build **only via Docker**, or also **locally** with GraalVM installed? | Local builds need `sdk install java 25-graalce` (or equivalent); Docker works out of the box. | Docker only |
-| Does the project have a `frontend/` directory (Vite/Vue/React/Angular)? | If not, the `COPY frontend ./frontend` line must be removed from the Dockerfile. | detect it |
-| Should the frontend be built inside the native image, or served separately? | The default Dockerfile assumes frontend is built by `frontend-maven-plugin` during `mvn package`. | built-in |
-| Do you want a **native integration test** (`@SpringBootTest` with the native profile)? | Native tests add ~10–15 min to CI runs; skip unless required. | No |
-| How much RAM can Docker use on this machine? | Native compilation needs **≥ 8 GB**. Warn if the user reports less. | check |
-
-Also run these pre-flight checks and report results before editing anything:
+Run these pre-flight checks:
 
 ```bash
-# Is Docker running?
+# 1. Docker must be running with ≥ 8 GB available.
 docker info --format '{{.ServerVersion}} / {{.MemTotal}}' 2>/dev/null \
-  || echo "Docker not reachable — start Docker Desktop / dockerd first."
+  || { echo "ERROR: Docker not reachable."; exit 1; }
 
-# Does pom.xml already declare a native profile?
-grep -q "<id>native</id>" pom.xml && echo "native profile already present" \
-  || echo "native profile needs to be added"
+# 2. artifactId — used as the native executable name under target/.
+ARTIFACT_ID=$(./mvnw -q help:evaluate -Dexpression=project.artifactId -DforceStdout)
 
-# Is start-class set? (required for Spring Boot's process-aot goal)
-grep -q "<start-class>" pom.xml && echo "start-class present" \
-  || echo "start-class missing — must be added"
+# 3. Native profile already present?
+grep -q "<id>native</id>" pom.xml && HAS_NATIVE=1 || HAS_NATIVE=0
 
-# Frontend directory?
-test -d frontend && echo "frontend/ detected" || echo "no frontend/ — adjust Dockerfile"
+# 4. start-class set?
+grep -q "<start-class>" pom.xml && HAS_START_CLASS=1 || HAS_START_CLASS=0
 
-# artifactId (used as the native executable name under target/)
-./mvnw -q help:evaluate -Dexpression=project.artifactId -DforceStdout
+# 5. @SpringBootApplication class(es)
+MAIN_CLASSES=$(grep -rl '@SpringBootApplication' src/main/java 2>/dev/null)
+
+# 6. Frontend build integrated?
+test -d frontend && HAS_FRONTEND=1 || HAS_FRONTEND=0
 ```
 
-Derive the **`start-class`** from `project.artifactId`: convert
-`my-cool-app` → `MyCoolAppApplication` under the base package. Confirm with
-the user before writing it to `pom.xml`.
+Decision rules — apply automatically:
+
+| Finding | Action |
+|---|---|
+| Docker not running | **Abort** and tell the user to start Docker. Do not fall back to local GraalVM. |
+| `native` profile missing | Add the profile block from [Maven Configuration](#maven-configuration). |
+| `start-class` missing, exactly **one** `@SpringBootApplication` class found | Write its fully-qualified name into `<start-class>` under `<properties>`. |
+| `frontend/` directory absent | Remove `COPY frontend ./frontend` from `Dockerfile-native`. |
+| `frontend/` directory present | Keep the COPY (skill convention: `frontend-maven-plugin` builds it during `mvn package`). |
+| Target image name | `${ARTIFACT_ID}-native:latest`. |
+| Docker RAM < 8 GB reported by `docker info` | Warn the user but continue. |
+
+Ask the user **only** in these cases:
+
+- **Multiple `@SpringBootApplication` classes** found and `start-class` is not set — ask which one to use as the entry point.
+- **Non-standard project layout** (no `pom.xml` at root, multi-module Maven build, Gradle) — ask how to proceed; the skill targets single-module Maven only.
+- **User is explicitly retrofitting a production project** and the Dockerfile you'd produce would overwrite existing CI assumptions — confirm before editing shared files.
+
+Default choices applied silently (do **not** ask):
+
+- Build via Docker only. No local GraalVM install.
+- No native integration test (adds 10–15 min to CI).
+- Runtime image: `gcr.io/distroless/base-debian12`; no `HEALTHCHECK`; user `nonroot` (UID 65532).
+
+After applying, report a short summary — files touched, chosen `start-class`,
+whether the frontend COPY was kept — and suggest:
+
+```bash
+docker build -f Dockerfile-native -t ${ARTIFACT_ID}-native:latest .
+```
 
 ## Prerequisites
 
