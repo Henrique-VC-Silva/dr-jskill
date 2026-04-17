@@ -325,6 +325,8 @@ export function applyDotfiles(projectDir, options = {}) {
   }
   // CI workflow
   copyAssetIfMissing(join('ci', 'github-actions.yml'), join(projectDir, '.github', 'workflows', 'ci.yml'));
+  // Copilot CLI LSP config (wires JDTLS for Java)
+  copyAssetIfMissing('lsp.json', join(projectDir, '.github', 'lsp.json'));
   // Optional Node version pinning if front-end present
   try {
     const nodeVersion = getNodeVersion();

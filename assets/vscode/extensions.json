@@ -1,5 +1,6 @@
 {
   "recommendations": [
+    "redhat.java",
     "vscjava.vscode-java-pack",
     "pivotal.vscode-spring-boot",
     "redhat.vscode-yaml",

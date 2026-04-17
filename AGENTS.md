@@ -9,6 +9,7 @@
 - **Hibernate ddl-auto** is the supported database initialization mechanism (`spring.jpa.hibernate.ddl-auto`). Do not offer Liquibase or Flyway.
 - Do not add OpenAPI/springdoc, feature toggles, Buildpacks, or Jib.
 - **Ship dotfiles**: ensure `.gitignore`, `.env.sample`, `.editorconfig`, `.gitattributes`, `.dockerignore`, optional `.vscode/` are added to generated projects (see `references/PROJECT-SETUP.md`).
+- **Java code intelligence**: when working on Java files in a generated project, **prefer the JDTLS-backed `lsp` tool** (goToDefinition, findReferences, hover, documentSymbol, rename) over grep/view/sed. Generated projects ship `.github/lsp.json` so GitHub Copilot CLI wires JDTLS automatically. See `references/JDTLS.md`.
 
 ## Versions Manifest
 Centralize versions in `versions.json`. Scripts load from `scripts/lib/versions.mjs` (JavaScript). Update this file first when bumping versions.

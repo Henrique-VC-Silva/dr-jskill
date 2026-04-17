@@ -57,3 +57,6 @@ dependency-check-report.*
 # Misc
 *.orig
 *.rej
+
+# JDTLS per-project workspace (see .github/lsp.json)
+.jdtls-workspace/

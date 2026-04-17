@@ -101,6 +101,26 @@ When creating Spring Boot projects:
 15. Enable GraalVM native image support for faster startup - see [GraalVM Guide](references/GRAALVM.md)
 16. The user must review changes before they are committed to git. Ask the user before initializing a Git repository, or running git commands.
 
+## Java Code Intelligence (JDTLS) ⭐
+
+Generated projects integrate with the **Eclipse JDT Language Server (JDTLS)** so AI agents can navigate, refactor, and diagnose Java code *semantically* rather than with text search. The scripts ship a `.github/lsp.json` that wires JDTLS into GitHub Copilot CLI automatically.
+
+**For the AI agent**: when working on Java files, prefer the `lsp` tool over `grep`/`view`/`sed`. It understands imports, generics, inheritance, and Javadoc.
+
+| Task | Use |
+|------|-----|
+| Find where a class/method is defined | `lsp goToDefinition` |
+| Find callers before changing a signature | `lsp findReferences` or `incomingCalls` |
+| Look up types, parameters, Javadoc | `lsp hover` |
+| List symbols in a file | `lsp documentSymbol` |
+| Search a class/method across the project | `lsp workspaceSymbol` |
+| Rename safely across files | `lsp rename` (never sed) |
+| Check compile errors before `./mvnw verify` | `ide-get_diagnostics` |
+
+**Preference order for Java work: `lsp` → `grep` with `.java` glob → `view`.**
+
+Install JDTLS once: `brew install jdtls` (or see [JDTLS guide](references/JDTLS.md) for other platforms). Full setup, gotchas, and editor integrations live in [references/JDTLS.md](references/JDTLS.md).
+
 ## Project Structure
 
 The service layer is only included if it adds value (e.g. complex business logic). For simple CRUD applications, the controller can directly call the repository.
@@ -217,6 +237,7 @@ Once the project is generated, go through the steps above to ensure that the gen
 - [Spring Boot 4 Migration Guide](references/SPRING-BOOT-4.md) - Key changes from Spring Boot 3, Jackson 3 annotations
 - [Configuration Best Practices](references/CONFIGURATION.md) - Properties files, profiles, secrets management
 - [Logging Best Practices](references/LOGGING.md) - Logback configuration and patterns
+- [Java Code Intelligence (JDTLS)](references/JDTLS.md) - LSP-based navigation, refactoring, diagnostics
 
 **Data and Persistence:**
 - [Database Best Practices](references/DATABASE.md) - PostgreSQL and Hibernate optimization
