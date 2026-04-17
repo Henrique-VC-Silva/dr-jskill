@@ -475,7 +475,7 @@ export const itemService = {
 ### Custom Hook for Items (frontend/src/hooks/useItems.js)
 
 ```javascript
-import { useState, useEffect } from 'react'
+import { useState, useCallback } from 'react'
 import { itemService } from '../services/itemService'
 
 export function useItems() {
@@ -483,7 +483,7 @@ export function useItems() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  const fetchItems = async () => {
+  const fetchItems = useCallback(async () => {
     setLoading(true)
     setError(null)
     try {
@@ -495,9 +495,9 @@ export function useItems() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
-  const createItem = async (item) => {
+  const createItem = useCallback(async (item) => {
     setLoading(true)
     setError(null)
     try {
@@ -511,9 +511,9 @@ export function useItems() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
-  const updateItem = async (id, item) => {
+  const updateItem = useCallback(async (id, item) => {
     setLoading(true)
     setError(null)
     try {
@@ -527,9 +527,9 @@ export function useItems() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
-  const deleteItem = async (id) => {
+  const deleteItem = useCallback(async (id) => {
     setLoading(true)
     setError(null)
     try {
@@ -542,7 +542,7 @@ export function useItems() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
   return {
     items,
@@ -604,7 +604,7 @@ export default function ItemsPage() {
 
   useEffect(() => {
     fetchItems()
-  }, [])
+  }, [fetchItems])
 
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this item?')) {
