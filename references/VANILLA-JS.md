@@ -364,7 +364,11 @@ function render() {
   
   // Update active nav links
   document.querySelectorAll('.nav-link').forEach(link => {
-    link.classList.toggle('active', link.getAttribute('href') === path)
+    const href = link.getAttribute('href')
+    const isActive = href === '/'
+      ? path === '/'
+      : path === href || path.startsWith(href + '/')
+    link.classList.toggle('active', isActive)
   })
 }
 
