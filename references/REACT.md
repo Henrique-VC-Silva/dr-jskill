@@ -28,7 +28,7 @@ This guide covers creating front-end applications for Spring Boot using React 19
 | npm | 11.12.1 |
 | React | 19.x |
 | Vite | 8.x |
-| React Router | 6.x |
+| React Router | 7.x |
 <!-- versions:end -->
 
 > Tip: `corepack enable` for pnpm/yarn if desired. Default instructions assume `npm`. No OpenAPI client generation is provided; use `fetch`/`axios` as needed.

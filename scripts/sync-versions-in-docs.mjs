@@ -34,7 +34,7 @@ const docs = {
     ['npm', versions.npmVersion],
     ['React', `${versions.reactVersion}.x`],
     ['Vite', `${versions.viteVersion}.x`],
-    ['React Router', '6.x'],
+    ['React Router', `${versions.reactRouterVersion}.x`],
   ],
   'references/ANGULAR.md': [
     ['Node.js', versions.nodeVersion],
