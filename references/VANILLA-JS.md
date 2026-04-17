@@ -862,33 +862,50 @@ main {
 
 ## Spring Boot SPA Controller
 
-To support client-side routing with HTML5 history mode, create a controller that forwards all non-API requests to index.html:
+To support client-side routing with HTML5 history mode, implement an `ErrorController` that forwards 404s for non-API paths to `index.html`. This lets `ResourceHttpRequestHandler` serve static files first, lets `@RestController` mappings win naturally, and only kicks in on unmapped paths — keeping proper JSON 404s for `/api/**` and `/actuator/**`:
 
 ```java
 package com.example.demo.controller;
 
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class SpaController {
-    
+public class SpaController implements ErrorController {
+
     /**
-     * Forward all routes to index.html to support client-side routing.
-     * Excludes API routes and static resources.
+     * When no controller matches, Spring dispatches to /error. For non-API
+     * 404s we forward to index.html so the client-side router can take
+     * over; API and actuator 404s propagate normally with their default
+     * error response.
      */
-    @GetMapping(value = {
-        "/",
-        "/{path:[^\\.]*}",
-        "/**/{path:[^\\.]*}"
-    })
-    public String forward() {
-        return "forward:/index.html";
+    @RequestMapping("/error")
+    public Object handleError(HttpServletRequest request) {
+        Integer status = (Integer) request.getAttribute(
+                RequestDispatcher.ERROR_STATUS_CODE);
+        String path = (String) request.getAttribute(
+                RequestDispatcher.ERROR_REQUEST_URI);
+
+        if (status != null
+                && status == HttpStatus.NOT_FOUND.value()
+                && path != null
+                && !path.startsWith("/api/")
+                && !path.startsWith("/actuator/")) {
+            return "forward:/index.html";
+        }
+        return ResponseEntity
+                .status(status != null ? status : 500)
+                .build();
     }
 }
 ```
 
-This controller ensures that refreshing the browser on any route (e.g., `/items/123`) serves the index.html file, allowing the client-side router to handle the routing.
+This approach ensures that refreshing the browser on any route (e.g., `/items/123`) serves `index.html` so the client-side router can render the page, while typos under `/api/**` or `/actuator/**` still return a real 404.
 
 ## Best Practices
 
