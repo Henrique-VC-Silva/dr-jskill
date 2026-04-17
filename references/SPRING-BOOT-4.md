@@ -7,6 +7,7 @@
 - [Major Changes from Spring Boot 3](#major-changes-from-spring-boot-3)
 - [Migration Strategy](#migration-strategy)
 - [Best Practices for Spring Boot 4 Projects](#best-practices-for-spring-boot-4-projects)
+- [Performance](#performance)
 - [Resources](#resources)
 
 ## Overview  
@@ -661,9 +662,74 @@ For war deployment to Tomcat:
 3. **@MockitoBean** - Adopt from the start, avoid deprecated `@MockBean`
 4. **TestContainers 2.0** - Use `@ServiceConnection` for simplified testing
 5. **Jackson 3** - Plan API usage with new package names
-6. **Virtual threads** - Consider enabling for HTTP clients: `spring.threads.virtual.enabled=true`
+6. **Virtual threads** - Consider enabling for IO-bound workloads (see [Performance](#performance))
 7. **OpenTelemetry** - Use new starter for observability
 8. **Health probes** - Leverage default liveness/readiness endpoints
+
+## Performance
+
+Apply these *after* profiling. Measure with `spring-boot-starter-actuator` + Micrometer (`/actuator/metrics`, `/actuator/prometheus`).
+
+### Virtual threads (JDK 21+, on by default on JDK 25)
+
+IO-bound controllers, `@Async`, and `@Scheduled` tasks benefit the most.
+
+```properties
+spring.threads.virtual.enabled=true
+```
+
+When enabled, do **not** also raise `server.tomcat.threads.max` — the platform thread pool becomes irrelevant for request handling. Avoid `synchronized` on hot paths that call blocking IO; prefer `java.util.concurrent.locks` so carrier threads aren't pinned.
+
+### HTTP response compression
+
+```properties
+server.compression.enabled=true
+server.compression.mime-types=application/json,application/xml,text/html,text/css,text/plain,application/javascript
+server.compression.min-response-size=1KB
+```
+
+If a reverse proxy (nginx, CloudFront, Azure Front Door, etc.) already compresses, leave this off to avoid double work.
+
+### HTTP/2
+
+```properties
+server.http2.enabled=true
+```
+
+Requires TLS in production. Biggest win for pages that fetch many small assets in parallel.
+
+### Tomcat tuning (platform threads only)
+
+Only relevant when **virtual threads are disabled**:
+
+```properties
+server.tomcat.threads.max=200
+server.tomcat.threads.min-spare=20
+server.tomcat.accept-count=100
+server.tomcat.max-connections=10000
+```
+
+### Static resource caching
+
+Vite emits hashed filenames for `/assets/**`, so they're safe to cache aggressively:
+
+```properties
+spring.web.resources.cache.cachecontrol.max-age=365d
+spring.web.resources.cache.cachecontrol.immutable=true
+```
+
+Keep `index.html` uncached (the default) so clients pick up new asset hashes.
+
+### Observability for performance work
+
+Enable in `application.properties` when diagnosing:
+
+```properties
+management.endpoints.web.exposure.include=health,info,metrics,prometheus
+management.metrics.distribution.percentiles-histogram.http.server.requests=true
+```
+
+See `references/LOGGING.md` for structured logging setup and `references/DATABASE.md` for Hibernate-specific tuning.
 
 ## Resources
 

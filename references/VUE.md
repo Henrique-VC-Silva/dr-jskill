@@ -918,10 +918,15 @@ This controller ensures that refreshing the browser on any Vue.js route (e.g., `
 
 ### 6. Performance
 
-- Code Splitting: Use lazy-loaded routes for better initial load times
-- Terser Minification: Configured in Vite for production builds
-- Tree Shaking: Vite automatically removes unused code
-- Asset Optimization: Vite optimizes images and fonts automatically
+- **Route-level code splitting** — use dynamic `import()` in the router (already shown in the Router Configuration example). Each route becomes a separate chunk, cutting initial bundle size.
+- **Component-level lazy loading** — for heavy components rendered conditionally (charts, rich editors, modals), wrap them with `defineAsyncComponent`:
+  ```javascript
+  import { defineAsyncComponent } from 'vue'
+  const Chart = defineAsyncComponent(() => import('./Chart.vue'))
+  ```
+- **Production build** — always ship the bundle produced by `./mvnw -Pprod package` (or `npm run build` during dev). Vite applies minification, tree shaking, and content-hashed filenames.
+- **Long-term asset caching** — content-hashed filenames mean `/assets/**` can be served with a 1-year `Cache-Control`. Configure this on the Spring side (see `references/SPRING-BOOT-4.md` → Performance → Static resource caching).
+- **Keep `index.html` uncached** — it references the hashed asset filenames; caching it would pin clients to stale bundles.
 
 ### 7. Development Workflow
 

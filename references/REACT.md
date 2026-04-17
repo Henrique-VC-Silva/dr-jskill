@@ -854,10 +854,14 @@ This controller ensures that refreshing the browser on any React route (e.g., `/
 
 ### 6. Performance
 
-- Code Splitting: Use lazy loading for routes and large components
-- Memoization: Use `React.memo`, `useMemo`, `useCallback` when appropriate
-- Terser Minification: Configured in Vite for production builds
-- Tree Shaking: Vite automatically removes unused code
+- **Route-level code splitting** — use `React.lazy` + `<Suspense>` for page components:
+  ```jsx
+  const ItemsPage = React.lazy(() => import('./pages/ItemsPage'))
+  // wrap <Routes> in <Suspense fallback={<Spinner />}>
+  ```
+- **Memoization** — `React.memo`, `useMemo`, `useCallback` for components and values that are expensive to compute *and* rendered often. Don't wrap everything; unnecessary memoization costs more than it saves.
+- **Production build** — ship the bundle produced by `./mvnw -Pprod package` (or `npm run build`). Vite applies minification, tree shaking, and content-hashed filenames.
+- **Long-term asset caching** — hashed `/assets/**` files are safe to cache for a year. Configure `Cache-Control` on the Spring side (see `references/SPRING-BOOT-4.md` → Performance → Static resource caching). Keep `index.html` uncached.
 
 ### 7. Development Workflow
 

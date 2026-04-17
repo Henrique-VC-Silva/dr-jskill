@@ -842,10 +842,15 @@ This controller ensures that refreshing the browser on any Angular route (e.g., 
 
 ### 6. Performance
 
-- OnPush Change Detection: Use `ChangeDetectionStrategy.OnPush` for performance
-- trackBy Functions: Use trackBy in `*ngFor` to optimize rendering
-- Lazy Loading: Lazy load routes and modules
-- Production Build: Angular CLI optimizes for production automatically
+- **Lazy-loaded routes** — use `loadComponent` (standalone components) in `app.routes.ts`:
+  ```typescript
+  { path: 'items', loadComponent: () => import('./pages/items/items.component').then(m => m.ItemsComponent) }
+  ```
+- **OnPush change detection** — set `changeDetection: ChangeDetectionStrategy.OnPush` on components that render from immutable inputs or signals. Drastically cuts dirty-checking cost.
+- **`@for` with `track`** — always provide a `track` expression in `@for` (or `trackBy` with `*ngFor`) so Angular reuses DOM nodes.
+- **Signals over `async` pipes on hot paths** — signals skip the zone roundtrip and integrate cleanly with OnPush.
+- **Production build** — `./mvnw -Pprod package` runs `ng build --configuration production`, which enables AOT, minification, tree shaking, and file hashing.
+- **Long-term asset caching** — hashed output is safe to cache for a year; configure `Cache-Control` on the Spring side (see `references/SPRING-BOOT-4.md` → Performance → Static resource caching). Keep `index.html` uncached.
 
 ### 7. Development Workflow
 

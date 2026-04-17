@@ -117,7 +117,7 @@ volumes:
 
 ## Production Tips
 - **Pooling:** Use HikariCP defaults; tune `maximum-pool-size` and `connection-timeout`.
-- **Indexes:** Add indexes via JPA annotations (`@Index` in `@Table`) or manual DDL.
+- **Indexes:** Add indexes on foreign keys and columns used in `WHERE` / `ORDER BY` via `@Index` in `@Table`. Verify query plans with `EXPLAIN ANALYZE` under production-like data volumes — ddl-auto does not create indexes for you beyond primary keys and those you declare.
 - **Secrets:** Inject via environment variables or Vault/Key Vault; never commit plaintext.
 - **Schema Validation:** Keep `spring.jpa.hibernate.ddl-auto=validate` in prod.
 - **UTF-8:** Ensure DB encoding is UTF8 (default for official Postgres images).
@@ -163,6 +163,13 @@ Page<AppUser> listUsers(@RequestParam(defaultValue = "0") int page,
 }
 ```
 
+For large tables, deep offset pagination (`OFFSET 100000`) becomes slow because the database must scan-and-discard all skipped rows. Switch to **keyset (seek) pagination** based on an indexed column:
+
+```java
+// Instead of PageRequest.of(page, size), use a cursor on the last seen id
+List<AppUser> findByIdGreaterThanOrderByIdAsc(Long cursorId, Limit limit);
+```
+
 ### Batch Operations
 For bulk inserts/updates, configure Hibernate batching:
 
@@ -180,6 +187,14 @@ items.forEach(item -> repository.save(item));
 // GOOD: batched — Hibernate groups INSERTs
 repository.saveAll(items);
 ```
+
+PostgreSQL's JDBC driver only sends true batches when `reWriteBatchedInserts` is enabled on the JDBC URL:
+
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/mydb?reWriteBatchedInserts=true
+```
+
+Without this flag, `batch_size` has little effect on INSERT performance.
 
 ### Connection Pool Sizing
 HikariCP pool size should match your workload. A good starting formula:
@@ -215,6 +230,45 @@ public AppUser findByLogin(String login) {
     return userRepository.findByLogin(login);
 }
 ```
+
+> The second-level cache is only a win for read-mostly entities that are looked up frequently by primary key (reference data, lookup tables). For write-heavy or frequently-invalidated entities it **adds** overhead. Measure before enabling it broadly.
+
+### Read-only transactions
+
+Mark query-only service methods `@Transactional(readOnly = true)`. Hibernate skips dirty-checking and auto-flush, which is a measurable win on large result sets.
+
+```java
+@Service
+public class UserService {
+
+    @Transactional(readOnly = true)
+    public Page<AppUser> listActive(Pageable pageable) {
+        return userRepository.findByActiveTrue(pageable);
+    }
+}
+```
+
+Combine with `spring.jpa.open-in-view=false` (already the default in generated projects) to keep transaction boundaries tight.
+
+### DTO / record projections
+
+For list endpoints and dashboards, project only the columns you actually render. This avoids hydrating full entity graphs and sidesteps many N+1 traps.
+
+```java
+public record UserSummary(Long id, String login, String email) {}
+
+public interface UserRepository extends JpaRepository<AppUser, Long> {
+
+    @Query("""
+        SELECT new com.example.app.user.UserSummary(u.id, u.login, u.email)
+        FROM AppUser u
+        WHERE u.active = true
+        """)
+    List<UserSummary> findActiveSummaries();
+}
+```
+
+Spring Data also supports interface projections (`Page<UserSummaryView>`) when you prefer declarative mapping.
 
 ## Local Developer Experience
 - Enable `spring-boot-docker-compose` (Boot 3.1+) to auto-start `compose.yaml` on `./mvnw spring-boot:run`.

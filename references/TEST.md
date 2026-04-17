@@ -633,6 +633,25 @@ This naming convention allows:
 - Test edge cases and error conditions
 - Don't test framework code or simple getters/setters
 
+### 7. Test Suite Performance
+
+Keep the feedback loop fast:
+
+- **Testcontainers reuse** — the generated `TestcontainersConfiguration` already calls `.withReuse(true)`, but reuse only activates when each developer opts in on their machine:
+
+  ```properties
+  # ~/.testcontainers.properties
+  testcontainers.reuse.enable=true
+  ```
+
+  Without this file, the container is still recreated every run. Document it in your project README.
+
+- **Detect slow queries early** — add `p6spy` or `datasource-proxy` (test scope) to log every SQL statement with its execution time. This catches N+1 queries and missing indexes while running integration tests, long before they hit production.
+
+- **Share container across tests** — prefer a single `@ServiceConnection`-annotated container (already the pattern in `TestcontainersConfiguration`) over per-class containers.
+
+- **Split unit vs integration** — unit tests run via `./mvnw test` (no containers, milliseconds); integration tests run via `./mvnw verify` (containers, slower). Keep controllers covered by `@WebMvcTest` so they stay in the fast lane.
+
 ## Example Test Structure
 
 ```
