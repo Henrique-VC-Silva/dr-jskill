@@ -17,17 +17,16 @@ const versions = JSON.parse(readFileSync(resolve(ROOT, 'versions.json'), 'utf8')
 const START = '<!-- versions:start -->';
 const END = '<!-- versions:end -->';
 
-// Per-file version-table manifests. Static "known-stable" rows (e.g. Pinia 2.x,
-// Vue Router 4.x) can stay hardcoded — they change infrequently and aren't in
-// versions.json.
+// Per-file version-table manifests. All rows must come from versions.json so
+// the manifest stays the single source of truth — no hardcoded versions here.
 const docs = {
   'references/VUE.md': [
     ['Node.js', versions.nodeVersion],
     ['npm', versions.npmVersion],
     ['Vue.js', `${versions.vueVersion}.x`],
     ['Vite', `${versions.viteVersion}.x`],
-    ['Pinia', '2.x'],
-    ['Vue Router', '4.x'],
+    ['Pinia', `${versions.piniaVersion}.x`],
+    ['Vue Router', `${versions.vueRouterVersion}.x`],
   ],
   'references/REACT.md': [
     ['Node.js', versions.nodeVersion],
@@ -46,7 +45,7 @@ const docs = {
     ['Node.js', versions.nodeVersion],
     ['npm', versions.npmVersion],
     ['Vite', `${versions.viteVersion}.x`],
-    ['Bootstrap', '5.3+'],
+    ['Bootstrap', versions.bootstrapVersion],
   ],
   'references/AZURE.md': [
     ['PostgreSQL', versions.postgresVersion],

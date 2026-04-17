@@ -44,8 +44,13 @@ export function getNpmVersion() { return getVersionValue('npmVersion', '11.12.1'
 export function getViteVersion() { return getVersionValue('viteVersion', '8'); }
 export function getMavenFrontendPluginVersion() { return getVersionValue('mavenFrontendPluginVersion', '1.15.1'); }
 export function getVueVersion() { return getVersionValue('vueVersion', '3'); }
+export function getPiniaVersion() { return getVersionValue('piniaVersion', '3'); }
+export function getVueRouterVersion() { return getVersionValue('vueRouterVersion', '5'); }
 export function getReactVersion() { return getVersionValue('reactVersion', '19'); }
+export function getReactRouterVersion() { return getVersionValue('reactRouterVersion', '7'); }
 export function getAngularVersion() { return getVersionValue('angularVersion', '21'); }
+export function getBootstrapVersion() { return getVersionValue('bootstrapVersion', '5.3.8'); }
+export function getBootstrapIconsVersion() { return getVersionValue('bootstrapIconsVersion', '1.13.1'); }
 export function getTestcontainersVersion() { return getVersionValue('testcontainersVersion', '2.0.0'); }
 export function getSpringFrameworkVersion() { return getVersionValue('springFrameworkVersion', '7.0'); }
 export function getHibernateVersion() { return getVersionValue('hibernateVersion', '7.1'); }

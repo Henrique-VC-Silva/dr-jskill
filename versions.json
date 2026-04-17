@@ -13,6 +13,8 @@
   "bootstrapVersion": "5.3.8",
   "bootstrapIconsVersion": "1.13.1",
   "vueVersion": "3",
+  "piniaVersion": "3",
+  "vueRouterVersion": "5",
   "reactVersion": "19",
   "reactRouterVersion": "7",
   "angularVersion": "21",

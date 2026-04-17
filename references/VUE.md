@@ -28,8 +28,8 @@ This guide covers creating front-end applications for Spring Boot using **Vue.js
 | npm | 11.12.1 |
 | Vue.js | 3.x |
 | Vite | 8.x |
-| Pinia | 2.x |
-| Vue Router | 4.x |
+| Pinia | 3.x |
+| Vue Router | 5.x |
 <!-- versions:end -->
 
 > Tip: `corepack enable` to use `pnpm`/`yarn` if preferred. Default instructions assume `npm`.

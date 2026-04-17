@@ -27,7 +27,7 @@ This guide covers creating front-end applications for Spring Boot using plain Ja
 | Node.js | 24.15.0 |
 | npm | 11.12.1 |
 | Vite | 8.x |
-| Bootstrap | 5.3+ |
+| Bootstrap | 5.3.8 |
 <!-- versions:end -->
 
 > Default instructions assume `npm`; `corepack enable` for pnpm/yarn. No OpenAPI client generation provided.
