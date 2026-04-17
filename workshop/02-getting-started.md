@@ -37,11 +37,11 @@ Inside the Copilot CLI session you can switch models at any time with the `/mode
 
 | Model | When to pick it |
 |---|---|
-| **Claude Haiku 4.5** | Default choice for this workshop. Fastest and cheapest; finished every chapter cleanly. Great when you want to move through the material quickly or you're learning. |
-| **GPT-5.3-Codex** | Pick this if you want to also build the **GraalVM native image** in [chapter 8](08-deployment.md) — it's the one that completed that step most reliably. Solid middle ground in speed and cost. |
-| **Claude Sonnet 4.6** | Pick this for harder, ambiguous tasks — for example when adapting generated code to a library's breaking changes. Slower and more expensive, but its reasoning is the most transparent in the trickiest chapter (testing). |
+| **Claude Sonnet 4.6** | **Recommended default.** The most reliable of the three: slower, but produces more reliable working code, including the trickiest chapter (testing). Pick this one if you want to follow the workshop without detours. |
+| **GPT-5.3-Codex** | Solid middle ground. Faster than Sonnet and cheaper. Good choice if you want to exercise the GraalVM native-image path. |
+| **Claude Haiku 4.5** | Fastest and cheapest, but with regular minor bugs that you'll need to fix. You can use Haiku for a quick skim of the workshop, but **verify each checkpoint manually** (`curl`, `./mvnw verify`, read the log) and don't trust a "✅ all green" summary from the agent. |
 
-If you're not sure: **start with Haiku 4.5**. You can always switch mid-session with `/model` if a specific step feels shaky.
+If you're not sure: **start with Sonnet 4.6**. You can always switch mid-session with `/model` if a step is taking too long.
 
 ## 3. Your first prompt
 
