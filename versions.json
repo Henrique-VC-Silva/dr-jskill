@@ -10,6 +10,8 @@
   "npmVersion": "11.12.1",
   "viteVersion": "8",
   "mavenFrontendPluginVersion": "1.15.1",
+  "bootstrapVersion": "5.3.8",
+  "bootstrapIconsVersion": "1.13.1",
   "vueVersion": "3",
   "reactVersion": "19",
   "angularVersion": "21",

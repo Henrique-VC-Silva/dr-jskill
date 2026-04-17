@@ -96,6 +96,9 @@ npm create vue@latest frontend
 
 cd frontend
 npm install
+
+# Install Bootstrap and Bootstrap Icons
+npm install bootstrap@5.3.8 bootstrap-icons@1.13.1
 ```
 
 ### 2. Configure Vite for Spring Boot Integration
@@ -267,9 +270,10 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
-// Bootstrap CSS
+// Bootstrap CSS + JS + Icons
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 const app = createApp(App)
 
@@ -914,7 +918,7 @@ This controller ensures that refreshing the browser on any Vue.js route (e.g., `
 - Import Once: Import Bootstrap CSS/JS in `main.js`
 - Utility Classes: Leverage Bootstrap's utility classes
 - Responsive Grid: Use Bootstrap's grid system for layouts
-- Icons: Consider Bootstrap Icons with `npm install bootstrap-icons`
+- Icons: Bootstrap Icons are installed and imported in `main.js`; use `<i class="bi bi-..."/>` anywhere
 
 ### 6. Performance
 

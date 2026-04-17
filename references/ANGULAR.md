@@ -90,8 +90,8 @@ ng new frontend --routing --style=css --skip-git
 
 cd frontend
 
-# Install Bootstrap
-npm install bootstrap
+# Install Bootstrap and Bootstrap Icons
+npm install bootstrap@5.3.8 bootstrap-icons@1.13.1
 ```
 
 ### 2. Configure Angular for Spring Boot Integration
@@ -116,6 +116,7 @@ Update `frontend/angular.json` - modify the `build` section:
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css",
               "src/styles.css"
             ],
             "scripts": [
@@ -838,7 +839,7 @@ This controller ensures that refreshing the browser on any Angular route (e.g., 
 - Import in angular.json: Add Bootstrap to styles and scripts arrays
 - Utility Classes: Leverage Bootstrap's utility classes
 - Responsive Grid: Use Bootstrap's grid system for layouts
-- Icons: Consider Bootstrap Icons or Angular Material Icons
+- Icons: Bootstrap Icons are wired into `angular.json` styles; use `<i class="bi bi-..."></i>` anywhere
 
 ### 6. Performance
 

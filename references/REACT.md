@@ -86,8 +86,8 @@ npm create vite@latest frontend -- --template react
 cd frontend
 npm install
 
-# Install React Router and other dependencies
-npm install react-router-dom
+# Install React Router, Bootstrap and Bootstrap Icons
+npm install react-router-dom bootstrap@5.3.8 bootstrap-icons@1.13.1
 ```
 
 ### 2. Configure Vite for Spring Boot Integration
@@ -258,9 +258,10 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 
-// Bootstrap CSS
+// Bootstrap CSS + JS + Icons
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -850,7 +851,7 @@ This controller ensures that refreshing the browser on any React route (e.g., `/
 - Import Once: Import Bootstrap CSS/JS in `main.jsx`
 - Utility Classes: Leverage Bootstrap's utility classes
 - Responsive Grid: Use Bootstrap's grid system for layouts
-- Icons: Consider Bootstrap Icons or other icon libraries
+- Icons: Bootstrap Icons are installed and imported in `main.jsx`; use `<i className="bi bi-..."/>` anywhere
 
 ### 6. Performance
 

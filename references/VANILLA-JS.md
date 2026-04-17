@@ -207,7 +207,8 @@ Edit `frontend/package.json`:
     "vite": "^8.0.0"
   },
   "dependencies": {
-    "bootstrap": "^5.3.0"
+    "bootstrap": "5.3.8",
+    "bootstrap-icons": "1.13.1"
   }
 }
 ```
@@ -271,9 +272,10 @@ The frontend is built and bundled into the Spring Boot JAR automatically.
 ### Main Entry Point (frontend/src/main.js)
 
 ```javascript
-// Bootstrap CSS
+// Bootstrap CSS + JS + Icons
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 // Components and Router
 import { initRouter } from './router.js'
