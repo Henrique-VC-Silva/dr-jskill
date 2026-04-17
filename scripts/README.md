@@ -136,9 +136,21 @@ After downloading from start.spring.io, the scripts **patch in** dotfiles:
 
 Existing files are preserved; `.gitignore` is appended once using a marker.
 
+## Keeping docs in sync with `versions.json`
+
+`scripts/sync-versions-in-docs.mjs` regenerates the version tables in the front-end reference guides (VUE / REACT / ANGULAR / VANILLA-JS) from `versions.json`. Tables are delimited by `<!-- versions:start -->` and `<!-- versions:end -->` markers.
+
+```bash
+# Regenerate tables after editing versions.json
+node scripts/sync-versions-in-docs.mjs
+
+# Verify no drift (exit 1 if any doc is out of sync) — ideal for CI
+node scripts/sync-versions-in-docs.mjs --check
+```
+
 ## Requirements
 
-- **Node.js** 22.x and **npm** 10.x (scripts use built-in `fetch` API, available since Node 18)
+- **Node.js** 24.x and **npm** 11.x (scripts use built-in `fetch` API, available since Node 18)
 - `unzip` - for extracting the downloaded project (pre-installed on macOS and Linux; Windows uses PowerShell `Expand-Archive`)
 - `docker` - optional, for automatic database startup in full-stack projects
 

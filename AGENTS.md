@@ -15,73 +15,43 @@ Centralize versions in `versions.json`. Scripts load from `scripts/lib/versions.
 
 ## Updating Versions
 
-To update all versions of tools, libraries, and frameworks in this skill, update the following:
+**All versions live in `versions.json` — the single source of truth.**
 
-### Backend & Java
-1. **Java version**: Currently Java 25
-   - Update in: `SKILL.md`, `assets/Dockerfile`, `assets/Dockerfile-native`, all script files
-   - Check latest LTS at: https://adoptium.net/
+### Bump workflow
 
-2. **Spring Boot version**: Currently 4.x (fetched dynamically)
-   - The `create-project-latest.mjs` script automatically fetches the latest version from start.spring.io
-   - For manual updates, check: https://spring.io/projects/spring-boot
+1. Edit `versions.json` with the new value(s).
+2. Search-and-replace the old value across the repo. Typical hotspots:
+   - `assets/Dockerfile`, `assets/Dockerfile-native` (Temurin / GraalVM image tags)
+   - `assets/compose.yaml`, `assets/docker-compose*.yml` (Postgres image tag)
+   - `assets/ci/github-actions.yml` (Java setup-java action version)
+   - `references/**/*.md` (narrative mentions like "Node 24" / "PostgreSQL 18")
+   - `SKILL.md`, `README.md` (prerequisites, headline framework versions)
+3. Regenerate the version tables in the front-end reference guides:
+   ```bash
+   node scripts/sync-versions-in-docs.mjs
+   ```
+   Use `--check` in CI to fail builds if a doc is out of sync.
+4. Update fallback defaults in `scripts/lib/versions.mjs` (the `getXxx()` getters) so the scripts still work without `versions.json`.
+5. Smoke-test by generating a project and running `./mvnw verify`.
 
-3. **PostgreSQL version**: Currently 18
-   - Update in: `assets/compose.yaml`, `assets/docker-compose.yml`, `assets/docker-compose-native.yml`
-   - Update references in: `references/TEST.md`, `references/DOCKER.md`, `references/DATABASE.md`
-   - Check latest at: https://www.postgresql.org/
+### Where to check for new releases
 
-4. **Eclipse Temurin (Docker base image)**: Currently 25
-   - Update in: `assets/Dockerfile`, `assets/Dockerfile-native`
-   - Check latest at: https://hub.docker.com/_/eclipse-temurin
+| Tool | Source |
+|------|--------|
+| Java (Temurin) | https://adoptium.net/ |
+| Spring Boot | https://spring.io/projects/spring-boot (also auto-resolved by `create-project-latest.mjs`) |
+| PostgreSQL | https://www.postgresql.org/ |
+| GraalVM | https://www.graalvm.org/ |
+| Maven | https://maven.apache.org/ |
+| Node.js (LTS) | https://nodejs.org/en/about/previous-releases |
+| npm | https://www.npmjs.com/package/npm |
+| Vite | https://vitejs.dev/ |
+| Vue.js / Pinia / Vue Router | https://vuejs.org/ |
+| React / React Router | https://react.dev/ |
+| Angular / Angular Router | https://angular.dev/ |
+| Bootstrap | https://getbootstrap.com/ |
+| Testcontainers | https://testcontainers.com/ |
+| Spring Framework / Hibernate | https://spring.io/ / https://hibernate.org/ |
+| Maven Frontend Plugin | https://github.com/eirslett/frontend-maven-plugin/releases |
 
-5. **Maven**: Currently 3.8+
-   - Update references in: `references/SPRING-BOOT-4.md`
-   - Check latest at: https://maven.apache.org/
-
-6. **GraalVM**: Currently 25+ (for native images)
-   - Update references in: `references/SPRING-BOOT-4.md`
-   - Check latest at: https://www.graalvm.org/
-
-### Front-End (All Frameworks)
-7. **Node.js version**: Currently v24.15.0
-   - Update in: `references/VUE.md`, `references/REACT.md`, `references/ANGULAR.md`, `references/VANILLA-JS.md`
-   - Check latest LTS at: https://nodejs.org/
-
-8. **npm version**: Currently 11.12.1
-   - Update in: `references/VUE.md`, `references/REACT.md`, `references/ANGULAR.md`, `references/VANILLA-JS.md`
-   - Check latest at: https://www.npmjs.com/package/npm
-
-9. **Maven Frontend Plugin**: Currently 1.15.1
-   - Update in: `references/VUE.md`, `references/REACT.md`, `references/ANGULAR.md`, `references/VANILLA-JS.md`
-   - Check latest at: https://github.com/eirslett/frontend-maven-plugin/releases
-
-### Framework-Specific Versions
-10. **Vite**: Currently 8.x
-   - Update in: `references/VUE.md`, `references/REACT.md`, `references/VANILLA-JS.md`
-   - Check latest at: https://vitejs.dev/
-
-11. **Bootstrap**: Currently 5.3+
-   - Update references in all front-end guides
-   - Check latest at: https://getbootstrap.com/
-
-12. **Vue.js**: Currently 3.x
-    - Update in: `references/VUE.md`, `SKILL.md`, `README.md`
-    - Check latest at: https://vuejs.org/
-
-13. **React**: Currently 21.x
-    - Update in: `references/REACT.md`, `SKILL.md`, `README.md`
-    - Check latest at: https://react.dev/
-
-14. **Angular**: Currently 21.x
-    - Update in: `references/ANGULAR.md`, `SKILL.md`, `README.md`
-    - Check latest at: https://angular.io/
-
-### Additional Dependencies to Check
-15. **Pinia** (Vue state management): Update in `references/VUE.md`
-16. **React Router** (React routing): Update in `references/REACT.md`
-17. **Vue Router** (Vue routing): Update in `references/VUE.md`
-18. **TestContainers**: Update in `references/TEST.md` and `references/SPRING-BOOT-4.md` - https://testcontainers.com/
-19. **Spring Framework**: Currently 7.0 - Update in `references/SPRING-BOOT-4.md`
-20. **Hibernate/Jakarta EE**: Update in `references/SPRING-BOOT-4.md`
-21. **Docker Compose file format**: Update in compose files if needed
+Do **not** add new `Currently X.Y.Z` lines here — hardcoded version numbers in this file drift out of sync with `versions.json`. Keep this guide version-free.

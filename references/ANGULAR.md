@@ -18,12 +18,17 @@
 This guide covers creating front-end applications for Spring Boot using Angular 21 and Angular CLI, with hot reload during development and optimized production builds integrated into the Spring Boot package.
 
 ## Versions (managed via `versions.json`)
+
+> Regenerate this table with `node scripts/sync-versions-in-docs.mjs` after bumping `versions.json`.
+
+<!-- versions:start -->
 | Tool | Version |
 |------|---------|
 | Node.js | 24.15.0 |
 | npm | 11.12.1 |
 | Angular | 21.x |
 | Angular Router | 21.x |
+<!-- versions:end -->
 
 > Use `npx @angular/cli@latest` to scaffold; keep alignment with `engines` constraints. No OpenAPI client generation provided.
 

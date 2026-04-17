@@ -18,6 +18,10 @@
 This guide covers creating front-end applications for Spring Boot using **Vue.js 3** and **Vite 8**, with hot reload during development and optimized production builds integrated into the Spring Boot package.
 
 ## Versions (managed via `versions.json`)
+
+> Regenerate this table with `node scripts/sync-versions-in-docs.mjs` after bumping `versions.json`.
+
+<!-- versions:start -->
 | Tool | Version |
 |------|---------|
 | Node.js | 24.15.0 |
@@ -26,6 +30,7 @@ This guide covers creating front-end applications for Spring Boot using **Vue.js
 | Vite | 8.x |
 | Pinia | 2.x |
 | Vue Router | 4.x |
+<!-- versions:end -->
 
 > Tip: `corepack enable` to use `pnpm`/`yarn` if preferred. Default instructions assume `npm`.
 
