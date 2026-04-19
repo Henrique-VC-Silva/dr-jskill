@@ -27,7 +27,7 @@ Replace the hardcoded user dropdown with OAuth 2.0 login via GitHub.
   GitHub login; remove the dropdown.
 - Keep existing per-user filtering.
 
-Follow references/SECURITY.md. Walk me through creating the GitHub OAuth app.
+Follow Dr JSkill's security conventions. Walk me through creating the GitHub OAuth app.
 ```
 
 See [`references/SECURITY.md`](../references/SECURITY.md) for the full treatment.
@@ -63,7 +63,7 @@ pagination using the "id" column. Accept an optional "after" query parameter
 Update the front-end to use infinite scroll based on the "after" cursor
 rather than page numbers.
 
-Follow references/DATABASE.md.
+Follow Dr JSkill's database conventions.
 ```
 
 ## 4. Try a different front-end

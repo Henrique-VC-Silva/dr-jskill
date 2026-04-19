@@ -53,7 +53,7 @@ Cover:
 - DELETE /api/todos/{id} returns 204
 
 Use Mockito's @MockitoBean for the service dependency (not the deprecated @MockBean).
-Follow the conventions in references/TEST.md.
+Follow Dr JSkill's testing conventions.
 ```
 
 Review the diff. Run:
@@ -83,7 +83,7 @@ Add an integration test TodoIntegrationIT that:
 - Uses RestAssured or TestRestTemplate, whichever is already in the project
 
 Put the test in the same package as TestcontainersConfiguration (package-private).
-Follow references/TEST.md.
+Follow Dr JSkill's testing conventions.
 ```
 
 Review the diff. The agent should:

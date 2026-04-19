@@ -237,8 +237,8 @@ Rather than copy-pasting every command by hand, let the agent drive it. Start wi
 ### Quick start — app only
 
 ```
-Deploy this app to Azure Container Apps following the "Quick Start (no database)"
-section in references/AZURE.md.
+Use Dr JSkill to deploy this app to Azure Container Apps via the
+Quick Start path (no database).
 
 - Ask me for RESOURCE_GROUP, LOCATION, and APP_NAME before creating anything.
 - Walk me through each step and confirm before running any `az` command that
@@ -259,8 +259,8 @@ Open the URL in a browser — your Todo app is live with TLS managed by Azure.
 ### Add a PostgreSQL database
 
 ```
-Now follow the "With PostgreSQL (VNET-injected)" section in references/AZURE.md
-to add a managed PostgreSQL database to my existing Azure deployment.
+Use Dr JSkill to add a managed PostgreSQL database to my existing Azure
+deployment, via the VNET-injected path.
 
 Use the RESOURCE_GROUP, LOCATION, APP_NAME, CONTAINER_APP_ENV, and
 CONTAINER_APP_NAME values from the previous deployment. Walk me through one
@@ -272,11 +272,11 @@ The agent will create a VNET, a private PostgreSQL Flexible Server, and store th
 ### Deploy the native image instead
 
 ```
-Redeploy my Azure Container App using the GraalVM native image (Dockerfile-native)
-instead of the JVM image.
+Use Dr JSkill to redeploy my Azure Container App using the GraalVM native
+image (Dockerfile-native) instead of the JVM image.
 
 After redeploying, set --cpu 0.25 --memory 0.5Gi and remove JAVA_TOOL_OPTIONS
-(there is no JVM heap to configure). Follow references/AZURE.md.
+(there is no JVM heap to configure).
 ```
 
 ### Clean up

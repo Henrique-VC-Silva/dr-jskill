@@ -172,8 +172,7 @@ This step is **optional** for the early chapters — you can keep working locall
 Ask the agent to drive it — per skill rules, it will confirm owner, name, and visibility with you before running any git command:
 
 ```
-Publish this generated project to a new GitHub repository following
-references/PROJECT-SETUP.md ("Publish the project to GitHub").
+Use Dr JSkill to publish this generated project to a new GitHub repository.
 
 - Ask me whether to use my personal account or an organisation, the repo
   name, and whether it should be public or private. Default branch is main.

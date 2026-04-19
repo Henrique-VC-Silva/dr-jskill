@@ -149,14 +149,14 @@ tests.
 ```
 Add @WebMvcTest unit tests for <controller>. Cover success, not-found, and
 bad-request paths for every endpoint. Mock the service with @MockitoBean.
-Follow references/TEST.md.
+Follow Dr JSkill's testing conventions.
 ```
 
 **Integration test:**
 ```
 Add a *IT test that walks through the full create-read-delete lifecycle
 against a real Postgres container via @ServiceConnection. Follow
-references/TEST.md.
+Dr JSkill's testing conventions.
 ```
 
 ## Performance
