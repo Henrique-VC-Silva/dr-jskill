@@ -14,7 +14,7 @@
 - [References](#references)
 
 ## Defaults
-- **Engine:** PostgreSQL (preferred version: **16**; configure in `versions.json`).
+- **Engine:** PostgreSQL (preferred version: **18**; configure in `versions.json`).
 - **Schema management:** ✅ **Hibernate ddl-auto** — schema derived from `@Entity` classes. Do not offer Flyway or Liquibase.
 - **Driver:** `org.postgresql:postgresql` (bundled via start.spring.io dependency).
 - **Testcontainers:** Use `postgres:18-alpine` images.

@@ -143,11 +143,13 @@ You'll find the rough edges faster than on your own, and you'll discover which p
 | Database tuning, pagination, caching | [`references/DATABASE.md`](../references/DATABASE.md) |
 | Authentication, CSRF, security headers | [`references/SECURITY.md`](../references/SECURITY.md) |
 | Structured logging, correlation IDs | [`references/LOGGING.md`](../references/LOGGING.md) |
+| Spring Boot 4 migration, virtual threads, performance | [`references/SPRING-BOOT-4.md`](../references/SPRING-BOOT-4.md) |
+| Configuration, profiles, secrets | [`references/CONFIGURATION.md`](../references/CONFIGURATION.md) |
 | Docker production image, compose, native | [`references/DOCKER.md`](../references/DOCKER.md) |
 | GraalVM native image | [`references/GRAALVM.md`](../references/GRAALVM.md) |
 | Azure deployment (Container Apps + Postgres Flexible Server) | [`references/AZURE.md`](../references/AZURE.md) |
 | Testing (unit, integration, Testcontainers) | [`references/TEST.md`](../references/TEST.md) |
-| Vue / React / Angular / Vanilla front-end guides | [`references/VUE.md`](../references/VUE.md), [`REACT.md`](../references/REACT.md), [`ANGULAR.md`](../references/ANGULAR.md), [`VANILLA-JS.md`](../references/VANILLA-JS.md) |
+| Vue / React / Angular / Vanilla front-end guides | [`references/VUE.md`](../references/VUE.md), [`references/REACT.md`](../references/REACT.md), [`references/ANGULAR.md`](../references/ANGULAR.md), [`references/VANILLA-JS.md`](../references/VANILLA-JS.md) |
 | Java code intelligence with JDTLS | [`references/JDTLS.md`](../references/JDTLS.md) |
 | Project setup, dotfiles | [`references/PROJECT-SETUP.md`](../references/PROJECT-SETUP.md) |
 

@@ -2,7 +2,7 @@
 // Script to create a full-stack Spring Boot application from start.spring.io
 
 import {
-  getJavaVersion, resolveBootVersion, joinDependencies,
+  getJavaVersion, resolveBootVersion,
   downloadAndExtractProject, parseArgs, applyDotfiles,
 } from './lib/versions.mjs';
 
@@ -29,7 +29,7 @@ const bootVersion = flags.bootVersion || await resolveBootVersion();
 
 let dependencies = 'web,data-jpa,actuator,validation,devtools,postgresql,docker-compose,testcontainers,native';
 
-console.error(`Creating full-stack Spring Boot application with Boot=${bootVersion}, Java=${javaVersion}`);
+console.log(`Creating full-stack Spring Boot application with Boot=${bootVersion}, Java=${javaVersion}`);
 
 try {
   await downloadAndExtractProject({

@@ -150,12 +150,12 @@ A real application needs maybe five to ten of these tweaks applied **thoughtfull
 
 | Recipe | Cost to apply | Typical upside | Reference |
 |---|---|---|---|
-| Virtual threads | 1 property | ↑ RPS on IO-bound endpoints | SPRING-BOOT-4.md |
-| HTTP compression | 2 properties | ↓ bytes on the wire | SPRING-BOOT-4.md |
-| Read-only transactions | 1 annotation per method | ↓ DB work on queries | DATABASE.md |
-| Lazy routes | 1 import per route | ↓ initial bundle | VUE.md |
-| Static asset caching | 2 properties | ↓ repeat requests | SPRING-BOOT-4.md |
-| N+1 detection in tests | 1 dep + config | ↓ surprises in prod | DATABASE.md |
+| Virtual threads | 1 property | ↑ RPS on IO-bound endpoints | [`references/SPRING-BOOT-4.md`](../references/SPRING-BOOT-4.md) |
+| HTTP compression | 2 properties | ↓ bytes on the wire | [`references/SPRING-BOOT-4.md`](../references/SPRING-BOOT-4.md) |
+| Read-only transactions | 1 annotation per method | ↓ DB work on queries | [`references/DATABASE.md`](../references/DATABASE.md) |
+| Lazy routes | 1 import per route | ↓ initial bundle | [`references/VUE.md`](../references/VUE.md) |
+| Static asset caching | 2 properties | ↓ repeat requests | [`references/SPRING-BOOT-4.md`](../references/SPRING-BOOT-4.md) |
+| N+1 detection in tests | 1 dep + config | ↓ surprises in prod | [`references/DATABASE.md`](../references/DATABASE.md) |
 
 ---
 

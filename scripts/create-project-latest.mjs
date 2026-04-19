@@ -4,7 +4,7 @@
 
 import {
   getJavaVersion, getBootPreferredMajor, getBootFallback,
-  resolveBootVersion, joinDependencies, downloadAndExtractProject, parseArgs,
+  resolveBootVersion, downloadAndExtractProject, parseArgs,
   applyDotfiles,
 } from './lib/versions.mjs';
 
@@ -43,7 +43,7 @@ const bootVersion = flags.bootVersion
   ? flags.bootVersion
   : await resolveBootVersion(PREFERRED_BOOT_MAJOR, DEFAULT_BOOT_FALLBACK);
 
-console.error(`Resolved Spring Boot version: ${bootVersion} (preferred major: ${PREFERRED_BOOT_MAJOR}, fallback: ${DEFAULT_BOOT_FALLBACK})`);
+console.log(`Resolved Spring Boot version: ${bootVersion} (preferred major: ${PREFERRED_BOOT_MAJOR}, fallback: ${DEFAULT_BOOT_FALLBACK})`);
 
 let dependencies;
 let description;

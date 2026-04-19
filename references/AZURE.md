@@ -487,7 +487,7 @@ unset DB_ADMIN_PASSWORD
 > ```
 > Store `app`'s password as a second Container Apps secret and point
 > `SPRING_DATASOURCE_USERNAME/PASSWORD` at it. Because the server is private,
-> run this via a Container Apps Job: spin up a one-shot `postgres:17`
+> run this via a Container Apps Job: spin up a one-shot `postgres:18-alpine`
 > container in the same VNET, with `PGPASSWORD` set from a `secretref` to
 > the admin password, and pipe the `CREATE USER` / `GRANT` statements to
 > `psql`.

@@ -23,17 +23,20 @@ Centralize versions in `versions.json`. Scripts load from `scripts/lib/versions.
 ### Bump workflow
 
 1. Edit `versions.json` with the new value(s).
-2. Search-and-replace the old value across the repo. Typical hotspots:
-   - `assets/Dockerfile`, `assets/Dockerfile-native` (Temurin / GraalVM image tags)
-   - `assets/compose.yaml`, `assets/docker-compose*.yml` (Postgres image tag)
-   - `assets/ci/github-actions.yml` (Java setup-java action version)
-   - `references/**/*.md` (narrative mentions like "Node 24" / "PostgreSQL 18")
-   - `SKILL.md`, `README.md` (prerequisites, headline framework versions)
-3. Regenerate the version tables in the front-end reference guides:
+2. Regenerate tables and asset versions:
    ```bash
    node scripts/sync-versions-in-docs.mjs
    ```
-   Use `--check` in CI to fail builds if a doc is out of sync.
+   This updates:
+   - Version tables in `references/*.md` (between `<!-- versions:start -->` / `<!-- versions:end -->`)
+   - `<nodeVersion>` / `<npmVersion>` inside `maven-frontend-plugin` snippets in the same docs
+   - Hardcoded versions in `assets/Dockerfile`, `assets/Dockerfile-native`, `assets/compose.yaml`, `assets/docker-compose*.yml`, `assets/devcontainer/*`, `assets/ci/github-actions.yml`
+
+   Use `--check` in CI to fail builds if anything is out of sync.
+3. Sweep any remaining narrative mentions the sync script does not cover:
+   - `references/**/*.md` prose (e.g. "Node 24" / "PostgreSQL 18" outside version markers)
+   - `SKILL.md`, `README.md` (prerequisites, headline framework versions)
+   - Workshop chapters (`workshop/*.md`) if they pin a version in prose
 4. Update fallback defaults in `scripts/lib/versions.mjs` (the `getXxx()` getters) so the scripts still work without `versions.json`.
 5. Smoke-test by generating a project and running `./mvnw verify`.
 

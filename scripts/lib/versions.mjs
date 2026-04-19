@@ -34,7 +34,7 @@ function getVersionValue(key, defaultValue = '') {
 
 export function getJavaVersion() { return getVersionValue('javaVersion', '25'); }
 export function getBootPreferredMajor() { return getVersionValue('springBootPreferredMajor', '4'); }
-export function getBootFallback() { return getVersionValue('springBootFallback', '4.0.2'); }
+export function getBootFallback() { return getVersionValue('springBootFallback', '4.0.5'); }
 export function getPostgresVersion() { return getVersionValue('postgresVersion', '18'); }
 export function getTemurinVersion() { return getVersionValue('temurinVersion', '25'); }
 export function getMavenMinVersion() { return getVersionValue('mavenMinVersion', '3.8.0'); }

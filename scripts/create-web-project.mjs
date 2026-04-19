@@ -2,7 +2,7 @@
 // Script to create a Spring Boot web application from start.spring.io
 
 import {
-  getJavaVersion, resolveBootVersion, joinDependencies,
+  getJavaVersion, resolveBootVersion,
   downloadAndExtractProject, parseArgs, applyDotfiles,
 } from './lib/versions.mjs';
 
@@ -29,7 +29,7 @@ const bootVersion = flags.bootVersion || await resolveBootVersion();
 
 let dependencies = 'web,actuator,validation,devtools,native';
 
-console.error(`Creating Spring Boot web application with Boot=${bootVersion}, Java=${javaVersion}`);
+console.log(`Creating Spring Boot web application with Boot=${bootVersion}, Java=${javaVersion}`);
 
 try {
   await downloadAndExtractProject({

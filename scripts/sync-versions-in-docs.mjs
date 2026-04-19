@@ -17,6 +17,44 @@ const versions = JSON.parse(readFileSync(resolve(ROOT, 'versions.json'), 'utf8')
 const START = '<!-- versions:start -->';
 const END = '<!-- versions:end -->';
 
+/**
+ * Asset files whose hardcoded versions track versions.json.
+ * Each entry: [relative-path, [ [regex, replacement], ... ]].
+ */
+const assetRewrites = [
+  ['assets/Dockerfile', [
+    [/eclipse-temurin:[^-\s]+-jdk-jammy/g, `eclipse-temurin:${versions.temurinVersion}-jdk-jammy`],
+    [/eclipse-temurin:[^-\s]+-jre-alpine/g, `eclipse-temurin:${versions.temurinVersion}-jre-alpine`],
+  ]],
+  ['assets/Dockerfile-native', [
+    [/ghcr\.io\/graalvm\/graalvm-community:\S+/g, `ghcr.io/graalvm/graalvm-community:${versions.graalvmVersion}`],
+    [/Requires GraalVM \d+\+/g, `Requires GraalVM ${versions.graalvmVersion}+`],
+    [/GraalVM \d+ \(includes native-image toolchain, JDK \d+\)/g, `GraalVM ${versions.graalvmVersion} (includes native-image toolchain, JDK ${versions.javaVersion})`],
+    [/GraalVM \d+ = JDK \d+/g, `GraalVM ${versions.graalvmVersion} = JDK ${versions.javaVersion}`],
+  ]],
+  ['assets/compose.yaml', [
+    [/postgres:\d+-alpine/g, `postgres:${versions.postgresVersion}-alpine`],
+  ]],
+  ['assets/docker-compose.yml', [
+    [/postgres:\d+-alpine/g, `postgres:${versions.postgresVersion}-alpine`],
+  ]],
+  ['assets/docker-compose-native.yml', [
+    [/postgres:\d+-alpine/g, `postgres:${versions.postgresVersion}-alpine`],
+  ]],
+  ['assets/devcontainer/docker-compose.yml', [
+    [/postgres:\d+-alpine/g, `postgres:${versions.postgresVersion}-alpine`],
+  ]],
+  ['assets/devcontainer/devcontainer.json', [
+    [/("ghcr\.io\/devcontainers\/features\/java:1"\s*:\s*\{\s*"version"\s*:\s*")\d+(")/g, `$1${versions.javaVersion}$2`],
+    [/("ghcr\.io\/devcontainers\/features\/node:1"\s*:\s*\{\s*"version"\s*:\s*")\d+(")/g, `$1${String(versions.nodeVersion).split('.')[0]}$2`],
+    [/(JDK )\d+( \+ Node )\d+/g, `$1${versions.javaVersion}$2${String(versions.nodeVersion).split('.')[0]}`],
+  ]],
+  ['assets/ci/github-actions.yml', [
+    [/Set up JDK \d+/g, `Set up JDK ${versions.javaVersion}`],
+    [/java-version:\s*'\d+'/g, `java-version: '${versions.javaVersion}'`],
+  ]],
+];
+
 // Per-file version-table manifests. All rows must come from versions.json so
 // the manifest stays the single source of truth — no hardcoded versions here.
 const docs = {
@@ -96,6 +134,38 @@ for (const [rel, rows] of Object.entries(docs)) {
   const after = content.slice(end);
   const withTable = `${before}\n${renderTable(rows)}\n${after}`;
   const next = rewritePluginVersions(withTable);
+  if (next === content) {
+    console.log(`  ∙ ${rel} up to date`);
+    continue;
+  }
+  drift++;
+  if (checkMode) {
+    console.error(`✗ ${rel} is out of sync with versions.json`);
+  } else {
+    writeFileSync(file, next, 'utf8');
+    console.log(`  ✓ Updated ${rel}`);
+    changed++;
+  }
+}
+
+if (checkMode && drift > 0) {
+  console.error(`✗ ${drift} reference doc(s) out of sync.`);
+}
+
+// ---- Asset files (Dockerfiles, compose, CI workflow) ----
+for (const [rel, rules] of assetRewrites) {
+  const file = resolve(ROOT, rel);
+  let content;
+  try {
+    content = readFileSync(file, 'utf8');
+  } catch {
+    console.error(`⚠️  ${rel}: not found — skipping`);
+    continue;
+  }
+  let next = content;
+  for (const [re, repl] of rules) {
+    next = next.replace(re, repl);
+  }
   if (next === content) {
     console.log(`  ∙ ${rel} up to date`);
     continue;

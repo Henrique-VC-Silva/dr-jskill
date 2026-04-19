@@ -246,7 +246,7 @@ The skill ships two files in `assets/devcontainer/`; the generator copies them t
             "installMaven": "true"
         },
         "ghcr.io/devcontainers/features/node:1": {
-            "version": "22"
+            "version": "24"
         },
         "ghcr.io/devcontainers/features/docker-in-docker:2": {}
     },

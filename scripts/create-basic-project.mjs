@@ -2,7 +2,7 @@
 // Script to create a basic Spring Boot project from start.spring.io
 
 import {
-  getJavaVersion, resolveBootVersion, joinDependencies,
+  getJavaVersion, resolveBootVersion,
   downloadAndExtractProject, parseArgs, applyDotfiles,
 } from './lib/versions.mjs';
 
@@ -29,7 +29,7 @@ const bootVersion = flags.bootVersion || await resolveBootVersion();
 
 let dependencies = 'web,actuator,devtools,native';
 
-console.error(`Creating basic Spring Boot project with Boot=${bootVersion}, Java=${javaVersion}`);
+console.log(`Creating basic Spring Boot project with Boot=${bootVersion}, Java=${javaVersion}`);
 
 try {
   await downloadAndExtractProject({
