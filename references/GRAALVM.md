@@ -430,7 +430,7 @@ Native compilation is CPU and memory intensive. Strategies to improve:
 
 1. **Use Docker Build Cache**: Docker caches layers, speeding up rebuilds
 2. **Build in CI/CD**: Offload builds to powerful CI/CD servers
-3. **Parallel Builds**: Use buildpack for parallel layer building
+3. **Parallel Builds**: Enable Docker BuildKit (`DOCKER_BUILDKIT=1`) so independent stages run in parallel
 4. **Skip During Development**: Use JVM mode for faster iteration
 
 **Issue 5: `UnsupportedFeatureException` for SLF4J/Logback helpers (HikariConfig)**

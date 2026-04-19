@@ -1,4 +1,4 @@
-# 08 — Going to Production
+# 08 — Deployment
 
 **In this chapter:**
 - Build a **production JAR** and run it locally

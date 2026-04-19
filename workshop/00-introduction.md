@@ -72,7 +72,7 @@ This workshop has been executed end-to-end (chapters 02 → 08) with three AI mo
 - **Claude Sonnet 4.6**
 - **GPT-5.3-Codex**
 
-All three produced a running application, but the *quality* of the generated code varied — Haiku is the fastest but it regulary has minor bugs in the generated code. Chapter 2 gives concrete advice on which one to pick when you start your session.
+All three produced a running application, but the *quality* of the generated code varied — Haiku is the fastest but it regularly has minor bugs in the generated code. Chapter 2 gives concrete advice on which one to pick when you start your session.
 
 ---
 

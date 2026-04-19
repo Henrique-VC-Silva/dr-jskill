@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Shared version utilities for dr-jskill scripts
 
-import { readFileSync, writeFileSync, existsSync, unlinkSync, mkdirSync, copyFileSync, appendFileSync, createWriteStream } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, unlinkSync, mkdirSync, copyFileSync, createWriteStream } from 'node:fs';
 import { pipeline } from 'node:stream/promises';
 import { Readable } from 'node:stream';
 import { resolve, dirname, join } from 'node:path';

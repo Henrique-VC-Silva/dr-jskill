@@ -22,7 +22,7 @@ This guide covers Docker deployment for Spring Boot 4 applications, including bo
 1. Java 17+ (Java 25 recommended - used in our Dockerfiles)
 2. GraalVM 25+ for native images
 3. Jakarta EE 11 / Servlet 6.1 baseline
-4. PostgreSQL 12+ (we use 16-alpine for optimal size and performance)
+4. PostgreSQL (we use `postgres:18-alpine` for optimal size and performance)
 
 **Key Improvements in These Docker Files:**
 
