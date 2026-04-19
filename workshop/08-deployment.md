@@ -223,6 +223,7 @@ See [`references/CONFIGURATION.md`](../references/CONFIGURATION.md) and [`refere
 ## 6. (Optional) Deploy to Azure Container Apps
 
 > **Prerequisites:**
+> - The project is **published to a GitHub repository** — images will be pushed to `ghcr.io/<owner>/<repo>` and the CI/CD / OIDC pieces in AZURE.md pin an exact `repo:<owner>/<repo>:ref:refs/heads/main` subject. If you skipped [Chapter 2 § 10 — Publish to GitHub](02-getting-started.md#10-optional-publish-to-github), do it now before continuing.
 > - An Azure account with an active subscription ([free trial](https://azure.microsoft.com/free) works)
 > - [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli) ≥ 2.85 installed and logged in (`az login`)
 > - `jq` installed (`brew install jq` / `apt install jq` / `winget install jqlang.jq`)
