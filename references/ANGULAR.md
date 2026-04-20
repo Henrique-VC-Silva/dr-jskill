@@ -101,7 +101,7 @@ npm install bootstrap@5.3.8 bootstrap-icons@1.13.1
 
 ### 2. Configure Angular for Spring Boot Integration
 
-Update `frontend/angular.json` - modify the `build` section. Since Angular 17 the default `@angular-devkit/build-angular:application` builder writes to `<outputPath>/browser/` when `outputPath` is a plain string. Use the object form with `"browser": ""` to flatten the output so `index.html` lands directly in `src/main/resources/static/`, and use the `browser` key for the entry point:
+Update `frontend/angular.json` - modify the `build` section. Angular 21's default builder is `@angular/build:application` (migrated from the older `@angular-devkit/build-angular:application`). When `outputPath` is a plain string it writes to `<outputPath>/browser/`; use the object form with `"browser": ""` to flatten the output so `index.html` lands directly in `src/main/resources/static/`, and use the `browser` key for the entry point:
 
 ```json
 {
