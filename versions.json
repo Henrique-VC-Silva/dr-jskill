@@ -20,5 +20,7 @@
   "angularVersion": "21",
   "testcontainersVersion": "2.0.0",
   "springFrameworkVersion": "7.0",
-  "hibernateVersion": "7.1"
+  "hibernateVersion": "7.1",
+  "flywayVersion": "11.0.0",
+  "springdocVersion": "3.0.0"
 }

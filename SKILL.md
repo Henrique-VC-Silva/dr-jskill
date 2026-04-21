@@ -24,6 +24,11 @@ Centralized versions live in `versions.json`. All scripts read from it via `scri
 - Follow best practices for project structure and configuration
 - Quick setup scripts for common use cases
 - Docker support for containerized deployments
+- **Enterprise-ready features**:
+  - **Flyway** for versioned database migrations
+  - **OpenAPI/springdoc** for interactive API documentation
+  - **Global Exception Handling** (Problem Details RFC 7807)
+  - **Micrometer/Prometheus** for observability
 - Front-end development with multiple framework options:
   - **Vue.js 3** (default) - Progressive framework with Composition API
   - **React 19** - Popular library for building user interfaces
@@ -61,6 +66,7 @@ Project types available:
 - `basic` - Minimal Spring Boot project
 - `web` - Web application with REST API capabilities
 - `fullstack` - Complete application with database and security
+- `enterprise` - Full-stack with migrations, OpenAPI, and layered architecture
 
 ### Basic Spring Boot Project
 Use the `create-basic-project.mjs` script to create a basic Spring Boot project with essential dependencies:
@@ -89,18 +95,20 @@ When creating Spring Boot projects:
 3. Include Spring Boot Actuator for production-ready features
 4. Use Spring Data JPA for database access
 5. Use PostgreSQL for database - see [Database Best Practices](references/DATABASE.md) for optimization
-6. Use properties files for configuration - see [Configuration Best Practices](references/CONFIGURATION.md)
-7. Set up foundational dotfiles: `.gitignore`, `.env.sample`, `.editorconfig`, `.gitattributes`, `.dockerignore`, optional `.vscode/`, `.devcontainer/` - see [Project Setup & Dotfiles](references/PROJECT-SETUP.md)
+6. **Use Flyway for Enterprise schema management**: Schema changes must be versioned and auditable — see [Flyway Guide](references/FLYWAY.md)
+7. Use properties files for configuration - see [Configuration Best Practices](references/CONFIGURATION.md)
+8. Set up foundational dotfiles: `.gitignore`, `.env.sample`, `.editorconfig`, `.gitattributes`, `.dockerignore`, optional `.vscode/`, `.devcontainer/` - see [Project Setup & Dotfiles](references/PROJECT-SETUP.md)
    - The `.env` file is the canonical location for local secrets; instruct users to copy `.env.sample` → `.env` and fill in real values
    - **NEVER read or expose `.env`**: it contains real secrets — do not `cat`, view, or print its contents; only `.env.sample` (placeholder values) may be read or displayed
-8. Use `spring-boot-docker-compose` for automatic database startup during development - see [Docker Guide](references/DOCKER.md)
-9. Follow RESTful API design principles
-10. Configure proper logging with Logback - see [Logging Best Practices](references/LOGGING.md)
-11. Use Maven for dependency management
-12. Include Spring Boot DevTools for development productivity
-13. Add Spring Security only when needed - see [Security Guide](references/SECURITY.md) for best practices
-14. Configure Docker for containerized deployments - see [Docker Guide](references/DOCKER.md)
-15. Enable GraalVM native image support for faster startup - see [GraalVM Guide](references/GRAALVM.md)
+9. Use `spring-boot-docker-compose` for automatic database startup during development - see [Docker Guide](references/DOCKER.md)
+10. Follow RESTful API design principles and **include OpenAPI/Swagger documentation** — see [OpenAPI Guide](references/OPENAPI.md)
+11. Configure proper logging with Logback - see [Logging Best Practices](references/LOGGING.md)
+12. Use Maven for dependency management
+13. Include Spring Boot DevTools for development productivity
+14. Add Spring Security only when needed - see [Security Guide](references/SECURITY.md) for best practices
+15. **Always use a Service Layer for Enterprise logic**: Even for simple CRUD, a service boundary provides stability for future complexity
+16. Configure Docker for containerized deployments - see [Docker Guide](references/DOCKER.md)
+17. Enable GraalVM native image support for faster startup - see [GraalVM Guide](references/GRAALVM.md)
 16. **Always ship a startup banner** that prints access URLs when the app is ready - see [Startup Banner](references/SPRING-BOOT-4.md#startup-banner-required)
 17. The user must review changes before they are committed to git. Ask the user before initializing a Git repository, or running git commands.
 

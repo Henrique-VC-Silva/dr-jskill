@@ -6,8 +6,8 @@
   - Node.js 24.x and npm 11.x are prerequisites.
 - NEVER propose to use Lombok in the generated projects (add Maven Enforcer/ArchUnit checks in generated templates).
 - Build tool is **Maven only** (no Gradle).
-- **Hibernate ddl-auto** is the supported database initialization mechanism (`spring.jpa.hibernate.ddl-auto`). Do not offer Liquibase or Flyway.
-- Do not add OpenAPI/springdoc, feature toggles, Buildpacks, or Jib.
+- **Schema management**: Prefer **Hibernate ddl-auto** for speed, but support **Flyway** (default for enterprise).
+- **Enterprise Features**: Support **OpenAPI/springdoc**, feature toggles (Unleash/LaunchDarkly), and centralized observability.
 - **Ship dotfiles**: ensure `.gitignore`, `.env.sample`, `.editorconfig`, `.gitattributes`, `.dockerignore`, optional `.vscode/` are added to generated projects (see `references/PROJECT-SETUP.md`).
 - **`.env` is the canonical local secret store**: generated projects load real credentials from a `.env` file (gitignored). Always instruct users to copy `.env.sample` → `.env` and fill in real values there.
 - **NEVER read or expose `.env`**: the `.env` file contains real secrets. Never `cat`, `view`, `read`, or print its contents — not to the console, not in output, not in logs. Only `.env.sample` (placeholder values) may be read or displayed. If a task requires inspecting current env values, ask the user to share only the specific variable name, never the whole file.

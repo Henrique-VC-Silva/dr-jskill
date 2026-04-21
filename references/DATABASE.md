@@ -15,7 +15,9 @@
 
 ## Defaults
 - **Engine:** PostgreSQL (preferred version: **18**; configure in `versions.json`).
-- **Schema management:** ✅ **Hibernate ddl-auto** — schema derived from `@Entity` classes. Do not offer Flyway or Liquibase.
+- **Schema management:**
+  - ✅ **Hibernate ddl-auto** — derived from `@Entity` classes (best for speed/prototyping).
+  - ✅ **Flyway** — versioned SQL migrations (required for **Enterprise**).
 - **Driver:** `org.postgresql:postgresql` (bundled via start.spring.io dependency).
 - **Testcontainers:** Use `postgres:18-alpine` images.
 
@@ -55,7 +57,47 @@ Hibernate generates the database schema automatically from your `@Entity` classe
 **Production** — `spring.jpa.hibernate.ddl-auto=validate`:
 - Hibernate only checks that the schema matches the entity model
 - Fails fast on startup if there is a mismatch
-- Schema changes must be applied before deployment (e.g., via a DBA or migration script)
+- **Required for Enterprise**: Use **Flyway** to apply schema changes before deployment.
+
+## Flyway (Enterprise Schema Management)
+
+Flyway provides versioned SQL migrations, ensuring your database schema is auditable and repeatable across environments.
+
+### Dependencies
+```xml
+<dependency>
+    <groupId>org.flywaydb</groupId>
+    <artifactId>flyway-core</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.flywaydb</groupId>
+    <artifactId>flyway-database-postgresql</artifactId>
+</dependency>
+```
+
+### Configuration
+`src/main/resources/application.properties`:
+```properties
+# Enable Flyway
+spring.flyway.enabled=true
+# Hibernate should only validate the schema, Flyway will manage it
+spring.jpa.hibernate.ddl-auto=validate
+```
+
+### Migration Files
+Place migrations in `src/main/resources/db/migration/`:
+- `V1__init_schema.sql`
+- `V2__add_user_table.sql`
+
+Example `V1__init_schema.sql`:
+```sql
+CREATE TABLE app_user (
+    id BIGSERIAL PRIMARY KEY,
+    login VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(191) NOT NULL UNIQUE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+```
 
 Entity example:
 ```java

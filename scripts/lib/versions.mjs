@@ -54,6 +54,8 @@ export function getBootstrapIconsVersion() { return getVersionValue('bootstrapIc
 export function getTestcontainersVersion() { return getVersionValue('testcontainersVersion', '2.0.0'); }
 export function getSpringFrameworkVersion() { return getVersionValue('springFrameworkVersion', '7.0'); }
 export function getHibernateVersion() { return getVersionValue('hibernateVersion', '7.1'); }
+export function getFlywayVersion() { return getVersionValue('flywayVersion', '11.0.0'); }
+export function getSpringdocVersion() { return getVersionValue('springdocVersion', '3.0.0'); }
 
 /**
  * Strip legacy qualifiers (.RELEASE, .GA) that Spring Boot 4+ no longer uses.
